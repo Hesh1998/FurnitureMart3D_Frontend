@@ -19,9 +19,9 @@
 					<div class="login-form">
 						<h2>Sign In to Your Account</h2>
 						
-						<form action="">
-							<input type="email" placeholder="Email Address" />
-							<input type="password" placeholder="Password" />
+						<form id = "sign_in">
+							<input type="email" id="sign_up_email" name="email" placeholder="Email Address"/>
+							<input type="password" id="sign_up_pwd" name="password" placeholder="Password"/>
 							<span>
 								<input type="checkbox" class="checkbox" id="showpass">
 								<label for="showpass">Show Password</label> 
@@ -41,10 +41,10 @@
 					<div class="signup-form">
 						<h2>New User Sign Up!</h2>
 						
-						<form id = "sign_in" action="http://localhost:8080/registerUserAsBuyer" method="POST">
+						<form id = "sign_up" action="http://localhost:8080/registerUserAsBuyer" method="POST">
 							<input type="text" id="sign_in_username" name="username" placeholder="Username"/>
-							<input type="email" id="sign_in_email" name="email" placeholder="Email Address"/>
-							<input type="password" id="sign_in_pwd" name="password" placeholder="Password"/>
+							<input type="email" id="sign_up_email" name="email" placeholder="Email Address"/>
+							<input type="password" id="sign_up_pwd" name="password" placeholder="Password"/>
 							
 							<button type="submit" class="btn btn-default">Sign Up</button>
 						</form>
@@ -56,56 +56,180 @@
 	</section>
 	
 	<script>
+		// JS code related to Sign Up
+		const signUpForm = document.getElementById("sign_up");
+		
+		signUpForm.addEventListener("submit", function(e){
+			e.preventDefault();
+			
+			let usernameValid = validateUsername();
+			usernameValid.then(value => {
+				if(value == "No"){
+					alert("Please enter a username!");
+				}else if(value == "Have"){
+					alert("Username already exists!");
+				}else{
+					let emailValid = validateEmail();
+					
+					emailValid.then(value => {
+						if(value == "No"){
+							alert("Please enter an email!");
+						}else if(value == "Have"){
+							alert("You have already registered with this email address! Please sign in to your account.");
+						}else if(checkPasswordStrength() == false){
+							alert("Password must have at least one lowercase letter, one uppercase letter, one digit, one special character, and is at least eight characters long.");
+						}else{
+							registerNewUser();
+						}
+					}).catch(err => {
+						console.log(err);
+					});
+				}
+			}).catch(err => {
+				console.log(err);
+			});
+			
+		})
+
+		
+		const validateUsername = async() => {
+			const data = new FormData(signUpForm);
+			const usernameVar = data.get("username");
+			
+			if(usernameVar == ""){
+				return "No";
+			}else{
+				let response = await fetch("http://localhost:8080/getAllUsernames");
+				let usernames = await response.json();
+				
+				
+				for (let i = 0; i < usernames.length; i++) {
+					if(usernameVar == usernames[i].username){
+						return "Have";
+						break;
+					}
+				}
+			}
+		}
+
+
+		const validateEmail = async() => {
+			const data = new FormData(signUpForm);
+			const emailVar = data.get("email");
+			
+			if(emailVar == ""){
+				return "No";
+			}else{
+				let response = await fetch("http://localhost:8080/getAllUserEmails");
+				let emails = await response.json();
+				
+				
+				for (let i = 0; i < emails.length; i++) {
+					if(emailVar == emails[i].email){
+						return "Have";
+						break;
+					}
+				}
+			}
+		}
+		
+
+		function checkPasswordStrength(){
+			const data = new FormData(signUpForm);
+			const pwdVar = data.get("password");
+
+			// Password must have at least one lowercase letter (?=.*[a-z]), 
+			// one uppercase letter (?=.*[A-Z]), 
+			// one digit (?=.*[0-9]), 
+			// one special character (?=.*[^A-Za-z0-9]), 
+			// and is at least eight characters long(?=.{8,}).
+			let pwdCriteria = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
+			if(pwdCriteria.test(pwdVar)) {
+				return true;
+			}else{
+				return false;
+			}
+		}
+
+		
+		const registerNewUser = async() => {
+			const data = new FormData(signUpForm);
+
+			const usernameVar = data.get("username");
+			const emailVar = data.get("email");
+			const pwdVar = data.get("password");
+
+			let response = await fetch("http://localhost:8080/noOfUsers");
+			let noOfUsers = await response.json();
+
+			var object = {};
+			object["id"] = noOfUsers + 1;
+			object["username"] = usernameVar;
+			object["email"] = emailVar;
+			object["password"] = pwdVar;
+			object["accountType"] = "Buyer";
+			object["contactNo"] = "NA";
+			object["deliveryAddress"] = "NA";
+			object["storeName"] = "NA";
+			object["storeAddress"] = "NA";
+			object["paymentAccountName"] = "NA";
+			object["paymentAccountNo"] = "NA";
+			object["paymentAccountBankName"] = "NA";
+			object["paymentAccountBankBranchName"] = "NA";
+
+			
+			var jsonText = JSON.stringify(object);
+			
+			await fetch("http://localhost:8080/registerUserAsBuyer", {
+				method: "POST",
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: jsonText
+			})
+			.then(response => response.text())
+			.then(alert("Registration Successful"))
+			.catch(error => console.log('Authorization failed: ' + error.message));	
+
+		}
+
+		
+		// JS code related to Sign In
 		const signInForm = document.getElementById("sign_in");
 		
 		signInForm.addEventListener("submit", function(e){
 			e.preventDefault();
-
-			if(validation() == true){
-				const data = new FormData(signInForm);
-
-				const usernameVar = data.get("username");
-				const emailVar = data.get("email");
-				const pwdVar = data.get("password");
-
-				var object = {};
-				object["id"] = 7;
-				data.forEach(function(value, key){
-					object[key] = value;
-				});
-				object["accountType"] = "Buyer";
-				object["contactNo"] = "NA";
-				object["deliveryAddress"] = "NA";
-				object["storeName"] = "NA";
-				object["storeAddress"] = "NA";
-				object["paymentAccountName"] = "NA";
-				object["paymentAccountNo"] = "NA";
-				object["paymentAccountBankName"] = "NA";
-				object["paymentAccountBankBranchName"] = "NA";
-
-				var jsonText = JSON.stringify(object);
-				
-				fetch("http://localhost:8080/registerUserAsBuyer", {
-					method: "POST",
-					headers: {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json'
-					},
-					body: jsonText
-				})
-				.then(response => response.text())
-				.then(alert("Registration Successful"))
-				.catch(error => console.log('Authorization failed: ' + error.message));
-			}
-
 			
+			signInUser();
 		})
 
-		function validation(){
-			let response = fetch("http://localhost:8080/usersList");
-			// console.log(response);
-			return true;
+		const signInUser = async() => {
+			const data = new FormData(signInForm);
+			const emailVar = data.get("email");
+			const pwdVar = data.get("password");
+
+			let response1 = await fetch("http://localhost:8080/getAllUserEmails");
+			let emails = await response1.json();
+
+			let response2 = await fetch("http://localhost:8080/getAllUserPasswords");
+			let passwords = await response2.json();
+
+			for (let i = 0; i < emails.length; i++) {
+				if(emailVar == emails[i].email){
+					// console.log(emails[i].email);
+					if(pwdVar == passwords[i].password){
+						alert("Login Success!");
+						break;
+					}else{
+						alert("Invalid username or password!");
+						break;
+					}
+				}
+			}
 		}
+
+
 	</script>
 
 	<script src="../js/script.js"></script>
