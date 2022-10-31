@@ -189,7 +189,7 @@
 				body: jsonText
 			})
 			.then(response => response.text())
-			.then(alert("Registration Successful"))
+			.then(alert("Registration Successful! Please Sign In to your account to continue!"))
 			.catch(error => console.log('Authorization failed: ' + error.message));	
 
 		}
@@ -200,7 +200,6 @@
 		
 		signInForm.addEventListener("submit", function(e){
 			e.preventDefault();
-			
 			signInUser();
 		})
 
@@ -215,18 +214,31 @@
 			let response2 = await fetch("http://localhost:8080/getAllUserPasswords");
 			let passwords = await response2.json();
 
+			var emailValid = false;
+			var index = 0;
+
 			for (let i = 0; i < emails.length; i++) {
+				
 				if(emailVar == emails[i].email){
-					// console.log(emails[i].email);
-					if(pwdVar == passwords[i].password){
-						alert("Login Success!");
-						break;
-					}else{
-						alert("Invalid username or password!");
-						break;
-					}
+					emailValid = true;
+					index = i;
+					break;	
 				}
 			}
+			
+
+			if(emailValid == true){
+				if(pwdVar == passwords[index].password){
+					alert("Login Success!");
+					open("../../../buyer-dashboard.html", "_parent")
+				}else{
+					alert("Invalid username or password!");
+				}
+			}else{
+				alert("Invalid username or password!");
+			}
+
+
 		}
 
 
