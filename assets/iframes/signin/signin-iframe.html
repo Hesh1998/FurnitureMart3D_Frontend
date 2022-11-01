@@ -229,7 +229,7 @@
 
 			if(emailValid == true){
 				if(pwdVar == passwords[index].password){
-					alert("Login Success!");
+					localStorage.setItem("email", emailVar);
 					open("../../../buyer-dashboard.html", "_parent")
 				}else{
 					alert("Invalid username or password!");
