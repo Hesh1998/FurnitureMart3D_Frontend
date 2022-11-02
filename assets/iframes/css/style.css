@@ -360,18 +360,18 @@ h6 {
   width: 100%;
 }
 
-.login-form form span{
+.login-form form span, .signup-form form span{
   line-height: 25px;
 }
 
-.login-form form span input {
+.login-form form span input, .signup-form form span input {
   width: 15px;
   float: left;
   height: 15px;
   margin-right: 5px;
 }
 
-.login-form form button {
+.login-form form button, .signup-form form button{
   margin-top: 23px;
 }
 
@@ -385,9 +385,6 @@ h6 {
   padding: 6px 25px;
 }
 
-.login-form label{
-
-}
 
 
 .login-form label input {
