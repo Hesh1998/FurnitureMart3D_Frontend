@@ -1,0 +1,32 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  color: #444444;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Raleway", sans-serif;
+}
+
+.profile-button {
+  background: #4CA48C;
+  box-shadow: none;
+  border: medium none;
+  border-radius: 0;
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+}
+
+.profile-button:hover {
+  background: #F5F5ED;
+  color: #696763;
+}
+
+.labels {
+  font-size: 11px
+}
