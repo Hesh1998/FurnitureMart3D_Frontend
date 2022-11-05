@@ -27,6 +27,15 @@ h6 {
   color: #696763;
 }
 
+.profile-button:focus {
+  background: #4CA48C;
+  box-shadow: none;
+  border: medium none;
+  border-radius: 0;
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+}
+
 .labels {
   font-size: 11px
 }

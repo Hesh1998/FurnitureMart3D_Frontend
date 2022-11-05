@@ -36,7 +36,7 @@
           <li><a href="index.html">Wishlist</a></li>
           <li><a href="index.html">Purchase History</a></li>
           <li><a href="explore.html#footer">Switch to Selling</a></li>
-          <li><a href="sign-in.html" class="getstarted">Hi, Hesh123</a></li>
+          <li><a href="sign-in.html" class="getstarted" id="usernameBtn"></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -106,6 +106,20 @@
   </footer>
   <!-- End Footer -->
 
+
+  <script>
+    var id = localStorage.getItem("id");
+
+    const setPageDetails = async() => {
+        let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+        let userDetails = await response1.json();
+
+        document.getElementById("usernameBtn").innerHTML = `Hi, ${userDetails.username}`;
+    }
+
+    setPageDetails();
+    
+  </script>
 
   <!-- JS Files -->
   <script src="assets/framework/bootstrap/js/bootstrap.bundle.min.js"></script>

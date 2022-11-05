@@ -11,10 +11,23 @@
     </head>
 
     <body>
-        <div class="container rounded bg-white mt-5 mb-5" style="padding-top: 100px;">
+        <div class="container rounded bg-white mt-5 mb-5" style="padding-top: 80px;">
             <div class="row">
                 <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Hesh123</span><span class="text-black-50">heshannana@gmail.com</span><span> </span></div>
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img id="userdp" class="rounded-circle mt-5" width="140px" src="">
+
+                        <div class="col-md-12" style="padding-top: 20px; padding-bottom: 20px;">
+                            <input type="file" id="dp" class="form-control">
+                        </div>
+
+                        <span class="font-weight-bold" id="userSpan"></span>
+                        <span class="text-black-50" id="emailSpan"></span><span> </span>
+
+                        <div class="mt-5 text-center">
+                            <button class="btn btn-primary profile-button" type="button" onclick="saveDP()">Save Profile Picture</button> 
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-md-5 border-right">
@@ -22,33 +35,33 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label class="labels">Username</label>
-                                <input id = "username" type="text" class="form-control" placeholder="" value="">
+                                <input id = "username" type="text" class="form-control" placeholder="" value="" readonly="readonly">
                             </div>
 
                             <div class="col-md-12" style="padding-top: 15px;">
                                 <label class="labels">Email Address</label>
-                                <input type="text" class="form-control" placeholder="" value="heshannana@gmail.com">
+                                <input id = "email" type="text" class="form-control" placeholder="" value="" readonly="readonly">
                             </div>
 
                             <div class="col-md-12" style="padding-top: 15px;">
                                 <label class="labels">Accouty Type</label>
-                                <input type="text" class="form-control" placeholder="" value="Buyer Account">
+                                <input id="account" type="text" class="form-control" placeholder="" value="" readonly="readonly">
                             </div>
 
                             <div class="col-md-12" style="padding-top: 15px;">
                                 <label class="labels">Phone Number</label>
-                                <input type="text" class="form-control" placeholder="Enter phone number" value="">
+                                <input id="phone" type="text" class="form-control" placeholder="" value="">
                             </div>
 
                             <div class="col-md-12" style="padding-top: 15px;">
                                 <label class="labels">Delivery Address</label>
-                                <input type="text" class="form-control" placeholder="Enter delivery address" value="">
+                                <input id="address" type="text" class="form-control" placeholder="" value="">
                             </div>
 
                         </div>
                         
                         <div class="mt-5 text-right">
-                            <button class="btn btn-primary profile-button" type="button">Save Edited Details</button>
+                            <button class="btn btn-primary profile-button" type="button" onclick="saveBtn()">Save Edited Details</button>
                             <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;">Delete Account</button>
                         </div>
 
@@ -59,12 +72,21 @@
                     <div class="p-3 py-5">
                         <div class="d-flex justify-content-between align-items-center experience">Change Password</div><br>
                         
-                        <div class="col-md-12"><label class="labels" style="padding-top: 15px;">Old Password</label><input type="text" class="form-control" placeholder="Enter old password" value=""></div>
-                        <div class="col-md-12"><label class="labels" style="padding-top: 15px;">New Password</label><input type="text" class="form-control" placeholder="Enter new password" value=""></div>
-                        <div class="col-md-12"><label class="labels" style="padding-top: 15px;">Confirm New Password</label><input type="text" class="form-control" placeholder="Confirm new password" value=""></div>
+                        <div class="col-md-12">
+                            <label class="labels" style="padding-top: 15px;">Current Password</label>
+                            <input id="currentPass" type="text" class="form-control" placeholder="Enter current password" value="">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels" style="padding-top: 15px;">New Password</label>
+                            <input id="newPass" type="text" class="form-control" placeholder="Enter new password" value="">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels" style="padding-top: 15px;">Confirm New Password</label>
+                            <input id="confirmNewPass" type="text" class="form-control" placeholder="Confirm new password" value="">
+                        </div>
 
                         <div class="mt-5 text-right">
-                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;">Set New Password</button>
+                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="resetPass()">Reset Password</button>
                         </div>
                     </div>
                 </div>
@@ -77,28 +99,227 @@
         <script>
             var id = localStorage.getItem("id");
 
+
+            // Setting page details
             const setPageDetails = async() => {
                 let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
 			    let userDetails = await response1.json();
 
                 document.getElementById("username").value = userDetails.username;
-                console.log(userDetails.id);
-                console.log(userDetails.username);
-                console.log(userDetails.email);
-                console.log(userDetails.password);
-                console.log(userDetails.accountType);
-                console.log(userDetails.contactNo);
-                console.log(userDetails.deliveryAddress);
-                console.log(userDetails.storeName);
-                console.log(userDetails.storeAddress);
-                console.log(userDetails.paymentAccountName);
-                console.log(userDetails.paymentAccountNo);
-                console.log(userDetails.paymentAccountBankName);
-                console.log(userDetails.paymentAccountBankBranchName);
+                document.getElementById("userSpan").innerHTML = userDetails.username;
+                document.getElementById("emailSpan").innerHTML = userDetails.email;
+                document.getElementById("email").value = userDetails.email;
+                document.getElementById("account").value = userDetails.accountType;
+                document.getElementById("userdp").src = userDetails.dp;
+
+                if(userDetails.contactNo == "NA"){
+                    document.getElementById("phone").placeholder = "Enter phone number";
+                }else{
+                    document.getElementById("phone").value = userDetails.contactNo;
+                }
+
+                if(userDetails.deliveryAddress == "NA"){
+                    document.getElementById("address").placeholder = "Enter delivery address";
+                }else{
+                    document.getElementById("address").value = userDetails.deliveryAddress;
+                }
             }
 
             setPageDetails();
+
+
+            // Update User details
+            const saveBtn = async() => {
+                var contactNo = document.getElementById("phone").value;
+                
+                if(isNaN(contactNo) || contactNo.length != 10){
+                    alert("Invalid contact number! New profile details not saved.");
+                }else{
+                    updateProfile();
+                }
+            }
+
+            const updateProfile = async() => {
+                var contactNo = document.getElementById("phone").value;
+                var address = document.getElementById("address").value;
+
+                let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+			    let userDetails = await response1.json();
+
+                var object = {};
+                object["id"] = userDetails.id;
+                object["username"] = userDetails.username;
+                object["email"] = userDetails.email;
+                object["dp"] = userDetails.dp;
+                object["password"] = userDetails.password;
+                object["accountType"] = userDetails.accountType;
+
+                if(contactNo == ""){
+                    object["contactNo"] = userDetails.contactNo;
+                }else{
+                    object["contactNo"] = contactNo;
+                }
+
+                if(address == ""){
+                    object["deliveryAddress"] = userDetails.deliveryAddress;
+                }else{
+                    object["deliveryAddress"] = address;
+                }
+
+                object["storeName"] = userDetails.storeName;
+                object["storeAddress"] = userDetails.storeAddress;
+                object["paymentAccountName"] = userDetails.paymentAccountName;
+                object["paymentAccountNo"] = userDetails.paymentAccountNo;
+                object["paymentAccountBankName"] = userDetails.paymentAccountBankName;
+                object["paymentAccountBankBranchName"] = userDetails.paymentAccountBankBranchName;
+                
+                var jsonText = JSON.stringify(object);
+                
+                await fetch("http://localhost:8080/registerUserAsBuyer", {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonText
+                })
+                .then(response => response.text())
+                .then(alert("Profile updated!"))
+                .catch(error => console.log('Authorization failed: ' + error.message));	
+
+                let response2 = await fetch(`http://localhost:8080/findbyId/${id}`);
+			    let userDetails2 = await response2.json();
+                document.getElementById("phone").value = userDetails2.contactNo;
+                document.getElementById("address").value = userDetails2.deliveryAddress;
+            }
+
+
+            // Reset password
+            const resetPass = async() => {
+                var currentPassword = document.getElementById("currentPass").value;
+                var newPassword = document.getElementById("newPass").value;
+                var confirmNewPassword = document.getElementById("confirmNewPass").value;
+
+                let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+			    let userDetails = await response1.json();
+
+                if(currentPassword != userDetails.password){
+                    alert("Current password incorrect! Try again.");
+                }else if(checkPasswordStrength() == false){
+                    alert("New password must have at least one lowercase letter, one uppercase letter, one digit, one special character, and is at least eight characters long.");
+                }else if(newPassword != confirmNewPassword){
+                    alert("New password doesn't match with Confirm new password!");
+                }else{
+                    var object = {};
+                    object["id"] = userDetails.id;
+                    object["username"] = userDetails.username;
+                    object["email"] = userDetails.email;
+                    object["dp"] = userDetails.dp;
+                    object["password"] = newPassword;
+                    object["accountType"] = userDetails.accountType;
+                    object["contactNo"] = userDetails.contactNo;
+                    object["deliveryAddress"] = userDetails.deliveryAddress;
+                    object["storeName"] = userDetails.storeName;
+                    object["storeAddress"] = userDetails.storeAddress;
+                    object["paymentAccountName"] = userDetails.paymentAccountName;
+                    object["paymentAccountNo"] = userDetails.paymentAccountNo;
+                    object["paymentAccountBankName"] = userDetails.paymentAccountBankName;
+                    object["paymentAccountBankBranchName"] = userDetails.paymentAccountBankBranchName;
+                    
+                    var jsonText = JSON.stringify(object);
+                    
+                    await fetch("http://localhost:8080/registerUserAsBuyer", {
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: jsonText
+                    })
+                    .then(response => response.text())
+                    .then(alert("Password changed!"))
+                    .catch(error => console.log('Authorization failed: ' + error.message));
+
+                    document.getElementById("currentPass").value = "";
+                    document.getElementById("newPass").value = "";
+                    document.getElementById("confirmNewPass").value = "";
+                }
+            }
+
+            function checkPasswordStrength(){
+                const pwdVar = document.getElementById("newPass").value;
+
+                // Password must have at least one lowercase letter (?=.*[a-z]), 
+                // one uppercase letter (?=.*[A-Z]), 
+                // one digit (?=.*[0-9]), 
+                // one special character (?=.*[^A-Za-z0-9]), 
+                // and is at least eight characters long(?=.{8,}).
+                let pwdCriteria = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
+                if(pwdCriteria.test(pwdVar)) {
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+
+
+            // Upload profile picture
+            const dpInput = document.getElementById("dp");
             
-          </script>
+            dpInput.addEventListener("change", e=> {
+                const file = dpInput.files[0];
+                const reader = new FileReader();
+
+                reader.addEventListener("load", () => {
+                    document.getElementById("userdp").src = reader.result;
+                });
+
+                reader.readAsDataURL(file);
+            });
+
+            const saveDP = async() => {
+                if(dpInput.files[0]){
+                    let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+                    let userDetails = await response1.json();
+
+                    var object = {};
+                    object["id"] = userDetails.id;
+                    object["username"] = userDetails.username;
+                    object["email"] = userDetails.email;
+                    object["dp"] = document.getElementById("userdp").src;
+                    object["password"] = userDetails.password;
+                    object["accountType"] = userDetails.accountType;
+                    object["contactNo"] = userDetails.contactNo;
+                    object["deliveryAddress"] = userDetails.deliveryAddress;
+                    object["storeName"] = userDetails.storeName;
+                    object["storeAddress"] = userDetails.storeAddress;
+                    object["paymentAccountName"] = userDetails.paymentAccountName;
+                    object["paymentAccountNo"] = userDetails.paymentAccountNo;
+                    object["paymentAccountBankName"] = userDetails.paymentAccountBankName;
+                    object["paymentAccountBankBranchName"] = userDetails.paymentAccountBankBranchName;
+                    
+                    var jsonText = JSON.stringify(object);
+                    
+                    await fetch("http://localhost:8080/registerUserAsBuyer", {
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: jsonText
+                    })
+                    .then(response => response.text())
+                    .then(alert("New profile picture uploaded!"))
+                    .catch(error => console.log('Authorization failed: ' + error.message));
+
+                    let response2 = await fetch(`http://localhost:8080/findbyId/${id}`);
+                    let userDetails2 = await response2.json();
+                    document.getElementById("userdp").src = userDetails2.dp;
+                }else{
+                    alert("Please upload a profile picture!")
+                }
+            }
+            
+        </script>
     </body>
 </html>
