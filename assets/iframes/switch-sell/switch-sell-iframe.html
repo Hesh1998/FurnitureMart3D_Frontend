@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link href="../buyer-dashboard/bootstrap.min.css" rel="stylesheet">
+        <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <div class="container rounded bg-white mt-5 mb-5" style="padding-top: 80px;">
+            <div class="row">
+                <div class="col-md-15">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img id="userdp" class="mt-5" width="140px" height="140px" src="shop.png">
+
+                        <div class="col-md-15" style="padding-top: 20px; padding-top: 40px;">
+                            <input id = "storename" type="text" class="form-control" placeholder="Enter store name" value="" style="width: 300px;">
+                        </div>
+
+                        <div class="mt-5 text-center">
+                            <button class="btn btn-primary profile-button" type="button" onclick="createStore()">Create Store</button> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var id = localStorage.getItem("id");
+            
+            const createStore = async() => {
+                let storenameValid = validateStoreName();
+                storenameValid.then(value => {
+                    if(value == "No"){
+                        alert("Please enter a store name!");
+                    }else if(value == "Have"){
+                        alert("Store name already exists!");
+                    }else{
+                        registerStore();
+                        open("../../../seller-dashboard.html", "_parent");
+                    }
+                }).catch(err => {
+                    console.log(err);
+                });
+            }
+
+            const validateStoreName = async() => {
+                const storenameVar = document.getElementById("storename").value;
+                
+                if(storenameVar == ""){
+                    return "No";
+                }else{
+                    let response = await fetch("http://localhost:8080/getAllStoreNames");
+			        let storeNames = await response.json();
+                    
+                    for (let i = 0; i < storeNames.length; i++) {
+                        if(storenameVar == storeNames[i].storeName){
+                            return "Have";
+                            break;
+                        }
+                    }
+                }
+            }
+
+            const registerStore = async() => {
+                let response = await fetch(`http://localhost:8080/findbyId/${id}`);
+			    let userDetails = await response.json();
+
+                var object = {};
+                object["id"] = userDetails.id;
+                object["username"] = userDetails.username;
+                object["email"] = userDetails.email;
+                object["dp"] = userDetails.dp;
+                object["password"] = userDetails.password;
+                object["accountType"] = "Buyer / Seller";
+                object["contactNo"] = userDetails.contactNo;
+                object["deliveryAddress"] = userDetails.deliveryAddress;
+                object["storeName"] = document.getElementById("storename").value;
+                object["storeAddress"] = userDetails.deliveryAddress;
+                object["paymentAccountName"] = userDetails.paymentAccountName;
+                object["paymentAccountNo"] = userDetails.paymentAccountNo;
+                object["paymentAccountBankName"] = userDetails.paymentAccountBankName;
+                object["paymentAccountBankBranchName"] = userDetails.paymentAccountBankBranchName;
+                
+                var jsonText = JSON.stringify(object);
+                
+                await fetch("http://localhost:8080/registerUserAsBuyer", {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonText
+                })
+                .then(response => response.text())
+                .then(alert("Extended to seller account successfully!"))
+                .catch(error => console.log('Authorization failed: ' + error.message));
+            }
+
+        </script>
+    </body>
+</html>

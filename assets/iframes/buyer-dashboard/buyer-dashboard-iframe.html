@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-md-3 border-right">
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <img id="userdp" class="rounded-circle mt-5" width="140px" src="">
+                        <img id="userdp" class="rounded-circle mt-5" width="140px" height="140px" src="">
 
                         <div class="col-md-12" style="padding-top: 20px; padding-bottom: 20px;">
                             <input type="file" id="dp" class="form-control">
@@ -62,7 +62,7 @@
                         
                         <div class="mt-5 text-right">
                             <button class="btn btn-primary profile-button" type="button" onclick="saveBtn()">Save Edited Details</button>
-                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;">Delete Account</button>
+                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="deleteUser()">Delete Account</button>
                         </div>
 
                     </div>
@@ -74,15 +74,15 @@
                         
                         <div class="col-md-12">
                             <label class="labels" style="padding-top: 15px;">Current Password</label>
-                            <input id="currentPass" type="text" class="form-control" placeholder="Enter current password" value="">
+                            <input id="currentPass" type="password" class="form-control" placeholder="Enter current password" value="">
                         </div>
                         <div class="col-md-12">
                             <label class="labels" style="padding-top: 15px;">New Password</label>
-                            <input id="newPass" type="text" class="form-control" placeholder="Enter new password" value="">
+                            <input id="newPass" type="password" class="form-control" placeholder="Enter new password" value="">
                         </div>
                         <div class="col-md-12">
                             <label class="labels" style="padding-top: 15px;">Confirm New Password</label>
-                            <input id="confirmNewPass" type="text" class="form-control" placeholder="Confirm new password" value="">
+                            <input id="confirmNewPass" type="password" class="form-control" placeholder="Confirm new password" value="">
                         </div>
 
                         <div class="mt-5 text-right">
@@ -189,8 +189,14 @@
 
                 let response2 = await fetch(`http://localhost:8080/findbyId/${id}`);
 			    let userDetails2 = await response2.json();
-                document.getElementById("phone").value = userDetails2.contactNo;
-                document.getElementById("address").value = userDetails2.deliveryAddress;
+            
+                if(contactNo != ""){
+                    document.getElementById("phone").value = userDetails2.contactNo;
+                }
+
+                if(address != ""){
+                    document.getElementById("address").value = userDetails2.deliveryAddress;
+                }
             }
 
 
@@ -320,6 +326,22 @@
                 }
             }
             
+
+            // Delete User account
+            const deleteUser = async() => {
+                await fetch(`http://localhost:8080/deleteUser/${id}`, {
+                    method: "DELETE",
+                })
+                .then(response => response.text())
+                .then(closeUser())
+                .catch(error => console.log('Authorization failed: ' + error.message));
+            }
+
+            const closeUser = async() => {
+                alert("User account deleted!");
+                localStorage.clear();
+				open("../../../sign-in.html", "_parent");
+            }
         </script>
     </body>
 </html>

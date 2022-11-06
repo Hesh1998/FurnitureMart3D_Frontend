@@ -31,12 +31,12 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="index.html#hero">Home</a></li> 
-          <li><a href="explore.html">Products</a></li>
-          <li><a href="index.html#portfolio">Trending Products</a></li>
-          <li><a href="index.html">Wishlist</a></li>
-          <li><a href="index.html">Cart</a></li>
-          <li><a href="explore.html#footer">About Us</a></li>
-          <li><a href="sign-in.html" class="getstarted">Sign In</a></li>
+          <li><a href="buyer-dashboard.html">Personal Info</a></li>
+          <li><a href="">Cart</a></li>
+          <li><a href="">Wishlist</a></li>
+          <li><a href="">Purchase History</a></li>
+          <li><a href="javascript:openSeller()">Switch to Selling</a></li>
+          <li><a href="sign-in.html" class="getstarted" id="usernameBtn"></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -45,9 +45,7 @@
   </header>
   <!-- End Header -->
 
-  
-  <iframe src="assets/iframes/signin/signin-iframe.html" width="100%" height="700px" style="border:none;"></iframe>
-    
+  <iframe src="assets/iframes/switch-sell/switch-sell-iframe.html" width="100%" height="900px" style="border:none;"></iframe>
   
   <!-- Footer -->
   <footer id="footer">
@@ -108,9 +106,35 @@
   </footer>
   <!-- End Footer -->
 
+
   <script>
-    localStorage.clear();
+    var id = localStorage.getItem("id");
+
+    const setPageDetails = async() => {
+        let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+        let userDetails = await response1.json();
+
+        document.getElementById("usernameBtn").innerHTML = `Hi, ${userDetails.username}`;
+    }
+
+    setPageDetails();
+    
+    const openSeller = async() => {
+        let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+        let userDetails = await response1.json();
+
+        if(userDetails.contactNo == "NA" || userDetails.deliveryAddress == "NA"){
+          alert("Please set contact no and delivery address to be eligible to extend to seller account!")
+        }else{
+          if(userDetails.storeName == "NA"){
+            open("switch-sell.html", "_parent");
+          }else{
+            open("seller-dashboard.html", "_parent");
+          }
+        }
+    }
   </script>
+
   <!-- JS Files -->
   <script src="assets/framework/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/framework/isotope-layout/isotope.pkgd.min.js"></script>

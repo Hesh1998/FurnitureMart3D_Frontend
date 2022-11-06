@@ -31,11 +31,11 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="index.html#hero">Home</a></li> 
-          <li><a href="explore.html">Personal Info</a></li>
-          <li><a href="index.html#portfolio">Cart</a></li>
-          <li><a href="index.html">Wishlist</a></li>
-          <li><a href="index.html">Purchase History</a></li>
-          <li><a href="explore.html#footer">Switch to Selling</a></li>
+          <li><a href="buyer-dashboard.html">Personal Info</a></li>
+          <li><a href="">Cart</a></li>
+          <li><a href="">Wishlist</a></li>
+          <li><a href="">Purchase History</a></li>
+          <li><a href="javascript:openSeller()">Switch to Selling</a></li>
           <li><a href="sign-in.html" class="getstarted" id="usernameBtn"></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -119,6 +119,20 @@
 
     setPageDetails();
     
+    const openSeller = async() => {
+        let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+        let userDetails = await response1.json();
+
+        if(userDetails.contactNo == "NA" || userDetails.deliveryAddress == "NA"){
+          alert("Please set contact no and delivery address to be eligible to extend to seller account!")
+        }else{
+          if(userDetails.storeName == "NA"){
+            open("switch-sell.html", "_parent");
+          }else{
+            open("seller-dashboard.html", "_parent");
+          }
+        }
+    }
   </script>
 
   <!-- JS Files -->
