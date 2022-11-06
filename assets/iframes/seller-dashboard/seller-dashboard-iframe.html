@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link href="../buyer-dashboard/bootstrap.min.css" rel="stylesheet">
+        <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="container rounded bg-white mt-5 mb-5" style="padding-top: 80px;">
+            <div class="row">
+                <div class="col-md-3 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img id="userdp" class="rounded-circle mt-5" width="140px" height="140px" src="">
+
+                        <span class="font-weight-bold" id="userSpan" style="padding-top: 20px;"></span>
+                        <span class="text-black-50" id="emailSpan"></span><span> </span>
+                    </div>
+                </div>
+
+                <div class="col-md-5 border-right">
+                    <div class="p-3 py-5">
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label class="labels">Username</label>
+                                <input id = "username" type="text" class="form-control" placeholder="" value="" readonly="readonly">
+                            </div>
+
+                            <div class="col-md-12" style="padding-top: 15px;">
+                                <label class="labels">Email Address</label>
+                                <input id = "email" type="text" class="form-control" placeholder="" value="" readonly="readonly">
+                            </div>
+
+                            <div class="col-md-12" style="padding-top: 15px;">
+                                <label class="labels">Accouty Type</label>
+                                <input id="account" type="text" class="form-control" placeholder="" value="" readonly="readonly">
+                            </div>
+
+                            <div class="col-md-12" style="padding-top: 15px;">
+                                <label class="labels">Phone Number</label>
+                                <input id="phone" type="text" class="form-control" placeholder="" value="" readonly="readonly">
+                            </div>
+
+                            <div class="col-md-12" style="padding-top: 15px;">
+                                <label class="labels">Store Name</label>
+                                <input id="storeName" type="text" class="form-control" placeholder="" value="" readonly="readonly">
+                            </div>
+
+                            <div class="col-md-12" style="padding-top: 15px;">
+                                <label class="labels">Store Address</label>
+                                <input id="address" type="text" class="form-control" placeholder="Enter store address" value="">
+                            </div>
+
+                        </div>
+                        
+                        <div class="mt-5 text-right">
+                            <button class="btn btn-primary profile-button" type="button" onclick="saveBtn()">Save Edited Details</button>
+                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="deleteUser()">Remove Store</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center experience">Bank Account Details</div><br>
+                        
+                        <div class="col-md-12">
+                            <label class="labels" style="padding-top: 15px;">Account Name</label>
+                            <input id="accountName" type="text" class="form-control" placeholder="" value="">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels" style="padding-top: 15px;">Account Number</label>
+                            <input id="accountNo" type="text" class="form-control" placeholder="" value="">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels" style="padding-top: 15px;">Bank Name</label>
+                            <input id="bankName" type="text" class="form-control" placeholder="" value="">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels" style="padding-top: 15px;">Bank Branch Name</label>
+                            <input id="bankBranch" type="text" class="form-control" placeholder="" value="">
+                        </div>
+
+                        <div class="mt-5 text-right">
+                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="resetPass()">Save Account Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        </div>
+        </div>
+
+        <script>
+            var id = localStorage.getItem("id");
+
+
+            // Setting page details
+            const setPageDetails = async() => {
+                let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+			    let userDetails = await response1.json();
+
+                document.getElementById("username").value = userDetails.username;
+                document.getElementById("userSpan").innerHTML = userDetails.username;
+                document.getElementById("emailSpan").innerHTML = userDetails.email;
+                document.getElementById("email").value = userDetails.email;
+                document.getElementById("account").value = userDetails.accountType;
+                document.getElementById("userdp").src = userDetails.dp;
+                document.getElementById("phone").value = userDetails.contactNo;
+                document.getElementById("storeName").value = userDetails.storeName;
+                document.getElementById("address").value = userDetails.storeAddress;
+
+                if(userDetails.paymentAccountName == "NA"){
+                    document.getElementById("accountName").placeholder = "Enter account name";
+                }else{
+                    document.getElementById("accountName").value = userDetails.paymentAccountName;
+                }
+
+                if(userDetails.paymentAccountNo == "NA"){
+                    document.getElementById("accountNo").placeholder = "Enter account number";
+                }else{
+                    document.getElementById("accountNo").value = userDetails.paymentAccountNo;
+                }
+
+                if(userDetails.paymentAccountBankName == "NA"){
+                    document.getElementById("bankName").placeholder = "Enter bank name";
+                }else{
+                    document.getElementById("bankName").value = userDetails.paymentAccountBankName;
+                }
+
+                if(userDetails.paymentAccountBankBranchName == "NA"){
+                    document.getElementById("bankBranch").placeholder = "Enter bank branch name";
+                }else{
+                    document.getElementById("bankBranch").value = userDetails.paymentAccountBankBranchName;
+                }
+            }
+
+            setPageDetails();
+
+
+            // Update seller details
+            const saveBtn = async() => {
+                var storeAddress = document.getElementById("address").value;
+                
+                if(storeAddress == ""){
+                    alert("Please enter store address details.");
+                }else{
+                    // updateProfile();
+                }
+            }
+
+            const updateProfile = async() => {
+                var contactNo = document.getElementById("phone").value;
+                var address = document.getElementById("address").value;
+
+                let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+			    let userDetails = await response1.json();
+
+                var object = {};
+                object["id"] = userDetails.id;
+                object["username"] = userDetails.username;
+                object["email"] = userDetails.email;
+                object["dp"] = userDetails.dp;
+                object["password"] = userDetails.password;
+                object["accountType"] = userDetails.accountType;
+
+                if(contactNo == ""){
+                    object["contactNo"] = userDetails.contactNo;
+                }else{
+                    object["contactNo"] = contactNo;
+                }
+
+                if(address == ""){
+                    object["deliveryAddress"] = userDetails.deliveryAddress;
+                }else{
+                    object["deliveryAddress"] = address;
+                }
+
+                object["storeName"] = userDetails.storeName;
+                object["storeAddress"] = userDetails.storeAddress;
+                object["paymentAccountName"] = userDetails.paymentAccountName;
+                object["paymentAccountNo"] = userDetails.paymentAccountNo;
+                object["paymentAccountBankName"] = userDetails.paymentAccountBankName;
+                object["paymentAccountBankBranchName"] = userDetails.paymentAccountBankBranchName;
+                
+                var jsonText = JSON.stringify(object);
+                
+                await fetch("http://localhost:8080/registerUserAsBuyer", {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonText
+                })
+                .then(response => response.text())
+                .then(alert("Profile updated!"))
+                .catch(error => console.log('Authorization failed: ' + error.message));	
+
+                let response2 = await fetch(`http://localhost:8080/findbyId/${id}`);
+			    let userDetails2 = await response2.json();
+            
+                if(contactNo != ""){
+                    document.getElementById("phone").value = userDetails2.contactNo;
+                }
+
+                if(address != ""){
+                    document.getElementById("address").value = userDetails2.deliveryAddress;
+                }
+            }
+
+
+            // Reset password
+            const resetPass = async() => {
+                var currentPassword = document.getElementById("currentPass").value;
+                var newPassword = document.getElementById("newPass").value;
+                var confirmNewPassword = document.getElementById("confirmNewPass").value;
+
+                let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+			    let userDetails = await response1.json();
+
+                if(currentPassword != userDetails.password){
+                    alert("Current password incorrect! Try again.");
+                }else if(checkPasswordStrength() == false){
+                    alert("New password must have at least one lowercase letter, one uppercase letter, one digit, one special character, and is at least eight characters long.");
+                }else if(newPassword != confirmNewPassword){
+                    alert("New password doesn't match with Confirm new password!");
+                }else{
+                    var object = {};
+                    object["id"] = userDetails.id;
+                    object["username"] = userDetails.username;
+                    object["email"] = userDetails.email;
+                    object["dp"] = userDetails.dp;
+                    object["password"] = newPassword;
+                    object["accountType"] = userDetails.accountType;
+                    object["contactNo"] = userDetails.contactNo;
+                    object["deliveryAddress"] = userDetails.deliveryAddress;
+                    object["storeName"] = userDetails.storeName;
+                    object["storeAddress"] = userDetails.storeAddress;
+                    object["paymentAccountName"] = userDetails.paymentAccountName;
+                    object["paymentAccountNo"] = userDetails.paymentAccountNo;
+                    object["paymentAccountBankName"] = userDetails.paymentAccountBankName;
+                    object["paymentAccountBankBranchName"] = userDetails.paymentAccountBankBranchName;
+                    
+                    var jsonText = JSON.stringify(object);
+                    
+                    await fetch("http://localhost:8080/registerUserAsBuyer", {
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: jsonText
+                    })
+                    .then(response => response.text())
+                    .then(alert("Password changed!"))
+                    .catch(error => console.log('Authorization failed: ' + error.message));
+
+                    document.getElementById("currentPass").value = "";
+                    document.getElementById("newPass").value = "";
+                    document.getElementById("confirmNewPass").value = "";
+                }
+            }
+
+            function checkPasswordStrength(){
+                const pwdVar = document.getElementById("newPass").value;
+
+                // Password must have at least one lowercase letter (?=.*[a-z]), 
+                // one uppercase letter (?=.*[A-Z]), 
+                // one digit (?=.*[0-9]), 
+                // one special character (?=.*[^A-Za-z0-9]), 
+                // and is at least eight characters long(?=.{8,}).
+                let pwdCriteria = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
+                if(pwdCriteria.test(pwdVar)) {
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+
+
+            // Delete User account
+            const deleteUser = async() => {
+                await fetch(`http://localhost:8080/deleteUser/${id}`, {
+                    method: "DELETE",
+                })
+                .then(response => response.text())
+                .then(closeUser())
+                .catch(error => console.log('Authorization failed: ' + error.message));
+            }
+
+            const closeUser = async() => {
+                alert("User account deleted!");
+                localStorage.clear();
+				open("../../../sign-in.html", "_parent");
+            }
+        </script>
+    </body>
+</html>
