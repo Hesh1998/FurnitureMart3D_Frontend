@@ -329,12 +329,16 @@
 
             // Delete User account
             const deleteUser = async() => {
-                await fetch(`http://localhost:8080/deleteUser/${id}`, {
-                    method: "DELETE",
-                })
-                .then(response => response.text())
-                .then(closeUser())
-                .catch(error => console.log('Authorization failed: ' + error.message));
+                const res = confirm("Are you sure you want to remove your account?")
+
+                if(res){
+                    await fetch(`http://localhost:8080/deleteUser/${id}`, {
+                        method: "DELETE",
+                    })
+                    .then(response => response.text())
+                    .then(closeUser())
+                    .catch(error => console.log('Authorization failed: ' + error.message));
+                }
             }
 
             const closeUser = async() => {

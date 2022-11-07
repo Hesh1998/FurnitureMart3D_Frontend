@@ -59,7 +59,7 @@
                         
                         <div class="mt-5 text-right">
                             <button class="btn btn-primary profile-button" type="button" onclick="saveBtn()">Save Edited Details</button>
-                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="deleteUser()">Remove Store</button>
+                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="deleteStore()">Remove Store</button>
                         </div>
 
                     </div>
@@ -87,7 +87,7 @@
                         </div>
 
                         <div class="mt-5 text-right">
-                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="resetPass()">Save Account Details</button>
+                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="accountBtn()">Save Account Details</button>
                         </div>
                     </div>
                 </div>
@@ -151,13 +151,12 @@
                 if(storeAddress == ""){
                     alert("Please enter store address details.");
                 }else{
-                    // updateProfile();
+                    updateProfile();
                 }
             }
 
             const updateProfile = async() => {
-                var contactNo = document.getElementById("phone").value;
-                var address = document.getElementById("address").value;
+                var storeAddress = document.getElementById("address").value;
 
                 let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
 			    let userDetails = await response1.json();
@@ -169,21 +168,10 @@
                 object["dp"] = userDetails.dp;
                 object["password"] = userDetails.password;
                 object["accountType"] = userDetails.accountType;
-
-                if(contactNo == ""){
-                    object["contactNo"] = userDetails.contactNo;
-                }else{
-                    object["contactNo"] = contactNo;
-                }
-
-                if(address == ""){
-                    object["deliveryAddress"] = userDetails.deliveryAddress;
-                }else{
-                    object["deliveryAddress"] = address;
-                }
-
+                object["contactNo"] = userDetails.contactNo;
+                object["deliveryAddress"] = userDetails.deliveryAddress;
                 object["storeName"] = userDetails.storeName;
-                object["storeAddress"] = userDetails.storeAddress;
+                object["storeAddress"] = storeAddress;
                 object["paymentAccountName"] = userDetails.paymentAccountName;
                 object["paymentAccountNo"] = userDetails.paymentAccountNo;
                 object["paymentAccountBankName"] = userDetails.paymentAccountBankName;
@@ -205,48 +193,113 @@
 
                 let response2 = await fetch(`http://localhost:8080/findbyId/${id}`);
 			    let userDetails2 = await response2.json();
-            
-                if(contactNo != ""){
-                    document.getElementById("phone").value = userDetails2.contactNo;
-                }
-
-                if(address != ""){
-                    document.getElementById("address").value = userDetails2.deliveryAddress;
+                
+                if(storeAddress != ""){
+                    document.getElementById("address").value = userDetails2.storeAddress;
                 }
             }
 
 
-            // Reset password
-            const resetPass = async() => {
-                var currentPassword = document.getElementById("currentPass").value;
-                var newPassword = document.getElementById("newPass").value;
-                var confirmNewPassword = document.getElementById("confirmNewPass").value;
+            // Save account details
+            const accountBtn = async() => {
+                var accountName = document.getElementById("accountName").value;
+                var accountNo = document.getElementById("accountNo").value;
+                var bankName = document.getElementById("bankName").value;
+                var bankBranch = document.getElementById("bankBranch").value;
+                
+                if(isNaN(accountNo)){
+                    alert("Account Number can only contain digits!");
+                }else if(accountName == "" || accountNo == "" || bankName == "" || bankBranch == ""){
+                    alert("Invalid account details!");
+                }else{
+                    updateAccount();
+                }
+            }
+
+            const updateAccount = async() => {
+                var accountName = document.getElementById("accountName").value;
+                var accountNo = document.getElementById("accountNo").value;
+                var bankName = document.getElementById("bankName").value;
+                var bankBranch = document.getElementById("bankBranch").value;
 
                 let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
 			    let userDetails = await response1.json();
 
-                if(currentPassword != userDetails.password){
-                    alert("Current password incorrect! Try again.");
-                }else if(checkPasswordStrength() == false){
-                    alert("New password must have at least one lowercase letter, one uppercase letter, one digit, one special character, and is at least eight characters long.");
-                }else if(newPassword != confirmNewPassword){
-                    alert("New password doesn't match with Confirm new password!");
-                }else{
+                var object = {};
+                object["id"] = userDetails.id;
+                object["username"] = userDetails.username;
+                object["email"] = userDetails.email;
+                object["dp"] = userDetails.dp;
+                object["password"] = userDetails.password;
+                object["accountType"] = userDetails.accountType;
+                object["contactNo"] = userDetails.contactNo;
+                object["deliveryAddress"] = userDetails.deliveryAddress;
+                object["storeName"] = userDetails.storeName;
+                object["storeAddress"] = userDetails.storeAddress;
+                object["paymentAccountName"] = accountName;
+                object["paymentAccountNo"] = accountNo;
+                object["paymentAccountBankName"] = bankName;
+                object["paymentAccountBankBranchName"] = bankBranch;
+                
+                var jsonText = JSON.stringify(object);
+                
+                await fetch("http://localhost:8080/registerUserAsBuyer", {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonText
+                })
+                .then(response => response.text())
+                .then(alert("Account Details updated! Please recheck your account details. Payments for sold products will be deposited to this bank account"))
+                .catch(error => console.log('Authorization failed: ' + error.message));	
+
+                let response2 = await fetch(`http://localhost:8080/findbyId/${id}`);
+			    let userDetails2 = await response2.json();
+                
+                if(accountName != ""){
+                    document.getElementById("accountName").value = userDetails2.paymentAccountName;
+                }
+
+                if(accountNo != ""){
+                    document.getElementById("accountNo").value = userDetails2.paymentAccountNo;
+                }
+
+                if(bankName != ""){
+                    document.getElementById("bankName").value = userDetails2.paymentAccountBankName;
+                }
+
+                if(bankBranch != ""){
+                    document.getElementById("bankBranch").value = userDetails2.paymentAccountBankBranchName;
+                }
+
+            }
+
+
+            // Delete User account
+            const deleteStore = async() => {
+                const res = confirm("Are you sure you want to remove your store?")
+
+                if(res){
+                    let response = await fetch(`http://localhost:8080/findbyId/${id}`);
+                    let userDetails = await response.json();
+
                     var object = {};
                     object["id"] = userDetails.id;
                     object["username"] = userDetails.username;
                     object["email"] = userDetails.email;
                     object["dp"] = userDetails.dp;
-                    object["password"] = newPassword;
-                    object["accountType"] = userDetails.accountType;
+                    object["password"] = userDetails.password;
+                    object["accountType"] = "Buyer";
                     object["contactNo"] = userDetails.contactNo;
                     object["deliveryAddress"] = userDetails.deliveryAddress;
-                    object["storeName"] = userDetails.storeName;
-                    object["storeAddress"] = userDetails.storeAddress;
-                    object["paymentAccountName"] = userDetails.paymentAccountName;
-                    object["paymentAccountNo"] = userDetails.paymentAccountNo;
-                    object["paymentAccountBankName"] = userDetails.paymentAccountBankName;
-                    object["paymentAccountBankBranchName"] = userDetails.paymentAccountBankBranchName;
+                    object["storeName"] = "NA";
+                    object["storeAddress"] = "NA";
+                    object["paymentAccountName"] = "NA";
+                    object["paymentAccountNo"] = "NA";
+                    object["paymentAccountBankName"] = "NA";
+                    object["paymentAccountBankBranchName"] = "NA";
                     
                     var jsonText = JSON.stringify(object);
                     
@@ -259,46 +312,14 @@
                         body: jsonText
                     })
                     .then(response => response.text())
-                    .then(alert("Password changed!"))
-                    .catch(error => console.log('Authorization failed: ' + error.message));
-
-                    document.getElementById("currentPass").value = "";
-                    document.getElementById("newPass").value = "";
-                    document.getElementById("confirmNewPass").value = "";
+                    .then(closeSeller())
+                    .catch(error => console.log('Authorization failed: ' + error.message));	
                 }
             }
 
-            function checkPasswordStrength(){
-                const pwdVar = document.getElementById("newPass").value;
-
-                // Password must have at least one lowercase letter (?=.*[a-z]), 
-                // one uppercase letter (?=.*[A-Z]), 
-                // one digit (?=.*[0-9]), 
-                // one special character (?=.*[^A-Za-z0-9]), 
-                // and is at least eight characters long(?=.{8,}).
-                let pwdCriteria = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
-                if(pwdCriteria.test(pwdVar)) {
-                    return true;
-                }else{
-                    return false;
-                }
-            }
-
-
-            // Delete User account
-            const deleteUser = async() => {
-                await fetch(`http://localhost:8080/deleteUser/${id}`, {
-                    method: "DELETE",
-                })
-                .then(response => response.text())
-                .then(closeUser())
-                .catch(error => console.log('Authorization failed: ' + error.message));
-            }
-
-            const closeUser = async() => {
-                alert("User account deleted!");
-                localStorage.clear();
-				open("../../../sign-in.html", "_parent");
+            const closeSeller = async() => {
+                alert("Store deleted!");
+				open("../../../buyer-dashboard.html", "_parent");
             }
         </script>
     </body>
