@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+	<link href="../css/responsive.css" rel="stylesheet">
+    <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+</head>
+
+<body>
+	<section id="cart_items" style="margin-top: 180px;">
+		<div class="container">
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image">Product</td>
+							<td class="description"></td>
+							<td class="price">In Stock</td>
+							<td class="quantity">Total Sold</td>
+							<td class="total"></td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="cart_product">
+								<a href=""><img src="TrendingItem.jpg" alt="" width="150px" height="100px"></a>
+							</td>
+							<td class="cart_description">
+								<h4><a href="">Classy Dining Table</a></h4>
+								<p>LKR 15,000.00</p>
+							</td>
+							<td class="cart_price">
+								<p>20</p>
+							</td>
+							<td class="cart_price">
+								<p>5</p>
+							</td>
+							<td class="cart_total">
+								<a href=""><p class="cart_total_price">View / Edit</p></a>
+                                <br>
+                                <a href=""><p class="cart_total_price">Delete</p></a>
+							</td>
+							
+						</tr>
+
+						<tr>
+							<td class="cart_product">
+								<a href=""><img src="TrendingItem.jpg" alt="" width="150px" height="100px"></a>
+							</td>
+							<td class="cart_description">
+								<h4><a href="">Classy Dining Table</a></h4>
+								<p>LKR 15,000.00</p>
+							</td>
+							<td class="cart_price">
+								<p>20</p>
+							</td>
+							<td class="cart_price">
+								<p>5</p>
+							</td>
+							<td class="cart_total">
+								<a href=""><p class="cart_total_price">View / Edit</p></a>
+                                <br>
+                                <a href=""><p class="cart_total_price">Delete</p></a>
+							</td>
+
+                            
+						</tr>
+					</tbody>
+				</table>
+
+                
+			</div>
+
+            <div class="mt-5 text-right">
+                <button class="btn btn-primary profile-button" type="button" style="font-size: large;" onclick="listProduct()">List a Product</button>
+            </div>
+		</div>
+
+        
+	</section>
+
+    
+
+	<script src="../js/bootstrap.min.js"></script>
+    <script>
+        const listProduct = async() => {
+            open("../../../seller-add-item.html", "_blank")
+        }
+    </script>
+</body>
+</html>

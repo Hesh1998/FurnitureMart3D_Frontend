@@ -42,7 +42,7 @@
                         alert("Store name already exists!");
                     }else{
                         registerStore();
-                        open("../../../seller-dashboard.html", "_parent");
+                        // open("../../../seller-dashboard.html", "_parent");
                     }
                 }).catch(err => {
                     console.log(err);
@@ -98,7 +98,7 @@
                     body: jsonText
                 })
                 .then(response => response.text())
-                .then(alert("Extended to seller account successfully!"))
+                .then(open("../../../seller-dashboard.html", "_parent"))
                 .catch(error => console.log('Authorization failed: ' + error.message));
             }
 
