@@ -2,7 +2,6 @@ body{
     width: 80%;
     margin: auto;
     background-color: white;
-    font-family: sans-serif;
 }
 
 
@@ -32,7 +31,7 @@ img{
 .cls1 input{
     width: 100%;
     font-size: medium;
-    color: #ccc;
+    color: black;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -42,8 +41,9 @@ img{
 
 .cls1 textarea{
     width: 100%;
-    font-size: large;
-    color: #ccc;
+    font-size: medium;
+    font-family: "Open Sans", sans-serif;
+    color: black;
     padding: 12px 20px;
     margin: 8px 0;
     border: 1px solid #ccc;

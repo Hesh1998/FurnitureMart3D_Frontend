@@ -6,12 +6,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet">
         <link href="list-product-style.css" rel="stylesheet">
     </head>
 
     <body>
-        <div class="clsBorder" style="margin-top: 50px;">
+        <div class="clsBorder" style="margin-top: 150px;">
             <div class="div2">
                 <div>
                     <h1 style="padding-top: 10px; padding-bottom: 10px; padding-left: 15px;">1. Item Details</h1>
@@ -21,8 +21,10 @@
             <div class="clsFrm1">
                 <div class="cls1">
                     <label for="itemname" style="padding-right: 10px;">Item Name</label><br>
-                    <input type="text" name="itemname" placeholder="Enter Item Name"><br>
+                    <input type="text" name="itemname" placeholder="Enter item name"><br>
                 </div>
+                <br>
+
                 <br>
 
                 <div class="cls2">
@@ -49,13 +51,63 @@
                 <br>
 
                 <div class="cls1">
+                    <label for="condition" style="padding-right: 10px;">Condition</label><br>
+                    <input type="text" name="condition" placeholder="Enter item condition - Brandnew or Used"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
                     <label for="description" style="padding-right: 10px;">Description</label><br>
-                    <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter Item Name"></textarea>
+                    <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter item description"></textarea>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="dimensions" style="padding-right: 10px;">Dimensions</label><br>
+                    <textarea id="dimensions" name="dimensions" rows="4" cols="50" placeholder="Enter item dimensions"></textarea>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="stock" style="padding-right: 10px;">Quantity in Stock</label><br>
+                    <input type="text" name="stock" placeholder="Enter quantity in stock"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="price" style="padding-right: 10px;">Price (LKR)</label><br>
+                    <input type="text" name="price" placeholder="Enter item price"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="delivery" style="padding-right: 10px;">Delivery Fee (LKR)</label><br>
+                    <input type="text" name="delivery" placeholder="Enter delivery fee"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="arrival" style="padding-right: 10px;">Estimated Arrival (days)</label><br>
+                    <input type="text" name="arrival" placeholder="Enter estimated arrival days"><br>
+                </div>
+            </div>
+        </div>
+
+        <div class="clsBorder" style="margin-top: 100px;">
+            <div class="div2">
+                <div>
+                    <h1 style="padding-top: 10px; padding-bottom: 10px; padding-left: 15px;">2. Material Details</h1>
+                </div> 
+            </div>
+
+            <div class="clsFrm1">
+                <div class="cls1">
+                    <label for="material" style="padding-right: 10px;">Material</label><br>
+                    <input type="text" name="material" placeholder="Enter item material"><br>
                 </div>
                 <br>
             </div>
         </div>
-
     </body>
 
 </html>
