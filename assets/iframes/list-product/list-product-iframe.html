@@ -8,6 +8,9 @@
         
         <link href="../css/style.css" rel="stylesheet">
         <link href="list-product-style.css" rel="stylesheet">
+        <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+        
+        
     </head>
 
     <body>
@@ -21,7 +24,7 @@
             <div class="clsFrm1">
                 <div class="cls1">
                     <label for="itemname" style="padding-right: 10px;">Item Name</label><br>
-                    <input type="text" name="itemname" placeholder="Enter item name"><br>
+                    <input type="text" id="itemname" placeholder="Enter item name"><br>
                 </div>
                 <br>
 
@@ -52,43 +55,43 @@
 
                 <div class="cls1">
                     <label for="condition" style="padding-right: 10px;">Condition</label><br>
-                    <input type="text" name="condition" placeholder="Enter item condition - Brandnew or Used"><br>
+                    <input type="text" id="condition" placeholder="Enter item condition - Brandnew or Used"><br>
                 </div>
                 <br>
 
                 <div class="cls1">
                     <label for="description" style="padding-right: 10px;">Description</label><br>
-                    <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter item description"></textarea>
+                    <textarea id="description" id="description" rows="4" cols="50" placeholder="Enter item description"></textarea>
                 </div>
                 <br>
 
                 <div class="cls1">
                     <label for="dimensions" style="padding-right: 10px;">Dimensions</label><br>
-                    <textarea id="dimensions" name="dimensions" rows="4" cols="50" placeholder="Enter item dimensions"></textarea>
+                    <textarea id="dimensions" id="dimensions" rows="4" cols="50" placeholder="Enter item dimensions"></textarea>
                 </div>
                 <br>
 
                 <div class="cls1">
                     <label for="stock" style="padding-right: 10px;">Quantity in Stock</label><br>
-                    <input type="text" name="stock" placeholder="Enter quantity in stock"><br>
+                    <input type="text" id="stock" placeholder="Enter quantity in stock"><br>
                 </div>
                 <br>
 
                 <div class="cls1">
                     <label for="price" style="padding-right: 10px;">Price (LKR)</label><br>
-                    <input type="text" name="price" placeholder="Enter item price"><br>
+                    <input type="text" id="price" placeholder="Enter item price"><br>
                 </div>
                 <br>
 
                 <div class="cls1">
                     <label for="delivery" style="padding-right: 10px;">Delivery Fee (LKR)</label><br>
-                    <input type="text" name="delivery" placeholder="Enter delivery fee"><br>
+                    <input type="text" id="delivery" placeholder="Enter delivery fee"><br>
                 </div>
                 <br>
 
                 <div class="cls1">
                     <label for="arrival" style="padding-right: 10px;">Estimated Arrival (days)</label><br>
-                    <input type="text" name="arrival" placeholder="Enter estimated arrival days"><br>
+                    <input type="text" id="arrival" placeholder="Enter estimated arrival days"><br>
                 </div>
             </div>
         </div>
@@ -103,11 +106,473 @@
             <div class="clsFrm1">
                 <div class="cls1">
                     <label for="material" style="padding-right: 10px;">Material</label><br>
-                    <input type="text" name="material" placeholder="Enter item material"><br>
+                    <input type="text" id="material" placeholder="Enter item material"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="clr1" style="padding-right: 10px;">Material Color Code 1</label><br>
+                    <input type="text" id="clr1" placeholder="Enter item material color code 1 (e.g. - #FFFFFF)"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label style="padding-right: 10px;">Color 1 item image</label><br><br>
+                    <img id="clr1Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <input type="file" id="clr1ImgInput">
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="clr2" style="padding-right: 10px;">Material Color Code 2</label><br>
+                    <input type="text" id="clr2" placeholder="Enter item material color code 2 (e.g. - #FFFFFF)"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label style="padding-right: 10px;">Color 2 item image</label><br><br>
+                    <img id="clr2Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <input type="file" id="clr2ImgInput">
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="clr3" style="padding-right: 10px;">Material Color Code 3</label><br>
+                    <input type="text" id="clr3" placeholder="Enter item material color code 3 (e.g. - #FFFFFF)"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label style="padding-right: 10px;">Color 3 item image</label><br><br>
+                    <img id="clr3Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <input type="file" id="clr3ImgInput">
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="clr4" style="padding-right: 10px;">Material Color Code 4</label><br>
+                    <input type="text" id="clr4" placeholder="Enter item material color code 4 (e.g. - #FFFFFF)"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label style="padding-right: 10px;">Color 4 item image</label><br><br>
+                    <img id="clr4Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <input type="file" id="clr4ImgInput">
+                </div>
+                <br>
+                
+                <div class="cls1">
+                    <label for="clr5" style="padding-right: 10px;">Material Color Code 5</label><br>
+                    <input type="text" id="clr5" placeholder="Enter item material color code 5 (e.g. - #FFFFFF)"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label style="padding-right: 10px;">Color 5 item image</label><br><br>
+                    <img id="clr5Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <input type="file" id="clr5ImgInput">
                 </div>
                 <br>
             </div>
         </div>
+
+
+        <div class="clsBorder" style="margin-top: 100px;">
+            <div class="div2">
+                <div>
+                    <h1 style="padding-top: 10px; padding-bottom: 10px; padding-left: 15px;">3. Additional Graphics</h1>
+                </div> 
+            </div>
+
+            <div class="clsFrm1">
+                <div class="cls1">
+                    <label style="padding-right: 10px;">Additional Image 1</label><br><br>
+                    <img id="add1Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <input type="file" id="add1ImgInput">
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label style="padding-right: 10px;">Additional Image 2</label><br><br>
+                    <img id="add2Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <input type="file" id="add2ImgInput">
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label style="padding-right: 10px;">Additional Image 3</label><br><br>
+                    <img id="add3Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <input type="file" id="add3ImgInput">
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label style="padding-right: 10px;">Video 1</label><br><br>
+                    <video id="vid1" width="320" height="240" controls>
+                        <source id="mp4_src1" src="" type="video/mp4">
+                    </video>
+                    <input type="file" id="vid1Input" class="form-control">
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label style="padding-right: 10px;">Video 2</label><br><br>
+                    <video id="vid2" width="320" height="240" controls>
+                        <source id="mp4_src2" src="" type="video/mp4">
+                    </video>
+                    <input type="file" id="vid2Input" class="form-control">
+                </div>
+                <br>
+                
+            </div>
+        </div>
+
+        <br><br><br>
+        <div class="mt-5 text-right" style="display: flex; justify-content: right">
+            <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding: 10px;" onclick="addNewProduct()">List Product</button>
+        </div>
+
+
+        <script>
+            // Upload Color 1 Image
+            const clr1ImgInput = document.getElementById("clr1ImgInput");
+            
+            clr1ImgInput.addEventListener("change", e=> {
+                const file = clr1ImgInput.files[0];
+                const reader = new FileReader();
+
+                reader.addEventListener("load", () => {
+                    document.getElementById("clr1Img").src = reader.result;
+                });
+
+                reader.readAsDataURL(file);
+            });
+
+
+            // Upload Color 2 Image
+            const clr2ImgInput = document.getElementById("clr2ImgInput");
+            
+            clr2ImgInput.addEventListener("change", e=> {
+                const file = clr2ImgInput.files[0];
+                const reader = new FileReader();
+
+                reader.addEventListener("load", () => {
+                    document.getElementById("clr2Img").src = reader.result;
+                });
+
+                reader.readAsDataURL(file);
+            });
+
+
+            // Upload Color 3 Image
+            const clr3ImgInput = document.getElementById("clr3ImgInput");
+            
+            clr3ImgInput.addEventListener("change", e=> {
+                const file = clr3ImgInput.files[0];
+                const reader = new FileReader();
+
+                reader.addEventListener("load", () => {
+                    document.getElementById("clr3Img").src = reader.result;
+                });
+
+                reader.readAsDataURL(file);
+            });
+
+
+            // Upload Color 4 Image
+            const clr4ImgInput = document.getElementById("clr4ImgInput");
+            
+            clr4ImgInput.addEventListener("change", e=> {
+                const file = clr4ImgInput.files[0];
+                const reader = new FileReader();
+
+                reader.addEventListener("load", () => {
+                    document.getElementById("clr4Img").src = reader.result;
+                });
+
+                reader.readAsDataURL(file);
+            });
+
+
+            // Upload Color 5 Image
+            const clr5ImgInput = document.getElementById("clr5ImgInput");
+            
+            clr5ImgInput.addEventListener("change", e=> {
+                const file = clr5ImgInput.files[0];
+                const reader = new FileReader();
+
+                reader.addEventListener("load", () => {
+                    document.getElementById("clr5Img").src = reader.result;
+                });
+
+                reader.readAsDataURL(file);
+            });
+
+
+            // Upload Additional Image 1
+            const add1ImgInput = document.getElementById("add1ImgInput");
+            
+            add1ImgInput.addEventListener("change", e=> {
+                const file = add1ImgInput.files[0];
+                const reader = new FileReader();
+
+                reader.addEventListener("load", () => {
+                    document.getElementById("add1Img").src = reader.result;
+                });
+
+                reader.readAsDataURL(file);
+            });
+
+            // Upload Additional Image 2
+            const add2ImgInput = document.getElementById("add2ImgInput");
+            
+            add2ImgInput.addEventListener("change", e=> {
+                const file = add2ImgInput.files[0];
+                const reader = new FileReader();
+
+                reader.addEventListener("load", () => {
+                    document.getElementById("add2Img").src = reader.result;
+                });
+
+                reader.readAsDataURL(file);
+            });
+
+            // Upload Additional Image 3
+            const add3ImgInput = document.getElementById("add3ImgInput");
+            
+            add3ImgInput.addEventListener("change", e=> {
+                const file = add3ImgInput.files[0];
+                const reader = new FileReader();
+
+                reader.addEventListener("load", () => {
+                    document.getElementById("add3Img").src = reader.result;
+                });
+
+                reader.readAsDataURL(file);
+            });
+
+            // Upload Video 1
+            const vid1 = document.getElementById("vid1");
+            const vid1Input = document.getElementById("vid1Input");
+            
+            vid1Input.addEventListener("change", e=> {
+                const file = vid1Input.files[0];
+                const fileName = file.name;
+                extension = fileName.split('.').pop();
+                
+                const reader = new FileReader();
+
+                reader.addEventListener("load", () => {
+                    if(extension == "mp4"){
+                        vid1.src = reader.result;
+                        vid1.load();
+                    }else{
+                        alert("Only MP4 videos are allowed!");
+                    }
+                });
+
+                reader.readAsDataURL(file);
+            });
+
+            // Upload Video 1
+            const vid2 = document.getElementById("vid2");
+            const vid2Input = document.getElementById("vid2Input");
+            
+            vid2Input.addEventListener("change", e=> {
+                const file = vid2Input.files[0];
+                const fileName = file.name;
+                extension = fileName.split('.').pop();
+                
+                const reader = new FileReader();
+
+                reader.addEventListener("load", () => {
+                    if(extension == "mp4"){
+                        vid2.src = reader.result;
+                        vid2.load();
+                    }else{
+                        alert("Only MP4 videos are allowed!");
+                    }
+                });
+
+                reader.readAsDataURL(file);
+            });
+
+
+            // Code related to validating and adding product to database
+            var id = localStorage.getItem("id");
+
+            const addNewProduct = async() => {
+                // Auto generate id for new product
+                let response1 = await fetch(`http://localhost:8080/findUserProducts/${id}`);
+                let items = await response1.json();
+                
+                var newId
+                if(items.length == 0){
+                    newId = 1;
+                }else{
+                    newId = items[items.length-1].itemId + 1;
+                }
+                
+                // Validations
+                var itemName = document.getElementById("itemname").value;
+
+                var livingroom = document.getElementById("livingroom").checked;
+                var dining = document.getElementById("dining").checked;
+                var bedroom = document.getElementById("bedroom").checked;
+                var office = document.getElementById("office").checked;
+                var outdoor = document.getElementById("outdoor").checked;
+                var other = document.getElementById("other").checked;
+
+                var condition = document.getElementById("condition").value;
+                var description = document.getElementById("description").value;
+                var dimensions = document.getElementById("dimensions").value;
+                var stock = document.getElementById("stock").value;
+                var price = document.getElementById("price").value;
+                var delivery = document.getElementById("delivery").value;
+                var arrival = document.getElementById("arrival").value;
+                var material = document.getElementById("material").value;
+                
+                var clr1 = document.getElementById("clr1").value;
+                var clr1Img = document.getElementById("clr1Img").src;
+                var clr2 = document.getElementById("clr2").value;
+                var clr2Img = document.getElementById("clr2Img").src;
+                var clr3 = document.getElementById("clr3").value;
+                var clr3Img = document.getElementById("clr3Img").src;
+                var clr4 = document.getElementById("clr4").value;
+                var clr4Img = document.getElementById("clr4Img").src;
+                var clr5 = document.getElementById("clr5").value;
+                var clr5Img = document.getElementById("clr5Img").src;
+                
+                var add1Img = document.getElementById("add1Img").src;
+                var add2Img = document.getElementById("add2Img").src;
+                var add3Img = document.getElementById("add3Img").src;
+                var vid1 = document.getElementById("vid1").src;
+                var vid2 = document.getElementById("vid2").src;
+                
+                // Assign default values to images / videos without uploads
+                if(clr1Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
+                    clr1Img = "NA";
+                }
+
+                if(clr2Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
+                    clr2Img = "NA";
+                }
+
+                if(clr3Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
+                    clr3Img = "NA";
+                }
+
+                if(clr4Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
+                    clr4Img = "NA";
+                }
+
+                if(clr5Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
+                    clr5Img = "NA";
+                }
+
+                if(add1Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
+                    add1Img = "NA";
+                }
+
+                if(add2Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
+                    add2Img = "NA";
+                }
+
+                if(add3Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
+                    add3Img = "NA";
+                }
+                
+                if(vid1 == ""){
+                    vid1 = "NA";
+                }
+
+                if(vid2 == ""){
+                    vid2 = "NA";
+                }
+
+                // Validations
+                if(itemName == ""){
+                    alert("Please enter an item name!");
+                }else if(livingroom == false & dining == false & bedroom == false & office == false & outdoor == false & other == false){
+                    alert("Please select atleaset one category!");
+                }else if(condition == ""){
+                    alert("Please enter a condition!");
+                }else if(description == ""){
+                    alert("Please enter a description!");
+                }else if(dimensions == ""){
+                    alert("Please enter dimensions!");
+                }else if(stock == "" || isNaN(stock)){
+                    alert("Please enter a valid integer number for quantity in stock!");
+                }else if(price == "" || isNaN(price)){
+                    alert("Please enter a valid item price!");
+                }else if(delivery == "" || isNaN(delivery)){
+                    alert("Please enter a valid item delivery fee!");
+                }else if(arrival == "" || isNaN(arrival)){
+                    alert("Please enter a valid integer number for estimated arrival days!");
+                }else if(material == ""){
+                    alert("Please enter item material!");
+                }else if(clr1 == ""){
+                    alert("Please enter material color code 1!");
+                }else if(clr1Img == "NA"){
+                    alert("Please enter color 1 item image!");
+                }else if(add1Img == "NA"){
+                    alert("Please enter additional image 1!");
+                }else{
+                    var object = {};
+
+                    object["userId"] = id;
+                    object["itemId"] = newId;
+                    object["itemName"] = itemName;
+                    object["living"] = livingroom;
+                    object["dining"] = dining;
+                    object["bedroom"] = bedroom;
+                    object["office"] = office;
+                    object["outdoor"] = outdoor;
+                    object["other"] = other;
+                    object["condition"] = condition;
+                    object["description"] = description;
+                    object["dimensions"] = dimensions;
+                    object["stockQuantity"] = stock;
+                    object["price"] = price;
+                    object["deliveryFee"] = delivery;
+                    object["arrivalDays"] = arrival;
+                    object["material"] = material;
+                    object["clr1"] = clr1;
+                    object["clr1Img"] = clr1Img;
+                    object["clr2"] = clr2;
+                    object["clr2Img"] = clr2Img;
+                    object["clr3"] = clr3;
+                    object["clr3Img"] = clr3Img;
+                    object["clr4"] = clr4;
+                    object["clr4Img"] = clr4Img;
+                    object["clr5"] = clr5;
+                    object["clr5Img"] = clr5Img;
+                    object["add1Img"] = add1Img;
+                    object["add2Img"] = add2Img;
+                    object["add3Img"] = add3Img;
+                    object["vid1"] = vid1;
+                    object["vid2"] = vid2;
+
+                    var jsonText = JSON.stringify(object);
+			
+                    await fetch("http://localhost:8080/addProduct", {
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: jsonText
+                    })
+                    .then(response => response.text())
+                    .then(alert("New item added successfully!"))
+                    .catch(error => console.log('Authorization failed: ' + error.message));
+
+                    window.close();
+                }
+            }
+            
+        </script>
     </body>
 
 </html>

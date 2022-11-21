@@ -25,51 +25,8 @@
 							<td></td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td class="cart_product">
-								<a href=""><img src="TrendingItem.jpg" alt="" width="150px" height="100px"></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Classy Dining Table</a></h4>
-								<p>LKR 15,000.00</p>
-							</td>
-							<td class="cart_price">
-								<p>20</p>
-							</td>
-							<td class="cart_price">
-								<p>5</p>
-							</td>
-							<td class="cart_total">
-								<a href=""><p class="cart_total_price">View / Edit</p></a>
-                                <br>
-                                <a href=""><p class="cart_total_price">Delete</p></a>
-							</td>
-							
-						</tr>
-
-						<tr>
-							<td class="cart_product">
-								<a href=""><img src="TrendingItem.jpg" alt="" width="150px" height="100px"></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Classy Dining Table</a></h4>
-								<p>LKR 15,000.00</p>
-							</td>
-							<td class="cart_price">
-								<p>20</p>
-							</td>
-							<td class="cart_price">
-								<p>5</p>
-							</td>
-							<td class="cart_total">
-								<a href=""><p class="cart_total_price">View / Edit</p></a>
-                                <br>
-                                <a href=""><p class="cart_total_price">Delete</p></a>
-							</td>
-
-                            
-						</tr>
+					<tbody id="items_table">
+						
 					</tbody>
 				</table>
 
@@ -88,9 +45,30 @@
 
 	<script src="../js/bootstrap.min.js"></script>
     <script>
-        const listProduct = async() => {
-            open("../../../seller-add-item.html", "_blank")
+        // List product button
+		const listProduct = async() => {
+            open("../../../list-product.html", "_blank")
         }
+		
+
+		// Set page details
+		var id = localStorage.getItem("id");
+		const setPageDetails = async() => {
+			let response1 = await fetch(`http://localhost:8080/findUserProducts/${id}`);
+			let items = await response1.json();
+			var items_table = document.getElementById("items_table");
+			if(items.length == 0){
+				items_table.innerHTML = '<tr> <td class="cart_product"> <h3>No items listed yet !</h3> </td> </tr>';
+			}else{
+				var in_html = "";
+				for (let i = 0; i < items.length; i++) {
+					in_html += `<tr> <td class="cart_product"> <img src=${items[i].clr1Img} alt="" width="150px" height="100px"> </td> <td class="cart_description"> <h4>${items[i].itemName}</h4> <p>LKR ${items[i].price}</p> </td> <td class="cart_price"> <p>${items[i].stockQuantity}</p> </td> <td class="cart_price"> <p>0</p> </td> <td class="cart_total"> <a href=""><p class="cart_total_price">View / Edit</p></a> <br> <a href=""><p class="cart_total_price">Delete</p></a> </td> </tr>`;
+				}
+				items_table.innerHTML = in_html;
+			}
+		}
+
+		setPageDetails();
     </script>
 </body>
 </html>
