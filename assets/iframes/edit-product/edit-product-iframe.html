@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <link href="../css/style.css" rel="stylesheet">
-        <link href="list-product-style.css" rel="stylesheet">
+        <link href="../list-product/list-product-style.css" rel="stylesheet">
         <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
         
         
@@ -73,7 +73,9 @@
 
                 <div class="cls1">
                     <label for="stock" style="padding-right: 10px;">Quantity in Stock *</label><br>
-                    <input type="text" id="stock" placeholder="Enter quantity in stock"><br>
+                    <input type="text" id="stock" placeholder="Enter quantity in stock" style="width: 89.5%;">
+                    <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding-top: 10px; padding-bottom: 10px; padding-left: 13px; padding-right: 13px; margin-left: 20px;" onclick="inc()"> + </button>
+                    <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding-top: 10px; padding-bottom: 10px; padding-left: 15px; padding-right: 15px; margin-left: 20px;" onclick="dec()"> - </button>
                 </div>
                 <br>
 
@@ -91,7 +93,9 @@
 
                 <div class="cls1">
                     <label for="arrival" style="padding-right: 10px;">Estimated Arrival (days) *</label><br>
-                    <input type="text" id="arrival" placeholder="Enter estimated arrival days"><br>
+                    <input type="text" id="arrival" placeholder="Enter estimated arrival days" style="width: 89.5%;">
+                    <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding-top: 10px; padding-bottom: 10px; padding-left: 13px; padding-right: 13px; margin-left: 20px;" onclick="incD()"> + </button>
+                    <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding-top: 10px; padding-bottom: 10px; padding-left: 15px; padding-right: 15px; margin-left: 20px;" onclick="decD()"> - </button>
                 </div>
             </div>
         </div>
@@ -188,7 +192,7 @@
 
         <br><br><br>
         <div class="mt-5 text-right" style="display: flex; justify-content: right">
-            <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding: 10px;" onclick="addNewProduct()">List Product</button>
+            <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding: 10px;" onclick="updateProduct()">Update Product</button>
         </div>
 
 
@@ -288,174 +292,97 @@
                 reader.readAsDataURL(file);
             });
 
-            // Code related to validating and adding product to database
+
+            // Code related to setting page details
             var id = localStorage.getItem("id");
+            var itemId = localStorage.getItem("itemId");
 
-            const addNewProduct = async() => {
-                // Auto generate id for new product
+            const setPageDetails = async() => {
                 let response1 = await fetch(`http://localhost:8080/findUserProducts/${id}`);
-                let items = await response1.json();
-                
-                var newId
-                if(items.length == 0){
-                    newId = 1;
-                }else{
-                    newId = items[items.length-1].itemId + 1;
-                }
-                
-                // Validations
-                var itemName = document.getElementById("itemname").value;
+			    let items = await response1.json();
 
-                var livingroom = document.getElementById("livingroom").checked;
-                var dining = document.getElementById("dining").checked;
-                var bedroom = document.getElementById("bedroom").checked;
-                var office = document.getElementById("office").checked;
-                var outdoor = document.getElementById("outdoor").checked;
-                var other = document.getElementById("other").checked;
+                for (let i = 0; i < items.length; i++) {
+                    if(items[i].itemId == itemId){
+                        document.getElementById("itemname").value = items[i].itemName;
 
-                var condition = document.getElementById("condition").value;
-                var description = document.getElementById("description").value;
-                var dimensions = document.getElementById("dimensions").value;
-                var stock = document.getElementById("stock").value;
-                var price = document.getElementById("price").value;
-                var delivery = document.getElementById("delivery").value;
-                var arrival = document.getElementById("arrival").value;
-                var material = document.getElementById("material").value;
-                
-                var clr1 = document.getElementById("clr1").value;
-                var clr1Img = document.getElementById("clr1Img").src;
-                var clr2 = document.getElementById("clr2").value;
-                var clr2Img = document.getElementById("clr2Img").src;
-                var clr3 = document.getElementById("clr3").value;
-                var clr3Img = document.getElementById("clr3Img").src;
-                
-                var add1Img = document.getElementById("add1Img").src;
-                var add2Img = document.getElementById("add2Img").src;
-                var vid1 = document.getElementById("vid1").src;
-                
-                // Assign default values to images / videos without uploads
-                if(clr1Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
-                    clr1Img = "NA";
-                }
+                        if(items[i].living == "true"){
+                            document.getElementById("livingroom").checked = true;
+                        }
 
-                if(clr2Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
-                    clr2Img = "NA";
-                }
+                        if(items[i].dining == "true"){
+                            document.getElementById("dining").checked = true;
+                        }
 
-                if(clr3Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
-                    clr3Img = "NA";
-                }
+                        if(items[i].bedroom == "true"){
+                            document.getElementById("bedroom").checked = true;
+                        }
 
-                if(add1Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
-                    add1Img = "NA";
-                }
+                        if(items[i].office == "true"){
+                            document.getElementById("office").checked = true;
+                        }
 
-                if(add2Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
-                    add2Img = "NA";
-                }
-                
-                if(vid1 == ""){
-                    vid1 = "NA";
-                }
+                        if(items[i].outdoor == "true"){
+                            document.getElementById("outdoor").checked = true;
+                        }
 
+                        if(items[i].other == "true"){
+                            document.getElementById("other").checked = true;
+                        }
 
-                // Validations
-                if(itemName == ""){
-                    alert("Please enter an item name!");
-                }else if(livingroom == false & dining == false & bedroom == false & office == false & outdoor == false & other == false){
-                    alert("Please select atleaset one category!");
-                }else if(condition == ""){
-                    alert("Please enter item condition!");
-                }else if(description == ""){
-                    alert("Please enter item description!");
-                }else if(dimensions == ""){
-                    alert("Please enter item dimensions!");
-                }else if(stock == ""){
-                    alert("Please enter a valid number for quantity in stock!");
-                }else if(isNaN(stock)){
-                    alert("Please enter a valid number for quantity in stock!");
-                }else if(stock.includes(".")){
-                    alert("Please enter a valid number for quantity in stock!");
-                }else if(price == "" || isNaN(price)){
-                    alert("Please enter a valid item price!");
-                }else if(delivery == "" || isNaN(delivery)){
-                    alert("Please enter a valid item delivery fee!");
-                }else if(arrival == ""){
-                    alert("Please enter a valid number for estimated arrival days!");
-                }else if(isNaN(arrival)){
-                    alert("Please enter a valid number for estimated arrival days!");  
-                }else if(arrival.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days!");  
-                }else if(material == ""){
-                    alert("Please enter item material!");
-                }else if(clr1 == ""){
-                    alert("Please enter a valid material color code 1!");
-                }else if(clr1.length != 7 || clr1.charAt(0) != "#"){
-                    alert("Please enter a valid material color code 1!");
-                }else if(clr1Img == "NA"){
-                    alert("Please enter color 1 item image!");
-                }else if(clr2 != "" & clr2Img != "NA" & (clr2.length != 7 || clr2.charAt(0) != "#")){
-                    alert("Please enter a valid material color code 2!");
-                }else if(clr2 != "" & clr2Img == "NA"){
-                    alert("Please enter color 2 item image!");
-                }else if(clr2 == "" & clr2Img != "NA"){
-                    alert("Please enter a valid material color code 2!");
-                }else if(clr3 != "" & clr3Img != "NA" & (clr3.length != 7 || clr3.charAt(0) != "#")){
-                    alert("Please enter a valid material color code 3!");
-                }else if(clr3 != "" & clr3Img == "NA"){
-                    alert("Please enter color 3 item image!");
-                }else if(clr3 == "" & clr3Img != "NA"){
-                    alert("Please enter a valid material color code 3!");
-                }else if(add1Img == "NA"){
-                    alert("Please enter additional image 1!");
-                }else{
-                    var object = {};
+                        document.getElementById("condition").value = items[i].condition;
+                        document.getElementById("description").value = items[i].description;
+                        document.getElementById("dimensions").value = items[i].dimensions;
+                        document.getElementById("stock").value = items[i].stockQuantity;
+                        document.getElementById("price").value = items[i].price;
+                        document.getElementById("delivery").value = items[i].deliveryFee;
+                        document.getElementById("arrival").value = items[i].arrivalDays;
+                        document.getElementById("material").value = items[i].material;
+                        document.getElementById("clr1").value = items[i].clr1;
+                        document.getElementById("clr1Img").src = items[i].clr1Img;
 
-                    object["userId"] = id;
-                    object["itemId"] = newId;
-                    object["itemName"] = itemName;
-                    object["living"] = livingroom;
-                    object["dining"] = dining;
-                    object["bedroom"] = bedroom;
-                    object["office"] = office;
-                    object["outdoor"] = outdoor;
-                    object["other"] = other;
-                    object["condition"] = condition;
-                    object["description"] = description;
-                    object["dimensions"] = dimensions;
-                    object["stockQuantity"] = stock;
-                    object["inOrder"] = 0;
-                    object["totalSold"] = 0;
-                    object["price"] = price;
-                    object["deliveryFee"] = delivery;
-                    object["arrivalDays"] = arrival;
-                    object["material"] = material;
-                    object["clr1"] = clr1;
-                    object["clr1Img"] = clr1Img;
-                    object["clr2"] = clr2;
-                    object["clr2Img"] = clr2Img;
-                    object["clr3"] = clr3;
-                    object["clr3Img"] = clr3Img;
-                    object["add1Img"] = add1Img;
-                    object["add2Img"] = add2Img;
-                    object["vid1"] = vid1;
+                        if(items[i].clr2 != ""){
+                            document.getElementById("clr2").value = items[i].clr2;
+                            document.getElementById("clr2Img").src = items[i].clr2Img;
+                        }
 
-                    var jsonText = JSON.stringify(object);
-			
-                    await fetch("http://localhost:8080/addProduct", {
-                        method: "POST",
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: jsonText
-                    })
-                    .then(response => response.text())
-                    .then(open("../../../seller-products.html", "_parent"))
-                    .catch(error => console.log('Authorization failed: ' + error.message));
+                        if(items[i].clr3 != ""){
+                            document.getElementById("clr3").value = items[i].clr3;
+                            document.getElementById("clr3Img").src = items[i].clr3Img;
+                        }
+
+                        document.getElementById("add1Img").src = items[i].add1Img;
+
+                        if(items[i].add2Img != "NA"){
+                            document.getElementById("add2Img").src = items[i].add2Img;
+                        }
+
+                        if(items[i].vid1 != "NA"){
+                            document.getElementById("vid1").src = items[i].vid1;
+                        }
+
+                        break;
+                    }
                 }
             }
-            
+
+            setPageDetails();
+
+            function inc(){
+                document.getElementById("stock").value = Number(document.getElementById("stock").value) + 1;
+            }
+
+            function dec(){
+                document.getElementById("stock").value = Number(document.getElementById("stock").value) - 1;
+            }
+
+            function incD(){
+                document.getElementById("arrival").value = Number(document.getElementById("arrival").value) + 1;
+            }
+
+            function decD(){
+                document.getElementById("arrival").value = Number(document.getElementById("arrival").value) - 1;
+            }
+
         </script>
     </body>
 

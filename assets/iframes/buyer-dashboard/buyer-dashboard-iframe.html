@@ -49,12 +49,12 @@
                             </div>
 
                             <div class="col-md-12" style="padding-top: 15px;">
-                                <label class="labels">Phone Number</label>
+                                <label class="labels">Phone Number *</label>
                                 <input id="phone" type="text" class="form-control" placeholder="" value="">
                             </div>
 
                             <div class="col-md-12" style="padding-top: 15px;">
-                                <label class="labels">Delivery Address</label>
+                                <label class="labels">Delivery Address *</label>
                                 <input id="address" type="text" class="form-control" placeholder="" value="">
                             </div>
 
@@ -73,15 +73,15 @@
                         <div class="d-flex justify-content-between align-items-center experience">Change Password</div><br>
                         
                         <div class="col-md-12">
-                            <label class="labels" style="padding-top: 15px;">Current Password</label>
+                            <label class="labels" style="padding-top: 15px;">Current Password *</label>
                             <input id="currentPass" type="password" class="form-control" placeholder="Enter current password" value="">
                         </div>
                         <div class="col-md-12">
-                            <label class="labels" style="padding-top: 15px;">New Password</label>
+                            <label class="labels" style="padding-top: 15px;">New Password *</label>
                             <input id="newPass" type="password" class="form-control" placeholder="Enter new password" value="">
                         </div>
                         <div class="col-md-12">
-                            <label class="labels" style="padding-top: 15px;">Confirm New Password</label>
+                            <label class="labels" style="padding-top: 15px;">Confirm New Password *</label>
                             <input id="confirmNewPass" type="password" class="form-control" placeholder="Confirm new password" value="">
                         </div>
 
@@ -329,7 +329,7 @@
 
             // Delete User account
             const deleteUser = async() => {
-                const res = confirm("Are you sure you want to remove your account?")
+                const res = confirm("Are you sure you want to remove your account?");
 
                 if(res){
                     await fetch(`http://localhost:8080/deleteUser/${id}`, {

@@ -33,7 +33,7 @@
           <li><a href="">Overview</a></li> 
           <li><a href="seller-dashboard.html">Store Info</a></li>
           <li><a href="">Tasks</a></li>
-          <li><a href="seller-products.html">Products</a></li>
+          <li><a href="javascript:openProducts()">Products</a></li>
           <li><a href="">Store Analytics</a></li>
           <li><a href="buyer-dashboard.html">Switch to Buying</a></li>
           <li><a href="sign-in.html" class="getstarted" id="usernameBtn"></a></li>
@@ -118,6 +118,17 @@
     }
 
     setPageDetails();
+    
+    const openProducts = async() => {
+        let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+        let userDetails = await response1.json();
+
+        if(userDetails.paymentAccountName == "NA"){
+          alert("Please add your payment details to list products!")
+        }else{
+          open("seller-products.html", "_parent");
+        }
+    }
     
   </script>
 
