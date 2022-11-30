@@ -63,7 +63,7 @@
 			}else{
 				var in_html = "";
 				for (let i = 0; i < items.length; i++) {
-					in_html += `<tr> <td class="cart_product"> <img src=${items[i].clr1Img} alt="" width="150px" height="100px"> </td> <td class="cart_description"> <h4>${items[i].itemName}</h4> <p>LKR ${items[i].price}</p> </td> <td class="cart_price"> <p>${items[i].stockQuantity}</p> </td> <td class="cart_price"> <p>${items[i].totalSold}</p> </td> <td class="cart_total"> <a href="javascript:viewEditProducts(${items[i].itemId})"><p class="cart_total_price">View / Edit</p></a> <br> <a href="javascript:deleteProducts(${items[i].itemId})"><p class="cart_total_price">Delete</p></a> </td> </tr>`;
+					in_html += `<tr> <td class="cart_product"> <img src=${items[i].clr1Img} alt="" width="150px" height="100px"> </td> <td class="cart_description"> <h4>${items[i].itemName}</h4> <p>LKR ${items[i].price}</p> </td> <td class="cart_price"> <p>${items[i].stockQuantity}</p> </td> <td class="cart_price"> <p>${items[i].totalSold}</p> </td> <td class="cart_total"> <a href="javascript:viewEditProducts(${items[i].itemId})"><p class="cart_total_price">View / Edit</p></a> <br> <a href="javascript:deleteProducts(${items[i].itemId}, ${items[i].inOrder})"><p class="cart_total_price">Delete</p></a> </td> </tr>`;
 					itemIndexes[i] = items[i].itemId;
 				}
 				items_table.innerHTML = in_html;
@@ -73,7 +73,7 @@
 		setPageDetails();
 
 
-		const deleteProducts = async(itemIndex) => {
+		const deleteProducts = async(itemIndex, inOrder) => {
 			let response1 = await fetch(`http://localhost:8080/findUserProducts/${id}`);
 			let items = await response1.json();
 
@@ -85,7 +85,7 @@
 			
 			var res = false;
 
-			if(items[itemIndex].inOrder == "0"){
+			if(inOrder == 0){
 				res = confirm("Are you sure you want to remove this item?");
 			}else{
 				alert("You cannot delete this item, because there are already existing orders for this item!");
