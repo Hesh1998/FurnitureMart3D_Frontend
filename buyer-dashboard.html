@@ -30,11 +30,11 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="index.html#hero">Home</a></li> 
           <li><a href="buyer-dashboard.html">Personal Info</a></li>
           <li><a href="">Cart</a></li>
           <li><a href="">Wishlist</a></li>
           <li><a href="">Purchase History</a></li>
+          <li><a href="FurnitureMart3D - Buyer Guidelines.pdf" target="_blank">Guidelines</a></li>
           <li><a href="javascript:openSeller()">Switch to Selling</a></li>
           <li><a href="sign-in.html" class="getstarted" id="usernameBtn"></a></li>
         </ul>
@@ -133,6 +133,28 @@
           }
         }
     }
+
+
+    // Handle log in button
+    const signInBtn = document.getElementById("usernameBtn");
+
+    // Change text color on mouseover
+    signInBtn.addEventListener('mouseover', function handleMouseOver() {
+      let width =  signInBtn.offsetWidth + 'px';
+      let height =  signInBtn.offsetHeight + 'px';
+      console.log(width);
+      signInBtn.innerHTML = "Logout"
+
+      signInBtn.style.height = height;
+      signInBtn.style.width = width;
+      signInBtn.style.textAlign = "center";
+    });
+
+    // Change text color back on mouseout
+    signInBtn.addEventListener('mouseout', function handleMouseOut() {
+      setPageDetails();
+    });
+
   </script>
 
   <!-- JS Files -->

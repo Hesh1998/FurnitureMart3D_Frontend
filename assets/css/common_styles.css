@@ -112,12 +112,16 @@ body {
     border-radius: 4px;
     font-weight: 400;
     color: #fff;
+    text-align: center;
+    display: inline-block;
   }
   
   .navbar .getstarted:hover,
   .navbar .getstarted:focus:hover {
     color: #fff;
     background: #df3740;
+    text-align: center;
+    display: inline-block;
   }
   
   /**

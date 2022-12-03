@@ -34,7 +34,7 @@
           <li><a href="seller-dashboard.html">Store Info</a></li>
           <li><a href="">Tasks</a></li>
           <li><a href="javascript:openProducts()">Products</a></li>
-          <li><a href="">Store Analytics</a></li>
+          <li><a href="FurnitureMart3D - Seller Guidelines.pdf" target="_blank">Guidelines</a></li>
           <li><a href="buyer-dashboard.html">Switch to Buying</a></li>
           <li><a href="sign-in.html" class="getstarted" id="usernameBtn"></a></li>
         </ul>
@@ -130,6 +130,26 @@
         }
     }
     
+
+    // Handle log in button
+    const signInBtn = document.getElementById("usernameBtn");
+
+    // Change text color on mouseover
+    signInBtn.addEventListener('mouseover', function handleMouseOver() {
+      let width =  signInBtn.offsetWidth + 'px';
+      let height =  signInBtn.offsetHeight + 'px';
+      console.log(width);
+      signInBtn.innerHTML = "Logout"
+
+      signInBtn.style.height = height;
+      signInBtn.style.width = width;
+      signInBtn.style.textAlign = "center";
+    });
+
+    // Change text color back on mouseout
+    signInBtn.addEventListener('mouseout', function handleMouseOut() {
+      setPageDetails();
+    });
   </script>
 
   <!-- JS Files -->
