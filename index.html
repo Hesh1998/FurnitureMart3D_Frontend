@@ -17,6 +17,7 @@
   <link href="assets/framework/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="assets/css/common_styles.css" rel="stylesheet">
   <link href="assets/css/landing_styles.css" rel="stylesheet">
+  <link href="assets/iframes/buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
   
 </head>
 
@@ -36,7 +37,7 @@
           <li><a href="index.html">Wishlist</a></li>
           <li><a href="index.html">Cart</a></li>
           <li><a href="index.html#footer">About Us</a></li>
-          <li><a href="sign-in.html" class="getstarted">Sign In</a></li>
+          <li><a href="sign-in.html" class="getstarted" id="usernameBtn">Sign In</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -91,33 +92,20 @@
 
 
   <!-- Portfolio Section -->
-  <section id="portfolio" class="portfolio">
+  <section id="portfolio" class="portfolio" style="margin-bottom: 120px;">
     
     <div class="container">
       <div>
-        <br>
+        <br><br>
         <center>
           <h2>Trending Products</h2>
         </center><br>
       </div>
       
-      <div class="row">
-        <div class="col-lg-12 d-flex justify-content-center">
-          
-          <ul id="portfolio-flters">
-            <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-app">Living Room</li>
-            <li data-filter=".filter-web">Dining</li>
-            <li data-filter=".filter-app">Bedroom</li>
-            <li data-filter=".filter-web">Office</li>
-            <li data-filter=".filter-app">Outdoor</li>
-          </ul>
-        </div>
-      </div>
 
       <div class="row portfolio-container">
 
-        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+        <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
             <img src="assets/landing/img/TrendingItem.jpg" class="img-fluid" alt="">
             <div class="portfolio-info">
@@ -128,7 +116,7 @@
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+        <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
             <img src="assets/landing/img/TrendingItem.jpg" class="img-fluid" alt="">
             <div class="portfolio-info">
@@ -139,7 +127,7 @@
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+        <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
             <img src="assets/landing/img/TrendingItem.jpg" class="img-fluid" alt="">
             <div class="portfolio-info">
@@ -150,7 +138,7 @@
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+        <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
             <img src="assets/landing/img/TrendingItem.jpg" class="img-fluid" alt="">
             <div class="portfolio-info">
@@ -161,7 +149,7 @@
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+        <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
             <img src="assets/landing/img/TrendingItem.jpg" class="img-fluid" alt="">
             <div class="portfolio-info">
@@ -172,7 +160,7 @@
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+        <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
             <img src="assets/landing/img/TrendingItem.jpg" class="img-fluid" alt="">
             <div class="portfolio-info">
@@ -183,9 +171,14 @@
           </div>
         </div>
 
+        
       </div>
-
+      <div class="mt-5 text-center" style="display: flex; justify-content: center;">
+        <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding: 10px;" onclick="">More Trending Products</button>
+      </div>
     </div>
+
+    
   </section>
   <!-- End Portfolio Section -->
 
@@ -253,6 +246,46 @@
   <script src="assets/framework/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/framework/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/js/landing_scripts.js"></script>
+
+  <script>
+    var id = localStorage.getItem("id");
+
+    const setLogInBtn = async() => {
+        let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+        let userDetails = await response1.json();
+
+        document.getElementById("usernameBtn").innerHTML = `Hi, ${userDetails.username}`;
+    }
+
+    if(id != null){
+      setLogInBtn();
+    }
+
+    // Handle log in button
+    const signInBtn = document.getElementById("usernameBtn");
+
+    // Change text color on mouseover
+    signInBtn.addEventListener('mouseover', function handleMouseOver() {
+      if(id != null){
+        let width =  signInBtn.offsetWidth + 'px';
+        let height =  signInBtn.offsetHeight + 'px';
+        console.log(width);
+        signInBtn.innerHTML = "Logout"
+
+        signInBtn.style.height = height;
+        signInBtn.style.width = width;
+        signInBtn.style.textAlign = "center";
+      }
+    });
+
+    // Change text color back on mouseout
+    signInBtn.addEventListener('mouseout', function handleMouseOut() {
+      if(id != null){
+        setLogInBtn();
+      }
+    });
+
+  </script>
 </body>
 
 </html>

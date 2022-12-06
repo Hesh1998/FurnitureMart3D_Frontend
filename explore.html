@@ -36,7 +36,7 @@
           <li><a href="index.html">Wishlist</a></li>
           <li><a href="index.html">Cart</a></li>
           <li><a href="explore.html#footer">About Us</a></li>
-          <li><a href="sign-in.html" class="getstarted">Sign In</a></li>
+          <li><a href="sign-in.html" class="getstarted" id="usernameBtn">Sign In</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -46,7 +46,7 @@
   <!-- End Header -->
 
   
-  <iframe src="assets/iframes/explore/explore-iframe.html" width="100%" height="1400px" style="border:none;"></iframe>
+  <iframe src="assets/iframes/explore/explore-iframe.html" width="100%" height="1600px" style="border:none;"></iframe>
     
   
   <!-- Footer -->
@@ -113,6 +113,46 @@
   <script src="assets/framework/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/js/landing_scripts.js"></script>
   <script src="assets/js/main.js"></script>
+
+  <script>
+		var id = localStorage.getItem("id");
+	
+		const setLogInBtn = async() => {
+			let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+			let userDetails = await response1.json();
+	
+			document.getElementById("usernameBtn").innerHTML = `Hi, ${userDetails.username}`;
+		}
+	
+		if(id != null){
+		  setLogInBtn();
+		}
+	
+		// Handle log in button
+		const signInBtn = document.getElementById("usernameBtn");
+	
+		// Change text color on mouseover
+		signInBtn.addEventListener('mouseover', function handleMouseOver() {
+		  if(id != null){
+			let width =  signInBtn.offsetWidth + 'px';
+			let height =  signInBtn.offsetHeight + 'px';
+			console.log(width);
+			signInBtn.innerHTML = "Logout"
+	
+			signInBtn.style.height = height;
+			signInBtn.style.width = width;
+			signInBtn.style.textAlign = "center";
+		  }
+		});
+	
+		// Change text color back on mouseout
+		signInBtn.addEventListener('mouseout', function handleMouseOut() {
+		  if(id != null){
+			setLogInBtn();
+		  }
+		});
+	
+	</script>
 </body>
 
 </html>
