@@ -9,7 +9,7 @@
         <link href="../css/style.css" rel="stylesheet">
         <link href="list-product-style.css" rel="stylesheet">
         <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
-        
+        <link href="list-product-style.css" rel="stylesheet">
         
     </head>
 
@@ -31,7 +31,7 @@
                 <br>
 
                 <div class="cls2">
-                    <label for="category">Category *</label><br><br>
+                    <label for="category">Location *</label><br><br>
                     
                     <input type="checkbox" id="livingroom" name="livingroom" value="Living Room">
                     <label for="livingroom">Living Room</label>
@@ -51,7 +51,69 @@
                     <input type="checkbox" id="other" name="other" value="Other" style="margin-left: 40px;">
                     <label for="other">Other</label>
                 </div>
-                <br>
+                <br><br>
+
+                <div class="cls2">
+                    <label for="item_type">Item Type *</label><br><br>
+                    
+                    <input type="checkbox" id="chair" name="chair" value="Chair">
+                    <label for="chair">Chair</label>
+
+                    <input type="checkbox" id="table" name="table" value="Table" style="margin-left: 40px;">
+                    <label for="table">Table</label>
+
+                    <input type="checkbox" id="sofa" name="sofa" value="Sofa" style="margin-left: 40px;">
+                    <label for="sofa">Sofa</label>
+
+                    <input type="checkbox" id="cupboard" name="cupboard" value="Cupboard" style="margin-left: 40px;">
+                    <label for="cupboard">Cupboard</label>
+
+                    <input type="checkbox" id="bed" name="bed" value="Bed" style="margin-left: 40px;">
+                    <label for="bed">Bed</label>
+
+                    <input type="checkbox" id="bench" name="bench" value="Bench" style="margin-left: 40px;">
+                    <label for="bench">Bench</label>
+
+                    <input type="checkbox" id="bookcase" name="bookcase" value="Bookcase" style="margin-left: 40px;">
+                    <label for="bookcase">Bookcase</label>
+
+                    <input type="checkbox" id="desk" name="desk" value="Desk" style="margin-left: 40px;">
+                    <label for="desk">Desk</label>
+
+                    <input type="checkbox" id="otherT" name="otherT" value="OtherT" style="margin-left: 40px;">
+                    <label for="otherT">Other</label>
+                </div>
+                <br><br>
+
+                <div class="cls2">
+                    <label for="category2">Category *</label><br><br>
+                    
+                    <input type="checkbox" id="classy" name="classy" value="Classy">
+                    <label for="classy">Classy</label>
+
+                    <input type="checkbox" id="antique" name="antique" value="Antique" style="margin-left: 40px;">
+                    <label for="antique">Antique</label>
+
+                    <input type="checkbox" id="traditional" name="traditional" value="Traditional" style="margin-left: 40px;">
+                    <label for="traditional">Traditional</label>
+
+                    <input type="checkbox" id="modern" name="modern" value="Modern" style="margin-left: 40px;">
+                    <label for="modern">Modern</label>
+
+                    <input type="checkbox" id="contemporary" name="contemporary" value="Contemporary" style="margin-left: 40px;">
+                    <label for="contemporary">Contemporary</label>
+
+                    <input type="checkbox" id="transitional" name="transitional" value="Transitional" style="margin-left: 40px;">
+                    <label for="transitional">Transitional</label>
+
+                    <input type="checkbox" id="coastal" name="coastal" value="Coastal" style="margin-left: 40px;">
+                    <label for="coastal">Coastal</label>
+
+                    <input type="checkbox" id="minimalist" name="minimalist" value="Minimalist" style="margin-left: 40px;">
+                    <label for="minimalist">Minimalist</label>
+                    
+                </div>
+                <br><br>
 
                 <div class="cls1">
                     <label for="condition" style="padding-right: 10px;">Condition *</label><br>
@@ -84,15 +146,143 @@
                 <br>
 
                 <div class="cls1">
-                    <label for="delivery" style="padding-right: 10px;">Delivery Fee (LKR) *</label><br>
-                    <input type="text" id="delivery" placeholder="Enter delivery fee"><br>
+                    <label for="delivery" style="padding-right: 10px;">Delivery Fee (LKR) and Estimated Arrival (days) *</label><br><br>
+
+                    <table>
+                        <tr>
+                          <th>District</th>
+                          <th>Delivery Fee (LKR)</th>
+                          <th>Estimated Arrival (days)</th>
+                        </tr>
+                        <tr>
+                          <td>Colombo</td>
+                          <td><input type="text" id="deliveryColombo" placeholder="Enter delivery fee"><br></td>
+                          <td><input type="text" id="arrivalColombo" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Gampaha</td>
+                            <td><input type="text" id="deliveryGampaha" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalGampaha" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Kalutara</td>
+                            <td><input type="text" id="deliveryKalutara" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalKalutara" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Kandy</td>
+                            <td><input type="text" id="deliveryKandy" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalKandy" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Matale</td>
+                            <td><input type="text" id="deliveryMatale" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalMatale" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Nuwara Eliya</td>
+                            <td><input type="text" id="deliveryNuwaraEliya" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalNuwaraEliya" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Galle</td>
+                            <td><input type="text" id="deliveryGalle" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalGalle" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Matara</td>
+                            <td><input type="text" id="deliveryMatara" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalMatara" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Hambantota</td>
+                            <td><input type="text" id="deliveryHambantota" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalHambantota" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Jaffna</td>
+                            <td><input type="text" id="deliveryJaffna" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalJaffna" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Kilinochchi</td>
+                            <td><input type="text" id="deliveryKilinochchi" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalKilinochchi" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Mannar</td>
+                            <td><input type="text" id="deliveryMannar" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalMannar" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Vavuniya</td>
+                            <td><input type="text" id="deliveryVavuniya" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalVavuniya" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Mullaitivu</td>
+                            <td><input type="text" id="deliveryMullaitivu" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalMullaitivu" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Batticallo</td>
+                            <td><input type="text" id="deliveryBatticallo" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalBatticallo" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Ampara</td>
+                            <td><input type="text" id="deliveryAmpara" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalAmpara" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Trincomalee</td>
+                            <td><input type="text" id="deliveryTrincomalee" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalTrincomalee" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Kurunegala</td>
+                            <td><input type="text" id="deliveryKurunegala" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalKurunegala" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Puttalam</td>
+                            <td><input type="text" id="deliveryPuttalam" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalPuttalam" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Anuradhapura</td>
+                            <td><input type="text" id="deliveryAnuradhapura" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalAnuradhapura" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Polonnaruwa</td>
+                            <td><input type="text" id="deliveryPolonnaruwa" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalPolonnaruwa" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Badulla</td>
+                            <td><input type="text" id="deliveryBadulla" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalBadulla" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Moneragala</td>
+                            <td><input type="text" id="deliveryMoneragala" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalMoneragala" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Ratnapura</td>
+                            <td><input type="text" id="deliveryRatnapura" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalRatnapura" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Kegalle</td>
+                            <td><input type="text" id="deliveryKegalle" placeholder="Enter delivery fee"><br></td>
+                            <td><input type="text" id="arrivalKegalle" placeholder="Enter estimated arrival days"><br></td>
+                        </tr>
+                    </table>
+                    
                 </div>
                 <br>
-
-                <div class="cls1">
-                    <label for="arrival" style="padding-right: 10px;">Estimated Arrival (days) *</label><br>
-                    <input type="text" id="arrival" placeholder="Enter estimated arrival days"><br>
-                </div>
             </div>
         </div>
 
@@ -105,13 +295,31 @@
 
             <div class="clsFrm1">
                 <div class="cls1">
-                    <label for="material" style="padding-right: 10px;">Material *</label><br>
-                    <input type="text" id="material" placeholder="Enter item material"><br>
+                    <label for="material" style="padding-right: 10px;">Main Material *</label><br>
+                    <input type="text" id="material" placeholder="Enter item main material"><br>
                 </div>
                 <br>
 
                 <div class="cls1">
-                    <label for="clr1" style="padding-right: 10px;">Material Color Code 1 *</label><br>
+                    <label for="materialDescription" style="padding-right: 10px;">Main Material Description *</label><br>
+                    <input type="text" id="materialDescription" placeholder="Enter item main material description"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="subMaterials" style="padding-right: 10px;">Sub Materials</label><br>
+                    <input type="text" id="subMaterials" placeholder="Enter item sub materials"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="subMaterialsDescription" style="padding-right: 10px;">Sub Materials Description</label><br>
+                    <input type="text" id="subMaterialsDescription" placeholder="Enter item sub materials description"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="clr1" style="padding-right: 10px;">Main Material Color Code 1 *</label><br>
                     <input type="text" id="clr1" placeholder="Enter item material color code 1 (e.g. - #FFFFFF)"><br>
                 </div>
                 <br>
@@ -125,7 +333,7 @@
                 <br>
 
                 <div class="cls1">
-                    <label for="clr2" style="padding-right: 10px;">Material Color Code 2</label><br>
+                    <label for="clr2" style="padding-right: 10px;">Main Material Color Code 2</label><br>
                     <input type="text" id="clr2" placeholder="Enter item material color code 2 (e.g. - #FFFFFF)"><br>
                 </div>
                 <br>
@@ -139,7 +347,7 @@
                 <br>
 
                 <div class="cls1">
-                    <label for="clr3" style="padding-right: 10px;">Material Color Code 3</label><br>
+                    <label for="clr3" style="padding-right: 10px;">Main Material Color Code 3</label><br>
                     <input type="text" id="clr3" placeholder="Enter item material color code 3 (e.g. - #FFFFFF)"><br>
                 </div>
                 <br>
@@ -206,11 +414,19 @@
                 const file = clr1ImgInput.files[0];
                 const reader = new FileReader();
 
-                reader.addEventListener("load", () => {
-                    document.getElementById("clr1Img").src = reader.result;
-                });
+                const fSize = Math.round((file.size / 1024));
 
-                reader.readAsDataURL(file);
+                if(fSize > 300){
+                    alert("Please upload an Image of maximum size 300 KB");
+                    document.getElementById("clr1Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                    document.getElementById("clr1ImgInput").value = "";
+                }else{
+                    reader.addEventListener("load", () => {
+                        document.getElementById("clr1Img").src = reader.result;
+                    });
+
+                    reader.readAsDataURL(file);
+                }                
             });
 
             // Reset Color 1 Image
@@ -226,11 +442,19 @@
                 const file = clr2ImgInput.files[0];
                 const reader = new FileReader();
 
-                reader.addEventListener("load", () => {
-                    document.getElementById("clr2Img").src = reader.result;
-                });
+                const fSize = Math.round((file.size / 1024));
 
-                reader.readAsDataURL(file);
+                if(fSize > 300){
+                    alert("Please upload an Image of maximum size 300 KB");
+                    document.getElementById("clr2Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                    document.getElementById("clr2ImgInput").value = "";
+                }else{
+                    reader.addEventListener("load", () => {
+                        document.getElementById("clr2Img").src = reader.result;
+                    });
+
+                    reader.readAsDataURL(file);
+                }
             });
 
             // Reset Color 2 Image
@@ -246,11 +470,19 @@
                 const file = clr3ImgInput.files[0];
                 const reader = new FileReader();
 
-                reader.addEventListener("load", () => {
-                    document.getElementById("clr3Img").src = reader.result;
-                });
+                const fSize = Math.round((file.size / 1024));
 
-                reader.readAsDataURL(file);
+                if(fSize > 300){
+                    alert("Please upload an Image of maximum size 300 KB");
+                    document.getElementById("clr3Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                    document.getElementById("clr3ImgInput").value = "";
+                }else{
+                    reader.addEventListener("load", () => {
+                        document.getElementById("clr3Img").src = reader.result;
+                    });
+
+                    reader.readAsDataURL(file);
+                }
             });
 
             // Reset Color 3 Image
@@ -266,11 +498,19 @@
                 const file = add1ImgInput.files[0];
                 const reader = new FileReader();
 
-                reader.addEventListener("load", () => {
-                    document.getElementById("add1Img").src = reader.result;
-                });
+                const fSize = Math.round((file.size / 1024));
 
-                reader.readAsDataURL(file);
+                if(fSize > 300){
+                    alert("Please upload an Image of maximum size 300 KB");
+                    document.getElementById("add1Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                    document.getElementById("add1ImgInput").value = "";
+                }else{
+                    reader.addEventListener("load", () => {
+                        document.getElementById("add1Img").src = reader.result;
+                    });
+
+                    reader.readAsDataURL(file);
+                }
             });
 
             // Reset Additional Image 1
@@ -286,11 +526,19 @@
                 const file = add2ImgInput.files[0];
                 const reader = new FileReader();
 
-                reader.addEventListener("load", () => {
-                    document.getElementById("add2Img").src = reader.result;
-                });
+                const fSize = Math.round((file.size / 1024));
 
-                reader.readAsDataURL(file);
+                if(fSize > 300){
+                    alert("Please upload an Image of maximum size 300 KB");
+                    document.getElementById("add2Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                    document.getElementById("add2ImgInput").value = "";
+                }else{
+                    reader.addEventListener("load", () => {
+                        document.getElementById("add2Img").src = reader.result;
+                    });
+
+                    reader.readAsDataURL(file);
+                }
             });
 
             // Reset Additional Image 2
@@ -307,13 +555,21 @@
                 const file = vid1Input.files[0];
                 const fileName = file.name;
                 extension = fileName.split('.').pop();
+
+                const fSize = Math.round((file.size / 1024));
                 
                 const reader = new FileReader();
 
                 reader.addEventListener("load", () => {
                     if(extension == "mp4"){
-                        vid1.src = reader.result;
-                        vid1.load();
+                        if(fSize > 1000){
+                            alert("Please upload a Video of maximum size 1000 KB");
+                            vid1.src = "";
+                            vid1Input.value = "";
+                        }else{
+                            vid1.src = reader.result;
+                            vid1.load();
+                        }
                     }else{
                         alert("Only MP4 videos are allowed!");
                     }
@@ -354,14 +610,111 @@
                 var outdoor = document.getElementById("outdoor").checked;
                 var other = document.getElementById("other").checked;
 
+                var chair = document.getElementById("chair").checked;
+                var table = document.getElementById("table").checked;
+                var sofa = document.getElementById("sofa").checked;
+                var cupboard = document.getElementById("cupboard").checked;
+                var bed = document.getElementById("bed").checked;
+                var bench = document.getElementById("bench").checked;
+                var bookcase = document.getElementById("bookcase").checked;
+                var desk = document.getElementById("desk").checked;
+                var otherT = document.getElementById("otherT").checked;
+
+                var classy = document.getElementById("classy").checked;
+                var antique = document.getElementById("antique").checked;
+                var traditional = document.getElementById("traditional").checked;
+                var modern = document.getElementById("modern").checked;
+                var contemporary = document.getElementById("contemporary").checked;
+                var transitional = document.getElementById("transitional").checked;
+                var coastal = document.getElementById("coastal").checked;
+                var minimalist = document.getElementById("minimalist").checked;
+
                 var condition = document.getElementById("condition").value;
                 var description = document.getElementById("description").value;
                 var dimensions = document.getElementById("dimensions").value;
                 var stock = document.getElementById("stock").value;
                 var price = document.getElementById("price").value;
-                var delivery = document.getElementById("delivery").value;
-                var arrival = document.getElementById("arrival").value;
+
+                var deliveryColombo = document.getElementById("deliveryColombo").value;
+                var arrivalColombo = document.getElementById("arrivalColombo").value;
+
+                var deliveryGampaha = document.getElementById("deliveryGampaha").value;
+                var arrivalGampaha = document.getElementById("arrivalGampaha").value;
+
+                var deliveryKalutara = document.getElementById("deliveryKalutara").value;
+                var arrivalKalutara = document.getElementById("arrivalKalutara").value;
+
+                var deliveryKandy = document.getElementById("deliveryKandy").value;
+                var arrivalKandy = document.getElementById("arrivalKandy").value;
+
+                var deliveryMatale = document.getElementById("deliveryMatale").value;
+                var arrivalMatale = document.getElementById("arrivalMatale").value;
+
+                var deliveryNuwaraEliya = document.getElementById("deliveryNuwaraEliya").value;
+                var arrivalNuwaraEliya = document.getElementById("arrivalNuwaraEliya").value;
+
+                var deliveryGalle = document.getElementById("deliveryGalle").value;
+                var arrivalGalle = document.getElementById("arrivalGalle").value;
+
+                var deliveryMatara = document.getElementById("deliveryMatara").value;
+                var arrivalMatara = document.getElementById("arrivalMatara").value;
+
+                var deliveryHambantota = document.getElementById("deliveryHambantota").value;
+                var arrivalHambantota = document.getElementById("arrivalHambantota").value;
+
+                var deliveryJaffna = document.getElementById("deliveryJaffna").value;
+                var arrivalJaffna = document.getElementById("arrivalJaffna").value;
+
+                var deliveryKilinochchi = document.getElementById("deliveryKilinochchi").value;
+                var arrivalKilinochchi = document.getElementById("arrivalKilinochchi").value;
+
+                var deliveryMannar = document.getElementById("deliveryMannar").value;
+                var arrivalMannar = document.getElementById("arrivalMannar").value;
+
+                var deliveryVavuniya = document.getElementById("deliveryVavuniya").value;
+                var arrivalVavuniya = document.getElementById("arrivalVavuniya").value;
+
+                var deliveryMullaitivu = document.getElementById("deliveryMullaitivu").value;
+                var arrivalMullaitivu = document.getElementById("arrivalMullaitivu").value;
+
+                var deliveryBatticallo = document.getElementById("deliveryBatticallo").value;
+                var arrivalBatticallo = document.getElementById("arrivalBatticallo").value;
+
+                var deliveryAmpara = document.getElementById("deliveryAmpara").value;
+                var arrivalAmpara = document.getElementById("arrivalAmpara").value;
+
+                var deliveryTrincomalee = document.getElementById("deliveryTrincomalee").value;
+                var arrivalTrincomalee = document.getElementById("arrivalTrincomalee").value;
+
+                var deliveryKurunegala = document.getElementById("deliveryKurunegala").value;
+                var arrivalKurunegala = document.getElementById("arrivalKurunegala").value;
+
+                var deliveryPuttalam = document.getElementById("deliveryPuttalam").value;
+                var arrivalPuttalam = document.getElementById("arrivalPuttalam").value;
+
+                var deliveryAnuradhapura = document.getElementById("deliveryAnuradhapura").value;
+                var arrivalAnuradhapura = document.getElementById("arrivalAnuradhapura").value;
+
+                var deliveryPolonnaruwa = document.getElementById("deliveryPolonnaruwa").value;
+                var arrivalPolonnaruwa = document.getElementById("arrivalPolonnaruwa").value;
+
+                var deliveryBadulla = document.getElementById("deliveryBadulla").value;
+                var arrivalBadulla = document.getElementById("arrivalBadulla").value;
+
+                var deliveryMoneragala = document.getElementById("deliveryMoneragala").value;
+                var arrivalMoneragala = document.getElementById("arrivalMoneragala").value;
+
+                var deliveryRatnapura = document.getElementById("deliveryRatnapura").value;
+                var arrivalRatnapura = document.getElementById("arrivalRatnapura").value;
+
+                var deliveryKegalle = document.getElementById("deliveryKegalle").value;
+                var arrivalKegalle = document.getElementById("arrivalKegalle").value;
+
                 var material = document.getElementById("material").value;
+                var materialDescription = document.getElementById("materialDescription").value;
+
+                var subMaterials = document.getElementById("subMaterials").value;
+                var subMaterialsDescription = document.getElementById("subMaterialsDescription").value;
                 
                 var clr1 = document.getElementById("clr1").value;
                 var clr1Img = document.getElementById("clr1Img").src;
@@ -373,7 +726,7 @@
                 var add1Img = document.getElementById("add1Img").src;
                 var add2Img = document.getElementById("add2Img").src;
                 var vid1 = document.getElementById("vid1").src;
-                
+
                 // Assign default values to images / videos without uploads
                 if(clr1Img == "file:///E:/UOK%20MIT/Level%203/Sem%201/INTE%2034263%20-%20System%20Development%20Project/Resources/istockphoto-1357365823-612x612.jpg"){
                     clr1Img = "NA";
@@ -404,6 +757,10 @@
                 if(itemName == ""){
                     alert("Please enter an item name!");
                 }else if(livingroom == false & dining == false & bedroom == false & office == false & outdoor == false & other == false){
+                    alert("Please select atleaset one location!");
+                }else if(chair == false & table == false & sofa == false & cupboard == false & bed == false & bench == false & bookcase == false & desk == false & otherT == false){
+                    alert("Please select atleaset one item type!");
+                }else if(classy == false & antique == false & traditional == false & modern == false & contemporary == false & transitional == false & coastal == false & minimalist == false){
                     alert("Please select atleaset one category!");
                 }else if(condition == ""){
                     alert("Please enter item condition!");
@@ -419,34 +776,338 @@
                     alert("Please enter a valid number for quantity in stock!");
                 }else if(price == "" || isNaN(price)){
                     alert("Please enter a valid item price!");
-                }else if(delivery == "" || isNaN(delivery)){
-                    alert("Please enter a valid item delivery fee!");
-                }else if(arrival == ""){
-                    alert("Please enter a valid number for estimated arrival days!");
-                }else if(isNaN(arrival)){
-                    alert("Please enter a valid number for estimated arrival days!");  
-                }else if(arrival.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days!");  
-                }else if(material == ""){
-                    alert("Please enter item material!");
-                }else if(clr1 == ""){
-                    alert("Please enter a valid material color code 1!");
+                }else if(deliveryColombo == "" & arrivalColombo == "" & deliveryGampaha == "" & arrivalGampaha == "" & deliveryKalutara == "" & arrivalKalutara == "" & deliveryKandy == "" & arrivalKandy == "" & deliveryMatale == "" & arrivalMatale == "" & deliveryNuwaraEliya == "" & arrivalNuwaraEliya == "" & deliveryGalle == "" & arrivalGalle == "" & deliveryMatara == "" & arrivalMatara == "" & deliveryHambantota == "" & arrivalHambantota == "" & deliveryJaffna == "" & arrivalJaffna == "" & deliveryKilinochchi == "" & arrivalKilinochchi == "" & deliveryMannar == "" & arrivalMannar == "" & deliveryVavuniya == "" & arrivalVavuniya == "" & deliveryMullaitivu == "" & arrivalMullaitivu == "" & deliveryBatticallo == "" & arrivalBatticallo == "" & deliveryAmpara == "" & arrivalAmpara == "" & deliveryTrincomalee == "" & arrivalTrincomalee == "" & deliveryKurunegala == "" & arrivalKurunegala == "" & deliveryPuttalam == "" & arrivalPuttalam == "" & deliveryAnuradhapura == "" & arrivalAnuradhapura == "" & deliveryPolonnaruwa == "" & arrivalPolonnaruwa == "" & deliveryBadulla == "" & arrivalBadulla == "" & deliveryMoneragala == "" & arrivalMoneragala == "" & deliveryRatnapura == "" & arrivalRatnapura == "" & deliveryKegalle == "" & arrivalKegalle == ""){
+                    alert("Please enter item delivery fee and estimated arrival days for atleast one district!");
+                }
+                
+                else if(deliveryColombo != "" && isNaN(deliveryColombo)){
+                    alert("Please enter a valid item delivery fee for Colombo!");
+                }else if(arrivalColombo != "" && isNaN(arrivalColombo)){
+                    alert("Please enter a valid number for estimated arrival days for Colombo!");  
+                }else if(arrivalColombo != "" && arrivalColombo.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Colombo!");  
+                }else if(deliveryColombo == "" && arrivalColombo != ""){
+                    alert("Please enter a valid item delivery fee for Colombo!");
+                }else if(deliveryColombo != "" && arrivalColombo == ""){
+                    alert("Please enter a valid number for estimated arrival days for Colombo!"); 
+                }
+                
+                else if(deliveryGampaha != "" && isNaN(deliveryGampaha)){
+                    alert("Please enter a valid item delivery fee for Gampaha!");
+                }else if(arrivalGampaha != "" && isNaN(arrivalGampaha)){
+                    alert("Please enter a valid number for estimated arrival days for Gampaha!");  
+                }else if(arrivalGampaha != "" && arrivalGampaha.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Gampaha!");  
+                }else if(deliveryGampaha == "" && arrivalGampaha != ""){
+                    alert("Please enter a valid item delivery fee for Gampaha!");
+                }else if(deliveryGampaha != "" && arrivalGampaha == ""){
+                    alert("Please enter a valid number for estimated arrival days for Gampaha!"); 
+                }
+                
+                else if(deliveryKalutara != "" && isNaN(deliveryKalutara)){
+                    alert("Please enter a valid item delivery fee for Kalutara!");
+                }else if(arrivalKalutara != "" && isNaN(arrivalKalutara)){
+                    alert("Please enter a valid number for estimated arrival days for Kalutara!");  
+                }else if(arrivalKalutara != "" && arrivalKalutara.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Kalutara!");  
+                }else if(deliveryKalutara == "" && arrivalKalutara != ""){
+                    alert("Please enter a valid item delivery fee for Kalutara!");
+                }else if(deliveryKalutara != "" && arrivalKalutara == ""){
+                    alert("Please enter a valid number for estimated arrival days for Kalutara!"); 
+                }
+
+                else if(deliveryKandy != "" && isNaN(deliveryKandy)){
+                    alert("Please enter a valid item delivery fee for Kandy!");
+                }else if(arrivalKandy != "" && isNaN(arrivalKandy)){
+                    alert("Please enter a valid number for estimated arrival days for Kandy!");  
+                }else if(arrivalKandy != "" && arrivalKandy.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Kandy!");  
+                }else if(deliveryKandy == "" && arrivalKandy != ""){
+                    alert("Please enter a valid item delivery fee for Kandy!");
+                }else if(deliveryKandy != "" && arrivalKandy == ""){
+                    alert("Please enter a valid number for estimated arrival days for Kandy!"); 
+                }
+
+                else if(deliveryMatale != "" && isNaN(deliveryMatale)){
+                    alert("Please enter a valid item delivery fee for Matale!");
+                }else if(arrivalMatale != "" && isNaN(arrivalMatale)){
+                    alert("Please enter a valid number for estimated arrival days for Matale!");  
+                }else if(arrivalMatale != "" && arrivalMatale.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Matale!");  
+                }else if(deliveryMatale == "" && arrivalMatale != ""){
+                    alert("Please enter a valid item delivery fee for Matale!");
+                }else if(deliveryMatale != "" && arrivalMatale == ""){
+                    alert("Please enter a valid number for estimated arrival days for Matale!"); 
+                }
+
+                else if(deliveryNuwaraEliya != "" && isNaN(deliveryNuwaraEliya)){
+                    alert("Please enter a valid item delivery fee for NuwaraEliya!");
+                }else if(arrivalNuwaraEliya != "" && isNaN(arrivalNuwaraEliya)){
+                    alert("Please enter a valid number for estimated arrival days for NuwaraEliya!");  
+                }else if(arrivalNuwaraEliya != "" && arrivalNuwaraEliya.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for NuwaraEliya!");  
+                }else if(deliveryNuwaraEliya == "" && arrivalNuwaraEliya != ""){
+                    alert("Please enter a valid item delivery fee for NuwaraEliya!");
+                }else if(deliveryNuwaraEliya != "" && arrivalNuwaraEliya == ""){
+                    alert("Please enter a valid number for estimated arrival days for NuwaraEliya!"); 
+                }
+                
+                else if(deliveryGalle != "" && isNaN(deliveryGalle)){
+                    alert("Please enter a valid item delivery fee for Galle!");
+                }else if(arrivalGalle != "" && isNaN(arrivalGalle)){
+                    alert("Please enter a valid number for estimated arrival days for Galle!");  
+                }else if(arrivalGalle != "" && arrivalGalle.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Galle!");  
+                }else if(deliveryGalle == "" && arrivalGalle != ""){
+                    alert("Please enter a valid item delivery fee for Galle!");
+                }else if(deliveryGalle != "" && arrivalGalle == ""){
+                    alert("Please enter a valid number for estimated arrival days for Galle!"); 
+                }
+
+                else if(deliveryMatara != "" && isNaN(deliveryMatara)){
+                    alert("Please enter a valid item delivery fee for Matara!");
+                }else if(arrivalMatara != "" && isNaN(arrivalMatara)){
+                    alert("Please enter a valid number for estimated arrival days for Matara!");  
+                }else if(arrivalMatara != "" && arrivalMatara.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Matara!");  
+                }else if(deliveryMatara == "" && arrivalMatara != ""){
+                    alert("Please enter a valid item delivery fee for Matara!");
+                }else if(deliveryMatara != "" && arrivalMatara == ""){
+                    alert("Please enter a valid number for estimated arrival days for Matara!"); 
+                }
+                
+                else if(deliveryHambantota != "" && isNaN(deliveryHambantota)){
+                    alert("Please enter a valid item delivery fee for Hambantota!");
+                }else if(arrivalHambantota != "" && isNaN(arrivalHambantota)){
+                    alert("Please enter a valid number for estimated arrival days for Hambantota!");  
+                }else if(arrivalHambantota != "" && arrivalHambantota.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Hambantota!");  
+                }else if(deliveryHambantota == "" && arrivalHambantota != ""){
+                    alert("Please enter a valid item delivery fee for Hambantota!");
+                }else if(deliveryHambantota != "" && arrivalHambantota == ""){
+                    alert("Please enter a valid number for estimated arrival days for Hambantota!"); 
+                }
+                
+                else if(deliveryJaffna != "" && isNaN(deliveryJaffna)){
+                    alert("Please enter a valid item delivery fee for Jaffna!");
+                }else if(arrivalJaffna != "" && isNaN(arrivalJaffna)){
+                    alert("Please enter a valid number for estimated arrival days for Jaffna!");  
+                }else if(arrivalJaffna != "" && arrivalJaffna.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Jaffna!");  
+                }else if(deliveryJaffna == "" && arrivalJaffna != ""){
+                    alert("Please enter a valid item delivery fee for Jaffna!");
+                }else if(deliveryJaffna != "" && arrivalJaffna == ""){
+                    alert("Please enter a valid number for estimated arrival days for Jaffna!"); 
+                }
+                
+                else if(deliveryKilinochchi != "" && isNaN(deliveryKilinochchi)){
+                    alert("Please enter a valid item delivery fee for Kilinochchi!");
+                }else if(arrivalKilinochchi != "" && isNaN(arrivalKilinochchi)){
+                    alert("Please enter a valid number for estimated arrival days for Kilinochchi!");  
+                }else if(arrivalKilinochchi != "" && arrivalKilinochchi.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Kilinochchi!");  
+                }else if(deliveryKilinochchi == "" && arrivalKilinochchi != ""){
+                    alert("Please enter a valid item delivery fee for Kilinochchi!");
+                }else if(deliveryKilinochchi != "" && arrivalKilinochchi == ""){
+                    alert("Please enter a valid number for estimated arrival days for Kilinochchi!"); 
+                }
+
+                else if(deliveryMannar != "" && isNaN(deliveryMannar)){
+                    alert("Please enter a valid item delivery fee for Mannar!");
+                }else if(arrivalMannar != "" && isNaN(arrivalMannar)){
+                    alert("Please enter a valid number for estimated arrival days for Mannar!");  
+                }else if(arrivalMannar != "" && arrivalMannar.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Mannar!");  
+                }else if(deliveryMannar == "" && arrivalMannar != ""){
+                    alert("Please enter a valid item delivery fee for Mannar!");
+                }else if(deliveryMannar != "" && arrivalMannar == ""){
+                    alert("Please enter a valid number for estimated arrival days for Mannar!"); 
+                }
+                
+                else if(deliveryVavuniya != "" && isNaN(deliveryVavuniya)){
+                    alert("Please enter a valid item delivery fee for Vavuniya!");
+                }else if(arrivalVavuniya != "" && isNaN(arrivalVavuniya)){
+                    alert("Please enter a valid number for estimated arrival days for Vavuniya!");  
+                }else if(arrivalVavuniya != "" && arrivalVavuniya.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Vavuniya!");  
+                }else if(deliveryVavuniya == "" && arrivalVavuniya != ""){
+                    alert("Please enter a valid item delivery fee for Vavuniya!");
+                }else if(deliveryVavuniya != "" && arrivalVavuniya == ""){
+                    alert("Please enter a valid number for estimated arrival days for Vavuniya!"); 
+                }
+
+                else if(deliveryMullaitivu != "" && isNaN(deliveryMullaitivu)){
+                    alert("Please enter a valid item delivery fee for Mullaitivu!");
+                }else if(arrivalMullaitivu != "" && isNaN(arrivalMullaitivu)){
+                    alert("Please enter a valid number for estimated arrival days for Mullaitivu!");  
+                }else if(arrivalMullaitivu != "" && arrivalMullaitivu.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Mullaitivu!");  
+                }else if(deliveryMullaitivu == "" && arrivalMullaitivu != ""){
+                    alert("Please enter a valid item delivery fee for Mullaitivu!");
+                }else if(deliveryMullaitivu != "" && arrivalMullaitivu == ""){
+                    alert("Please enter a valid number for estimated arrival days for Mullaitivu!"); 
+                }
+
+                else if(deliveryBatticallo != "" && isNaN(deliveryBatticallo)){
+                    alert("Please enter a valid item delivery fee for Batticallo!");
+                }else if(arrivalBatticallo != "" && isNaN(arrivalBatticallo)){
+                    alert("Please enter a valid number for estimated arrival days for Batticallo!");  
+                }else if(arrivalBatticallo != "" && arrivalBatticallo.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Batticallo!");  
+                }else if(deliveryBatticallo == "" && arrivalBatticallo != ""){
+                    alert("Please enter a valid item delivery fee for Batticallo!");
+                }else if(deliveryBatticallo != "" && arrivalBatticallo == ""){
+                    alert("Please enter a valid number for estimated arrival days for Batticallo!"); 
+                }
+
+                else if(deliveryAmpara != "" && isNaN(deliveryAmpara)){
+                    alert("Please enter a valid item delivery fee for Ampara!");
+                }else if(arrivalAmpara != "" && isNaN(arrivalAmpara)){
+                    alert("Please enter a valid number for estimated arrival days for Ampara!");  
+                }else if(arrivalAmpara != "" && arrivalAmpara.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Ampara!");  
+                }else if(deliveryAmpara == "" && arrivalAmpara != ""){
+                    alert("Please enter a valid item delivery fee for Ampara!");
+                }else if(deliveryAmpara != "" && arrivalAmpara == ""){
+                    alert("Please enter a valid number for estimated arrival days for Ampara!"); 
+                }
+
+                else if(deliveryTrincomalee != "" && isNaN(deliveryTrincomalee)){
+                    alert("Please enter a valid item delivery fee for Trincomalee!");
+                }else if(arrivalTrincomalee != "" && isNaN(arrivalTrincomalee)){
+                    alert("Please enter a valid number for estimated arrival days for Trincomalee!");  
+                }else if(arrivalTrincomalee != "" && arrivalTrincomalee.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Trincomalee!");  
+                }else if(deliveryTrincomalee == "" && arrivalTrincomalee != ""){
+                    alert("Please enter a valid item delivery fee for Trincomalee!");
+                }else if(deliveryTrincomalee != "" && arrivalTrincomalee == ""){
+                    alert("Please enter a valid number for estimated arrival days for Trincomalee!"); 
+                }
+
+                else if(deliveryKurunegala != "" && isNaN(deliveryKurunegala)){
+                    alert("Please enter a valid item delivery fee for Kurunegala!");
+                }else if(arrivalKurunegala != "" && isNaN(arrivalKurunegala)){
+                    alert("Please enter a valid number for estimated arrival days for Kurunegala!");  
+                }else if(arrivalKurunegala != "" && arrivalKurunegala.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Kurunegala!");  
+                }else if(deliveryKurunegala == "" && arrivalKurunegala != ""){
+                    alert("Please enter a valid item delivery fee for Kurunegala!");
+                }else if(deliveryKurunegala != "" && arrivalKurunegala == ""){
+                    alert("Please enter a valid number for estimated arrival days for Kurunegala!"); 
+                }
+                
+                else if(deliveryPuttalam != "" && isNaN(deliveryPuttalam)){
+                    alert("Please enter a valid item delivery fee for Puttalam!");
+                }else if(arrivalPuttalam != "" && isNaN(arrivalPuttalam)){
+                    alert("Please enter a valid number for estimated arrival days for Puttalam!");  
+                }else if(arrivalPuttalam != "" && arrivalPuttalam.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Puttalam!");  
+                }else if(deliveryPuttalam == "" && arrivalPuttalam != ""){
+                    alert("Please enter a valid item delivery fee for Puttalam!");
+                }else if(deliveryPuttalam != "" && arrivalPuttalam == ""){
+                    alert("Please enter a valid number for estimated arrival days for Puttalam!"); 
+                }
+
+                else if(deliveryAnuradhapura != "" && isNaN(deliveryAnuradhapura)){
+                    alert("Please enter a valid item delivery fee for Anuradhapura!");
+                }else if(arrivalAnuradhapura != "" && isNaN(arrivalAnuradhapura)){
+                    alert("Please enter a valid number for estimated arrival days for Anuradhapura!");  
+                }else if(arrivalAnuradhapura != "" && arrivalAnuradhapura.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Anuradhapura!");  
+                }else if(deliveryAnuradhapura == "" && arrivalAnuradhapura != ""){
+                    alert("Please enter a valid item delivery fee for Anuradhapura!");
+                }else if(deliveryAnuradhapura != "" && arrivalAnuradhapura == ""){
+                    alert("Please enter a valid number for estimated arrival days for Anuradhapura!"); 
+                }
+
+                else if(deliveryPolonnaruwa != "" && isNaN(deliveryPolonnaruwa)){
+                    alert("Please enter a valid item delivery fee for Polonnaruwa!");
+                }else if(arrivalPolonnaruwa != "" && isNaN(arrivalPolonnaruwa)){
+                    alert("Please enter a valid number for estimated arrival days for Polonnaruwa!");  
+                }else if(arrivalPolonnaruwa != "" && arrivalPolonnaruwa.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Polonnaruwa!");  
+                }else if(deliveryPolonnaruwa == "" && arrivalPolonnaruwa != ""){
+                    alert("Please enter a valid item delivery fee for Polonnaruwa!");
+                }else if(deliveryPolonnaruwa != "" && arrivalPolonnaruwa == ""){
+                    alert("Please enter a valid number for estimated arrival days for Polonnaruwa!"); 
+                }
+
+                else if(deliveryBadulla != "" && isNaN(deliveryBadulla)){
+                    alert("Please enter a valid item delivery fee for Badulla!");
+                }else if(arrivalBadulla != "" && isNaN(arrivalBadulla)){
+                    alert("Please enter a valid number for estimated arrival days for Badulla!");  
+                }else if(arrivalBadulla != "" && arrivalBadulla.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Badulla!");  
+                }else if(deliveryBadulla == "" && arrivalBadulla != ""){
+                    alert("Please enter a valid item delivery fee for Badulla!");
+                }else if(deliveryBadulla != "" && arrivalBadulla == ""){
+                    alert("Please enter a valid number for estimated arrival days for Badulla!"); 
+                }
+
+                else if(deliveryMoneragala != "" && isNaN(deliveryMoneragala)){
+                    alert("Please enter a valid item delivery fee for Moneragala!");
+                }else if(arrivalMoneragala != "" && isNaN(arrivalMoneragala)){
+                    alert("Please enter a valid number for estimated arrival days for Moneragala!");  
+                }else if(arrivalMoneragala != "" && arrivalMoneragala.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Moneragala!");  
+                }else if(deliveryMoneragala == "" && arrivalMoneragala != ""){
+                    alert("Please enter a valid item delivery fee for Moneragala!");
+                }else if(deliveryMoneragala != "" && arrivalMoneragala == ""){
+                    alert("Please enter a valid number for estimated arrival days for Moneragala!"); 
+                }
+
+                else if(deliveryRatnapura != "" && isNaN(deliveryRatnapura)){
+                    alert("Please enter a valid item delivery fee for Ratnapura!");
+                }else if(arrivalRatnapura != "" && isNaN(arrivalRatnapura)){
+                    alert("Please enter a valid number for estimated arrival days for Ratnapura!");  
+                }else if(arrivalRatnapura != "" && arrivalRatnapura.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Ratnapura!");  
+                }else if(deliveryRatnapura == "" && arrivalRatnapura != ""){
+                    alert("Please enter a valid item delivery fee for Ratnapura!");
+                }else if(deliveryRatnapura != "" && arrivalRatnapura == ""){
+                    alert("Please enter a valid number for estimated arrival days for Ratnapura!"); 
+                }
+
+                else if(deliveryKegalle != "" && isNaN(deliveryKegalle)){
+                    alert("Please enter a valid item delivery fee for Kegalle!");
+                }else if(arrivalKegalle != "" && isNaN(arrivalKegalle)){
+                    alert("Please enter a valid number for estimated arrival days for Kegalle!");  
+                }else if(arrivalKegalle != "" && arrivalKegalle.includes(".")){
+                    alert("Please enter a valid number for estimated arrival days for Kegalle!");  
+                }else if(deliveryKegalle == "" && arrivalKegalle != ""){
+                    alert("Please enter a valid item delivery fee for Kegalle!");
+                }else if(deliveryKegalle != "" && arrivalKegalle == ""){
+                    alert("Please enter a valid number for estimated arrival days for Kegalle!"); 
+                }
+
+                else if(material == ""){
+                    alert("Please enter item main material!");
+                }else if(materialDescription == ""){
+                    alert("Please enter item main material description!");
+                }else if(subMaterials == "" & subMaterialsDescription != ""){
+                    alert("Please enter item sub materials!");
+                }else if(subMaterials != "" & subMaterialsDescription == ""){
+                    alert("Please enter item sub materials description!");
+                }
+                
+                else if(clr1 == ""){
+                    alert("Please enter a valid main material color code 1!");
                 }else if(clr1.length != 7 || clr1.charAt(0) != "#"){
-                    alert("Please enter a valid material color code 1!");
+                    alert("Please enter a valid main material color code 1!");
                 }else if(clr1Img == "NA"){
                     alert("Please enter color 1 item image!");
                 }else if(clr2 != "" & clr2Img != "NA" & (clr2.length != 7 || clr2.charAt(0) != "#")){
-                    alert("Please enter a valid material color code 2!");
+                    alert("Please enter a valid main material color code 2!");
                 }else if(clr2 != "" & clr2Img == "NA"){
                     alert("Please enter color 2 item image!");
                 }else if(clr2 == "" & clr2Img != "NA"){
-                    alert("Please enter a valid material color code 2!");
+                    alert("Please enter a valid main material color code 2!");
                 }else if(clr3 != "" & clr3Img != "NA" & (clr3.length != 7 || clr3.charAt(0) != "#")){
-                    alert("Please enter a valid material color code 3!");
+                    alert("Please enter a valid main material color code 3!");
                 }else if(clr3 != "" & clr3Img == "NA"){
                     alert("Please enter color 3 item image!");
                 }else if(clr3 == "" & clr3Img != "NA"){
-                    alert("Please enter a valid material color code 3!");
+                    alert("Please enter a valid main material color code 3!");
                 }else if(add1Img == "NA"){
                     alert("Please enter additional image 1!");
                 }else{
@@ -455,12 +1116,33 @@
                     object["userId"] = id;
                     object["itemId"] = newId;
                     object["itemName"] = itemName;
+
                     object["living"] = livingroom;
                     object["dining"] = dining;
                     object["bedroom"] = bedroom;
                     object["office"] = office;
                     object["outdoor"] = outdoor;
                     object["other"] = other;
+
+                    object["chair"] = chair;
+                    object["table"] = table;
+                    object["sofa"] = sofa;
+                    object["cupboard"] = cupboard;
+                    object["bed"] = bed;
+                    object["bench"] = bench;
+                    object["bookcase"] = bookcase;
+                    object["desk"] = desk;
+                    object["otherT"] = otherT;
+
+                    object["classy"] = classy;
+                    object["antique"] = antique;
+                    object["traditional"] = traditional;
+                    object["modern"] = modern;
+                    object["contemporary"] = contemporary;
+                    object["transitional"] = transitional;
+                    object["coastal"] = coastal;
+                    object["minimalist"] = minimalist;
+
                     object["condition"] = condition;
                     object["description"] = description;
                     object["dimensions"] = dimensions;
@@ -468,9 +1150,86 @@
                     object["inOrder"] = 0;
                     object["totalSold"] = 0;
                     object["price"] = price;
-                    object["deliveryFee"] = delivery;
-                    object["arrivalDays"] = arrival;
+
+                    object["deliveryColombo"] = deliveryColombo;
+                    object["arrivalColombo"] = arrivalColombo;
+
+                    object["deliveryGampaha"] = deliveryGampaha;
+                    object["arrivalGampaha"] = arrivalGampaha;
+
+                    object["deliveryKalutara"] = deliveryKalutara;
+                    object["arrivalKalutara"] = arrivalKalutara;
+
+                    object["deliveryKandy"] = deliveryKandy;
+                    object["arrivalKandy"] = arrivalKandy;
+
+                    object["deliveryMatale"] = deliveryMatale;
+                    object["arrivalMatale"] = arrivalMatale;
+
+                    object["deliveryNuwaraEliya"] = deliveryNuwaraEliya;
+                    object["arrivalNuwaraEliya"] = arrivalNuwaraEliya;
+
+                    object["deliveryGalle"] = deliveryGalle;
+                    object["arrivalGalle"] = arrivalGalle;
+
+                    object["deliveryMatara"] = deliveryMatara;
+                    object["arrivalMatara"] = arrivalMatara;
+
+                    object["deliveryHambantota"] = deliveryHambantota;
+                    object["arrivalHambantota"] = arrivalHambantota;
+
+                    object["deliveryJaffna"] = deliveryJaffna;
+                    object["arrivalJaffna"] = arrivalJaffna;
+
+                    object["deliveryKilinochchi"] = deliveryKilinochchi;
+                    object["arrivalKilinochchi"] = arrivalKilinochchi;
+                    
+                    object["deliveryMannar"] = deliveryMannar;
+                    object["arrivalMannar"] = arrivalMannar;
+
+                    object["deliveryVavuniya"] = deliveryVavuniya;
+                    object["arrivalVavuniya"] = arrivalVavuniya;
+
+                    object["deliveryMullaitivu"] = deliveryMullaitivu;
+                    object["arrivalMullaitivu"] = arrivalMullaitivu;
+
+                    object["deliveryBatticallo"] = deliveryBatticallo;
+                    object["arrivalBatticallo"] = arrivalBatticallo;
+
+                    object["deliveryAmpara"] = deliveryAmpara;
+                    object["arrivalAmpara"] = arrivalAmpara;
+
+                    object["deliveryTrincomalee"] = deliveryTrincomalee;
+                    object["arrivalTrincomalee"] = arrivalTrincomalee;
+
+                    object["deliveryKurunegala"] = deliveryKurunegala;
+                    object["arrivalKurunegala"] = arrivalKurunegala;
+
+                    object["deliveryPuttalam"] = deliveryPuttalam;
+                    object["arrivalPuttalam"] = arrivalPuttalam;
+
+                    object["deliveryAnuradhapura"] = deliveryAnuradhapura;
+                    object["arrivalAnuradhapura"] = arrivalAnuradhapura;
+
+                    object["deliveryPolonnaruwa"] = deliveryPolonnaruwa;
+                    object["arrivalPolonnaruwa"] = arrivalPolonnaruwa;
+
+                    object["deliveryBadulla"] = deliveryBadulla;
+                    object["arrivalBadulla"] = arrivalBadulla;
+
+                    object["deliveryMoneragala"] = deliveryMoneragala;
+                    object["arrivalMoneragala"] = arrivalMoneragala;
+
+                    object["deliveryRatnapura"] = deliveryRatnapura;
+                    object["arrivalRatnapura"] = arrivalRatnapura;
+
+                    object["deliveryKegalle"] = deliveryKegalle;
+                    object["arrivalKegalle"] = arrivalKegalle;
+
                     object["material"] = material;
+                    object["materialDescription"] = materialDescription;
+                    object["subMaterials"] = subMaterials;
+                    object["subMaterialsDescription"] = subMaterialsDescription;
                     object["clr1"] = clr1;
                     object["clr1Img"] = clr1Img;
                     object["clr2"] = clr2;

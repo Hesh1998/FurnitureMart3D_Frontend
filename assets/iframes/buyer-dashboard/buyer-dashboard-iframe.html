@@ -59,6 +59,36 @@
                                 <input id="address" type="text" class="form-control" placeholder="" value="">
                             </div>
 
+                            <div class="col-md-12" style="padding-top: 15px;">
+                                <select id="district" style="color: #676a70;">
+                                    <option value="Colombo">Colombo</option>
+                                    <option value="Gampaha">Gampaha</option>
+                                    <option value="Kalutara">Kalutara</option>
+                                    <option value="Kandy">Kandy</option>
+                                    <option value="Matale">Matale</option>
+                                    <option value="Nuwara Eliya">Nuwara Eliya</option>
+                                    <option value="Galle">Galle</option>
+                                    <option value="Matara">Matara</option>
+                                    <option value="Hambantota">Hambantota</option>
+                                    <option value="Jaffna">Jaffna</option>
+                                    <option value="Kilinochchi">Kilinochchi</option>
+                                    <option value="Mannar">Mannar</option>
+                                    <option value="Vavuniya">Vavuniya</option>
+                                    <option value="Mullaitivu">Mullaitivu</option>
+                                    <option value="Batticallo">Batticallo</option>
+                                    <option value="Ampara">Ampara</option>
+                                    <option value="Trincomalee">Trincomalee</option>
+                                    <option value="Kurunegala">Kurunegala</option>
+                                    <option value="Puttalam">Puttalam</option>
+                                    <option value="Anuradhapura">Anuradhapura</option>
+                                    <option value="Polonnaruwa">Polonnaruwa</option>
+                                    <option value="Badulla">Badulla</option>
+                                    <option value="Moneragala">Moneragala</option>
+                                    <option value="Ratnapura">Ratnapura</option>
+                                    <option value="Kegalle">Kegalle</option>
+                                </select>
+                            </div>
+
                         </div>
                         
                         <div class="mt-5 text-right">
@@ -124,6 +154,10 @@
                 }else{
                     document.getElementById("address").value = userDetails.deliveryAddress;
                 }
+
+                if(userDetails.buyerDistrict != "NA"){
+                    document.getElementById("district").value = userDetails.buyerDistrict;
+                }
             }
 
             setPageDetails();
@@ -143,6 +177,7 @@
             const updateProfile = async() => {
                 var contactNo = document.getElementById("phone").value;
                 var address = document.getElementById("address").value;
+                var buyerDistrict = document.getElementById("district").value;
 
                 let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
 			    let userDetails = await response1.json();
@@ -167,8 +202,10 @@
                     object["deliveryAddress"] = address;
                 }
 
+                object["buyerDistrict"] = buyerDistrict;
                 object["storeName"] = userDetails.storeName;
                 object["storeAddress"] = userDetails.storeAddress;
+                object["storeDistrict"] = userDetails.storeDistrict;
                 object["paymentAccountName"] = userDetails.paymentAccountName;
                 object["paymentAccountNo"] = userDetails.paymentAccountNo;
                 object["paymentAccountBankName"] = userDetails.paymentAccountBankName;
@@ -198,6 +235,10 @@
                 if(address != ""){
                     document.getElementById("address").value = userDetails2.deliveryAddress;
                 }
+
+                if(userDetails2.buyerDistrict != "NA"){
+                    document.getElementById("district").value = userDetails2.buyerDistrict;
+                }
             }
 
 
@@ -226,8 +267,10 @@
                     object["accountType"] = userDetails.accountType;
                     object["contactNo"] = userDetails.contactNo;
                     object["deliveryAddress"] = userDetails.deliveryAddress;
+                    object["buyerDistrict"] = userDetails.buyerDistrict;
                     object["storeName"] = userDetails.storeName;
                     object["storeAddress"] = userDetails.storeAddress;
+                    object["storeDistrict"] = userDetails.storeDistrict;
                     object["paymentAccountName"] = userDetails.paymentAccountName;
                     object["paymentAccountNo"] = userDetails.paymentAccountNo;
                     object["paymentAccountBankName"] = userDetails.paymentAccountBankName;
@@ -298,8 +341,10 @@
                     object["accountType"] = userDetails.accountType;
                     object["contactNo"] = userDetails.contactNo;
                     object["deliveryAddress"] = userDetails.deliveryAddress;
+                    object["buyerDistrict"] = userDetails.buyerDistrict;
                     object["storeName"] = userDetails.storeName;
                     object["storeAddress"] = userDetails.storeAddress;
+                    object["storeDistrict"] = userDetails.storeDistrict;
                     object["paymentAccountName"] = userDetails.paymentAccountName;
                     object["paymentAccountNo"] = userDetails.paymentAccountNo;
                     object["paymentAccountBankName"] = userDetails.paymentAccountBankName;
