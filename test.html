@@ -1,1 +1,62 @@
+<html>
+    <head>
+        <style>
+            body{
+                margin: 0;
+            }
 
+            canvas{
+                display: block;
+            }
+        </style>
+    </head>
+
+    <body>
+        <canvas id="canvas"></canvas>
+
+
+        <script src="test/three.js"></script>
+        <script>
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, .01, 1000);  // (width camera sees in degress, aspect ratio - entire widow, min distance to see an object, max distance to seen an object)
+            var renderer = new THREE.WebGLRenderer(); 
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            document.body.appendChild(renderer.domElement);
+
+            // creating the 3D object
+            var geometry = new THREE.BoxGeometry(); // vertices
+            var material = new THREE.MeshLambertMaterial({color:0xFFFFFF}); // material
+            var cube = new THREE.Mesh(geometry, material); // combines geometry and material
+            var light = new THREE.HemisphereLight(0xFFFFFF, 0x000000, 1); // (source color, bottom color, light intensity - 1 for full intensity)
+            scene.add(cube);
+            scene.add(light);
+
+            camera.position.z = 5;
+
+
+
+            // rotating the cube
+            var mx = 0;
+            var my = 0;
+
+            function saveMouse(event){
+                mx = event.clientX;
+                my = event.clientY;
+            }
+            document.onmousemove = saveMouse;
+
+            function animate(){
+                requestAnimationFrame(animate); // loops animation
+
+                // Use the mouse coordinates as the roatation of the object when animating
+                cube.rotation.y = mx/500; // /500 to slow down the rotation speed, because very high speed
+                cube.rotation.x = my/500;
+                // switch coordinates for correct rotation
+
+                renderer.render(scene, camera);
+            }
+            animate();
+        </script>
+    </body>
+</html>
