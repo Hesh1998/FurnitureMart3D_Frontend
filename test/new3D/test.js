@@ -5,7 +5,7 @@ import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm//
 const canvas = document.querySelector('.webgl');
 const scene = new THREE.Scene();
 const loader = new GLTFLoader();
-var scale = 1.5;
+var scale = 2;
 
 // Background color - initially set to black
 const params = {
@@ -14,7 +14,7 @@ const params = {
 
 
 var root;
-var path = '3D Files/White_small_sofa.glb';
+var path = '3D Files/Ash_small_sofa.glb';
 
 
 loader.load(path, function(glb){
@@ -40,7 +40,7 @@ const sizes = {
 // Adding the camera 
 // (Width camera sees in degress, aspect ratio - entire widow, min distance to see an object, max distance to seen an object)
 const camera = new THREE.PerspectiveCamera(75, sizes.width/sizes.height, 0.1, 100);
-camera.position.set(0, 0.5, 2);
+camera.position.set(0, 0.05, 2);
 scene.add(camera)
 
 
@@ -113,7 +113,7 @@ zoomIn.onclick = zoomInObj;
 var mat1 = document.getElementById("mat1");
 
 const mat1Obj = async(event) => {
-    path = '3D Files/White_small_sofa.glb';
+    path = '3D Files/Ash_small_sofa.glb';
     loader.load(path, function(glb){
         scene.remove(root); // removes current object
 
@@ -131,7 +131,7 @@ mat1.onclick = mat1Obj;
 var mat2 = document.getElementById("mat2");
 
 const mat2Obj = async(event) => {
-    path = '3D Files/Grey_small_sofa.glb';
+    path = '3D Files/Blue_small_sofa.glb';
     loader.load(path, function(glb){
         scene.remove(root); // removes current object
 
@@ -143,6 +143,24 @@ const mat2Obj = async(event) => {
 }
 
 mat2.onclick = mat2Obj;
+
+
+// Set material color 3
+var mat3 = document.getElementById("mat3");
+
+const mat3Obj = async(event) => {
+    path = '3D Files/Red_small_sofa.glb';
+    loader.load(path, function(glb){
+        scene.remove(root); // removes current object
+
+        // adds new object
+        root = glb.scene;
+        root.scale.set(scale, scale, scale);
+        scene.add(root);
+    })
+}
+
+mat3.onclick = mat3Obj;
 
 
 // Define and run animate function
