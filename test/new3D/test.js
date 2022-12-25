@@ -5,7 +5,7 @@ import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm//
 const canvas = document.querySelector('.webgl');
 const scene = new THREE.Scene();
 const loader = new GLTFLoader();
-var scale = 2;
+var scale = 1.4;
 
 // Background color - initially set to black
 const params = {
@@ -15,8 +15,11 @@ const params = {
 
 var root;
 var path = '3D Files/Ash_small_sofa.glb';
+// var path = '3D Files/wooden_table.glb';
+// var path = '3D Files/sofa.glb';
 
 
+// Loading the source  3D file
 loader.load(path, function(glb){
     root = glb.scene;
     root.scale.set(scale, scale, scale);
@@ -63,7 +66,9 @@ renderer.render(scene, camera);
 var mx = 0;
 var my = 0;
 
+
 const saveMouse = async(event) => {
+    // Do this when the mouse is down, on mouse move
     let mxTemp = event.clientX;
     var myTemp = event.clientY;
     var el = document.elementFromPoint(mxTemp, myTemp);
@@ -73,7 +78,18 @@ const saveMouse = async(event) => {
         my = myTemp;
     }
 }
-document.onmousemove = saveMouse;
+
+const saveMouse2 = async(event) => {
+    // Do nothing when the mouse is up, on mouse move
+}
+
+document.onmousedown = function(event) {
+    document.onmousemove = saveMouse;
+}
+
+document.onmouseup = function(event) {
+    document.onmousemove = saveMouse2;
+}
 
 
 // Changing background color
