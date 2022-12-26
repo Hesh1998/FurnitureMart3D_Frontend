@@ -326,7 +326,7 @@
 
                 <div class="cls1">
                     <label style="padding-right: 10px;">Color 1 item image *</label><br><br>
-                    <img id="clr1Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <img id="clr1Img" src="istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
                     <input type="file" id="clr1ImgInput" style="width: 87.3%;">
                     <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding-top: 10px; padding-bottom: 10px; padding-left: 13px; padding-right: 13px; margin-left: 20px;" onclick="resetImg1()"> Clear Image </button>
                 </div>
@@ -340,7 +340,7 @@
 
                 <div class="cls1">
                     <label style="padding-right: 10px;">Color 2 item image</label><br><br>
-                    <img id="clr2Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <img id="clr2Img" src="istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
                     <input type="file" id="clr2ImgInput" style="width: 87.3%;">
                     <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding-top: 10px; padding-bottom: 10px; padding-left: 13px; padding-right: 13px; margin-left: 20px;" onclick="resetImg2()"> Clear Image </button>
                 </div>
@@ -354,7 +354,7 @@
 
                 <div class="cls1">
                     <label style="padding-right: 10px;">Color 3 item image</label><br><br>
-                    <img id="clr3Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <img id="clr3Img" src="istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
                     <input type="file" id="clr3ImgInput" style="width: 87.3%;">
                     <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding-top: 10px; padding-bottom: 10px; padding-left: 13px; padding-right: 13px; margin-left: 20px;" onclick="resetImg3()"> Clear Image </button>
                 </div>
@@ -373,7 +373,7 @@
             <div class="clsFrm1">
                 <div class="cls1">
                     <label style="padding-right: 10px;">Additional Image 1 *</label><br><br>
-                    <img id="add1Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <img id="add1Img" src="istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
                     <input type="file" id="add1ImgInput" style="width: 87.3%;">
                     <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding-top: 10px; padding-bottom: 10px; padding-left: 13px; padding-right: 13px; margin-left: 20px;" onclick="resetAdd1()"> Clear Image </button>
                 </div>
@@ -381,7 +381,7 @@
 
                 <div class="cls1">
                     <label style="padding-right: 10px;">Additional Image 2</label><br><br>
-                    <img id="add2Img" src="../../../../../Resources/istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
+                    <img id="add2Img" src="istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
                     <input type="file" id="add2ImgInput" style="width: 87.3%;">
                     <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding-top: 10px; padding-bottom: 10px; padding-left: 13px; padding-right: 13px; margin-left: 20px;" onclick="resetAdd2()"> Clear Image </button>
                 </div>
@@ -416,9 +416,9 @@
 
                 const fSize = Math.round((file.size / 1024));
 
-                if(fSize > 300){
+                if(fSize > 20000){ // 300
                     alert("Please upload an Image of maximum size 300 KB");
-                    document.getElementById("clr1Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                    document.getElementById("clr1Img").src = "istockphoto-1357365823-612x612.jpg";
                     document.getElementById("clr1ImgInput").value = "";
                 }else{
                     reader.addEventListener("load", () => {
@@ -431,7 +431,7 @@
 
             // Reset Color 1 Image
             const resetImg1 = async() => {
-                document.getElementById("clr1Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                document.getElementById("clr1Img").src = "istockphoto-1357365823-612x612.jpg";
                 document.getElementById("clr1ImgInput").value = "";
             }
 
@@ -444,9 +444,9 @@
 
                 const fSize = Math.round((file.size / 1024));
 
-                if(fSize > 300){
+                if(fSize > 20000){
                     alert("Please upload an Image of maximum size 300 KB");
-                    document.getElementById("clr2Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                    document.getElementById("clr2Img").src = "istockphoto-1357365823-612x612.jpg";
                     document.getElementById("clr2ImgInput").value = "";
                 }else{
                     reader.addEventListener("load", () => {
@@ -459,7 +459,7 @@
 
             // Reset Color 2 Image
             const resetImg2 = async() => {
-                document.getElementById("clr2Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                document.getElementById("clr2Img").src = "istockphoto-1357365823-612x612.jpg";
                 document.getElementById("clr2ImgInput").value = "";
             }
 
@@ -472,9 +472,9 @@
 
                 const fSize = Math.round((file.size / 1024));
 
-                if(fSize > 300){
+                if(fSize > 20000){
                     alert("Please upload an Image of maximum size 300 KB");
-                    document.getElementById("clr3Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                    document.getElementById("clr3Img").src = "istockphoto-1357365823-612x612.jpg";
                     document.getElementById("clr3ImgInput").value = "";
                 }else{
                     reader.addEventListener("load", () => {
@@ -487,7 +487,7 @@
 
             // Reset Color 3 Image
             const resetImg3 = async() => {
-                document.getElementById("clr3Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                document.getElementById("clr3Img").src = "istockphoto-1357365823-612x612.jpg";
                 document.getElementById("clr3ImgInput").value = "";
             }
 
@@ -500,9 +500,9 @@
 
                 const fSize = Math.round((file.size / 1024));
 
-                if(fSize > 300){
+                if(fSize > 20000){
                     alert("Please upload an Image of maximum size 300 KB");
-                    document.getElementById("add1Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                    document.getElementById("add1Img").src = "istockphoto-1357365823-612x612.jpg";
                     document.getElementById("add1ImgInput").value = "";
                 }else{
                     reader.addEventListener("load", () => {
@@ -515,7 +515,7 @@
 
             // Reset Additional Image 1
             const resetAdd1 = async() => {
-                document.getElementById("add1Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                document.getElementById("add1Img").src = "istockphoto-1357365823-612x612.jpg";
                 document.getElementById("add1ImgInput").value = "";
             }
 
@@ -528,9 +528,9 @@
 
                 const fSize = Math.round((file.size / 1024));
 
-                if(fSize > 300){
+                if(fSize > 20000){
                     alert("Please upload an Image of maximum size 300 KB");
-                    document.getElementById("add2Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                    document.getElementById("add2Img").src = "istockphoto-1357365823-612x612.jpg";
                     document.getElementById("add2ImgInput").value = "";
                 }else{
                     reader.addEventListener("load", () => {
@@ -543,7 +543,7 @@
 
             // Reset Additional Image 2
             const resetAdd2 = async() => {
-                document.getElementById("add2Img").src = "../../../../../Resources/istockphoto-1357365823-612x612.jpg";
+                document.getElementById("add2Img").src = "istockphoto-1357365823-612x612.jpg";
                 document.getElementById("add2ImgInput").value = "";
             }
 
