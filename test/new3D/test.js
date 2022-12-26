@@ -5,7 +5,7 @@ import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm//
 const canvas = document.querySelector('.webgl');
 const scene = new THREE.Scene();
 const loader = new GLTFLoader();
-var scale = 1.4;
+var scale = 2.2;
 
 // Background color - initially set to black
 const params = {
@@ -14,10 +14,8 @@ const params = {
 
 
 var root;
-var path = '3D Files/Ash_small_sofa.glb';
-// var path = '3D Files/wooden_table.glb';
-// var path = '3D Files/sofa.glb';
-
+var path = '3D Files/sofa - c3c3c3.glb';
+var path = '3D Files/sofa_chair 2.glb';
 
 // Loading the source  3D file
 loader.load(path, function(glb){
@@ -129,7 +127,7 @@ zoomIn.onclick = zoomInObj;
 var mat1 = document.getElementById("mat1");
 
 const mat1Obj = async(event) => {
-    path = '3D Files/Ash_small_sofa.glb';
+    path = '3D Files/sofa - c3c3c3.glb';
     loader.load(path, function(glb){
         scene.remove(root); // removes current object
 
@@ -147,7 +145,7 @@ mat1.onclick = mat1Obj;
 var mat2 = document.getElementById("mat2");
 
 const mat2Obj = async(event) => {
-    path = '3D Files/Blue_small_sofa.glb';
+    path = '3D Files/sofa - 7177d8.glb';
     loader.load(path, function(glb){
         scene.remove(root); // removes current object
 
@@ -165,7 +163,7 @@ mat2.onclick = mat2Obj;
 var mat3 = document.getElementById("mat3");
 
 const mat3Obj = async(event) => {
-    path = '3D Files/Red_small_sofa.glb';
+    path = '3D Files/sofa - 88001b.glb';
     loader.load(path, function(glb){
         scene.remove(root); // removes current object
 
