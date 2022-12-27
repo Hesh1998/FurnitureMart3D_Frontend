@@ -1430,8 +1430,20 @@
                     .catch(error => console.log('Authorization failed: ' + error.message));
 
 
+                    // Auto generate ids for 3D models
+                    let response6 = await fetch("http://localhost:8080/getAll3DModelIds");
+                    let items6 = await response6.json();
+                    
+                    var id3d
+                    if(items6.length == 0){
+                        id3d = 0;
+                    }else{
+                        id3d = items6[items6.length-1].id;
+                    }
+
                     // Uploading 3D model for color 1
                     var object2 = {};
+                    object2["id"] = id3d + 1;
                     object2["userId"] = id;
                     object2["productId"] = newId;
                     object2["clrId"] = 1;
@@ -1453,6 +1465,7 @@
 
                     // Uploading 3D model for color 2
                     var object3 = {};
+                    object3["id"] = id3d + 2;
                     object3["userId"] = id;
                     object3["productId"] = newId;
                     object3["clrId"] = 2;
@@ -1474,6 +1487,7 @@
 
                     // Uploading 3D model for color 3
                     var object4 = {};
+                    object4["id"] = id3d + 3;
                     object4["userId"] = id;
                     object4["productId"] = newId;
                     object4["clrId"] = 3;
