@@ -101,6 +101,67 @@
 					body: jsonText
 				})
 				.then(response => response.text())
+				.then()
+				.catch(error => console.log('Authorization failed: ' + error.message));
+
+
+				// Delete 3D Model for colour 1
+				var object2 = {};
+				object2["userId"] = id;
+				object2["productId"] = itemIndex;
+				object2["clrId"] = 1;
+				
+				var jsonText2 = JSON.stringify(object2);
+
+				await fetch("http://localhost:8080/delete3DModel", {
+					method: "DELETE",
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					body: jsonText2
+				})
+				.then(response => response.text())
+				.then()
+				.catch(error => console.log('Authorization failed: ' + error.message));
+
+				// Delete 3D Model for colour 2
+				var object3 = {};
+				object3["userId"] = id;
+				object3["productId"] = itemIndex;
+				object3["clrId"] = 2;
+				
+				var jsonText3 = JSON.stringify(object3);
+
+				await fetch("http://localhost:8080/delete3DModel", {
+					method: "DELETE",
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					body: jsonText3
+				})
+				.then(response => response.text())
+				.then()
+				.catch(error => console.log('Authorization failed: ' + error.message));
+
+				// Delete 3D Model for colour 3
+				var object4 = {};
+				object4["userId"] = id;
+				object4["productId"] = itemIndex;
+				object4["clrId"] = 3;
+				
+				var jsonText4 = JSON.stringify(object4);
+
+				await fetch("http://localhost:8080/delete3DModel", {
+					method: "DELETE",
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					body: jsonText4
+				})
+				.then(response => response.text())
 				.then(open("../../../seller-products.html", "_parent"))
 				.catch(error => console.log('Authorization failed: ' + error.message));
 			}
