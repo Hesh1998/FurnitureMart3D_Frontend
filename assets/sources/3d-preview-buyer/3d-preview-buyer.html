@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <link href="../3d-preview-seller/style.css" rel="stylesheet">
+        <link href="../../framework/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div>
+            <div class = "left">
+                <canvas class="webgl"></canvas>
+            </div>
+
+            <div class="right">
+                <div class="card">
+                    <h5 class="card-header" style="text-align: center;">3D Model Properties</h5>
+                    <div class="card-body">
+                        <a href="#" id="zoom-out"><img src="zoom-out-2-24.png"></a>&nbsp&nbsp&nbsp
+                        <a href="#" id="zoom-in"><img src="zoom-in-2-24.png"></a>
+                        
+                        <br><br>
+                        <h5 class="card-title" style="display: inline-block;">Background Color</h5>&nbsp&nbsp&nbsp
+                        <input type="color" id="backcolor" value="#000000">
+                        
+                        <br><br>
+                        <h5 class="card-title">Material Color</h5>
+                        <button type="button" id="mat1" class="btn btn-primary" style="width: 20px; height: 25px; background-color: #c3c3c3; border-width: 2px; border-color: black;"></button>
+                        <button type="button" id="mat2" class="btn btn-primary" style="width: 20px; height: 25px; background-color: #7177d8; border-width: 2px; border-color: black;"></button>
+                        <button type="button" id="mat3" class="btn btn-primary" style="width: 20px; height: 25px; background-color: #88001b; border-width: 2px; border-color: black;"></button>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <script type="module" src="script.js"></script>
+        <script>
+
+        </script>
+    </body>
+</html>
