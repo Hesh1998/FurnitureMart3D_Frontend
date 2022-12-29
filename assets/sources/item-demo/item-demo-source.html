@@ -15,35 +15,10 @@
 		<div class="container"> 
 			<div id="myCarousel" class="carousel slide" data-ride="carousel">
 			  <!-- Indicators -->
-			  <ol class="carousel-indicators">
-				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-				<li data-target="#myCarousel" data-slide-to="1"></li>
-				<li data-target="#myCarousel" data-slide-to="2"></li>
-				<li data-target="#myCarousel" data-slide-to="3"></li>
-			  </ol>
+			  <ol class="carousel-indicators" id="carousel-indicators-sethtml"> </ol>
 		  
 			  <!-- Wrapper for slides -->
-			  <div class="carousel-inner">
-				<div class="item active">
-				  <img src="Add img 1.jpg" alt="" style="width:100%;">
-				</div>
-		  
-				<div class="item">
-				  <img src="Add img 2.jpg" alt="" style="width:100%;">
-				</div>
-			  
-				<div class="item">
-				  <img src="Add img 1.jpg" alt="" style="width:100%;">
-				</div>
-
-				<div class="item">
-					<video style="width:100%; height: 736.5px;" controls>
-                        <source id="mp4_src1" src="Sofa Video.mp4" type="video/mp4">
-                    </video>
-				</div>
-
-				
-			  </div>
+			  <div class="carousel-inner" id="carousel-inner-sethtml"> </div>
 		  
 			  <!-- Left and right controls -->
 			  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -61,17 +36,13 @@
 			<div class="product-details">
 				<div class="col-sm-12" style="padding-right: 0px;">
 					<div class="product-information">
-						<h1>Classy Dining Table <span style="font-size: 20px; color: green;">(In Stock)</span></h1>
-						<div>
-							<span style="height: 25px; width: 25px; background-color: #bbb; border-radius: 50%; display: inline-block;"></span>
-							<span style="height: 25px; width: 25px; background-color: #bbb; border-radius: 50%; display: inline-block;"></span>
-							<span style="height: 25px; width: 25px; background-color: #bbb; border-radius: 50%; display: inline-block;"></span>
-						</div>
+						<h1 id="itemName"> </h1>
+						<div id="colours"> </div>
 
 						
 						<span>
-							<span> LKR 15,000 </span>
-							<button type="button" class="btn btn-fefault cart">
+							<span id="price"></span>
+							<button type="button" class="btn btn-fefault cart" onclick="purchase()">
 								Continue to Purchase
 							</button>
 						</span>
@@ -88,29 +59,23 @@
 							</button>
 						</span>
 						<br><br>
-						<p><b>Location: </b> Living Room, Bedroom </p>
-						<p><b>Category: </b> Classy, Antique </p>
+						<p id="location"> </p>
+						<p id="category"></p>
 						<br>
 
-						<p><b>Main Material: </b> Wood, Leather </p>
-						<p><b>Main Material Description: </b> Wood, Leather </p>
-						<p><b>Sub Materials: </b> Wood, Leather </p>
-						<p><b>Sub Materials Description: </b> Wood, Leather </p>
-						<p><b>Condition:</b> Brand New</p>
-						<p><b>Quantity in Stock:</b> 10</p>
-						<p><b>Seller: </b> ABC Furniture Store </p>
+						<p id="mainMaterial"> </p>
+						<p id="mainDescription"> </p>
+						<p id="subMaterial"> </p>
+						<p id="subMaterialDescription"> </p>
+						<p id="condition"> </p>
+						<p id="stock"> </p>
+						<p id="seller"> </p>
 						<br>
 
-						<p><b>Description: </b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
-							et dolore magna aliqua. Arcu vitae elementum curabitur vitae. Pellentesque sit amet porttitor eget dolor morbi non arcu. 
-							Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Pharetra pharetra massa massa ultricies mi quis 
-							hendrerit dolor. Tempus imperdiet nulla malesuada pellentesque elit eget gravida cum sociis. </p>
+						<p id="description"> </p>
 						<br>
 
-						<p><b>Dimensions: </b> Proin libero nunc consequat interdum. 
-							Metus vulputate eu scelerisque felis imperdiet. Convallis a cras semper auctor. Ipsum consequat nisl vel pretium lectus. Auctor 
-							elit sed vulputate mi sit amet mauris commodo quis. Magna fringilla urna porttitor rhoncus dolor purus non enim. Placerat 
-							vestibulum lectus mauris ultrices eros in cursus turpis massa. Diam volutpat commodo sed egestas egestas fringilla phasellus. </p>
+						<p id="dimensions"> </p>
 
 						<div>
 							<br><br>
@@ -128,9 +93,242 @@
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 	<script>
-		const open3DView = async() => {
-			open("../3d-preview-buyer/3d-preview-buyer.html", "_blank")
+		// Setting page details
+		var sellerId = localStorage.getItem("sellerId");
+        var productId = localStorage.getItem("productId");
+		var stockCount = 0;
+
+		const setPageDetails = async() => {
+			let response1 = await fetch(`http://localhost:8080/findUserProducts/${sellerId}`);
+			let items = await response1.json();
+
+			for (let i = 0; i < items.length; i++) {
+				if(items[i].itemId == productId){
+					var carouselIndicators = document.getElementById("carousel-indicators-sethtml");
+					var carouselInner = document.getElementById("carousel-inner-sethtml");
+					var itemName = document.getElementById("itemName");
+					var colours = document.getElementById("colours");
+					var price = document.getElementById("price");
+					var location = document.getElementById("location");
+					var category = document.getElementById("category");
+					var mainMaterial = document.getElementById("mainMaterial");
+					var mainDescription = document.getElementById("mainDescription");
+					var subMaterial = document.getElementById("subMaterial");
+					var subMaterialDescription = document.getElementById("subMaterialDescription");
+					var condition = document.getElementById("condition");
+					var stock = document.getElementById("stock");
+					var seller = document.getElementById("seller");
+					var description = document.getElementById("description");
+					var dimensions = document.getElementById("dimensions");
+
+					// Setting all Images and Video
+					var carouselIndicatorsInnerHTML = "";
+					var carouselInnerInnerHTML = "";
+					var slide = 0;
+					
+					// Setting Image 1 (Colour 1)
+					carouselIndicatorsInnerHTML += `<li data-target="#myCarousel" data-slide-to="${slide}" class="active"></li>`;
+					slide = slide + 1;
+					carouselInnerInnerHTML += `<div class="item active"> <img src="${items[i].clr1Img}" alt="" style="width:100%;"> </div>`;
+					
+					// Setting Image 2 (Colour 2)
+					if(items[i].clr2 != ""){
+						carouselIndicatorsInnerHTML += `<li data-target="#myCarousel" data-slide-to="${slide}"></li>`;
+						slide = slide + 1;
+						carouselInnerInnerHTML += `<div class="item"> <img src="${items[i].clr2Img}" alt="" style="width:100%;"> </div>`;
+					}
+
+					// Setting Image 3 (Colour 3)
+					if(items[i].clr3 != ""){
+						carouselIndicatorsInnerHTML += `<li data-target="#myCarousel" data-slide-to="${slide}"></li>`;
+						slide = slide + 1;
+						carouselInnerInnerHTML += `<div class="item"> <img src="${items[i].clr3Img}" alt="" style="width:100%;"> </div>`;
+					}
+
+					// Setting Additional Image 1
+					carouselIndicatorsInnerHTML += `<li data-target="#myCarousel" data-slide-to="${slide}"></li>`;
+					slide = slide + 1;
+					carouselInnerInnerHTML += `<div class="item"> <img src="${items[i].add1Img}" alt="" style="width:100%;"> </div>`;
+					
+					// Setting Additional Image 2
+					if(items[i].add2Img != "NA"){
+						carouselIndicatorsInnerHTML += `<li data-target="#myCarousel" data-slide-to="${slide}"></li>`;
+						slide = slide + 1;
+						carouselInnerInnerHTML += `<div class="item"> <img src="${items[i].add2Img}" alt="" style="width:100%;"> </div>`;
+					}
+
+					
+					// Setting Video 1
+					if(items[i].vid1 != "NA" && (items[i].vid1).charAt(0) != "h"){
+						carouselIndicatorsInnerHTML += `<li data-target="#myCarousel" data-slide-to="${slide}"></li>`;
+						slide = slide + 1;
+						carouselInnerInnerHTML += `<div class="item"> <video style="width:100%; height: 736.5px;" controls> <source id="mp4_src1" src="${items[i].vid1}" type="video/mp4"> </video> </div>`;
+					}
+
+					carouselIndicators.innerHTML = carouselIndicatorsInnerHTML;
+					carouselInner.innerHTML = carouselInnerInnerHTML;
+
+
+					// Setting item name and in-stock or out-of-stock
+					stockCount = items[i].stockQuantity;
+					if(items[i].stockQuantity <= 0){
+						itemName.innerHTML = `${items[i].itemName} <span style="font-size: 20px; color: red;">(Out of Stock)</span>`;
+					}else{
+						itemName.innerHTML = `${items[i].itemName} <span style="font-size: 20px; color: green;">(In Stock)</span>`;
+					}
+
+
+					// Setting available colors
+					var coloursInnerHTML = "";
+					coloursInnerHTML += `<span style="height: 25px; width: 25px; background-color: ${items[i].clr1}; border-radius: 50%; display: inline-block; border: 1px solid black;"></span>`;
+
+					if(items[i].clr2 != ""){
+						coloursInnerHTML += `<span style="height: 25px; width: 25px; background-color: ${items[i].clr2}; border-radius: 50%; display: inline-block; border: 1px solid black; margin-left: 10px;"></span>`;
+					}
+
+					if(items[i].clr3 != ""){
+						coloursInnerHTML += `<span style="height: 25px; width: 25px; background-color: ${items[i].clr3}; border-radius: 50%; display: inline-block; border: 1px solid black; margin-left: 10px;"></span>`;
+					}
+
+					colours.innerHTML = coloursInnerHTML;
+
+
+					// Setting price of item
+					var priceVal = (items[i].price).toLocaleString('en-US');
+					price.innerHTML = `LKR ${priceVal}`;
+
+					
+					// Setting location
+					var locationInnerHTML = "<b>Location: </b> ";
+
+					if(items[i].living == "true"){
+						locationInnerHTML += "Living Room, ";
+					}
+
+					if(items[i].dining == "true"){
+						locationInnerHTML += "Dining, ";
+					}
+
+					if(items[i].bedroom == "true"){
+						locationInnerHTML += "Bedroom, ";
+					}
+
+					if(items[i].office == "true"){
+						locationInnerHTML += "Office, ";
+					}
+
+					if(items[i].outdoor == "true"){
+						locationInnerHTML += "Outdoor, ";
+					}
+
+					if(items[i].other == "true"){
+						locationInnerHTML += "Other, ";
+					}
+
+					locationInnerHTMLFinal = locationInnerHTML.slice(0, -2);
+					location.innerHTML = locationInnerHTMLFinal;
+
+
+					// Setting Category
+					var categoryInnerHTML = "<b>Category: </b> ";
+
+					if(items[i].classy == "true"){
+						categoryInnerHTML += "Classy, ";
+					}
+
+					if(items[i].antique == "true"){
+						categoryInnerHTML += "Antique, ";
+					}
+
+					if(items[i].traditional == "true"){
+						categoryInnerHTML += "Traditional, ";
+					}
+
+					if(items[i].modern == "true"){
+						categoryInnerHTML += "Modern, ";
+					}
+
+					if(items[i].contemporary == "true"){
+						categoryInnerHTML += "Contemporary, ";
+					}
+
+					if(items[i].transitional == "true"){
+						categoryInnerHTML += "Transitional, ";
+					}
+
+					if(items[i].coastal == "true"){
+						categoryInnerHTML += "Coastal, ";
+					}
+
+					if(items[i].minimalist == "true"){
+						categoryInnerHTML += "Minimalist, ";
+					}
+
+					categoryInnerHTMLFinal = categoryInnerHTML.slice(0, -2);
+					category.innerHTML = categoryInnerHTMLFinal;
+
+					
+					// Setting material details, condition, stock, seller, description and dimensions
+					mainMaterial.innerHTML = `<b>Main Material: </b> ${items[i].material}`;
+					mainDescription.innerHTML = `<b>Main Material Description: </b> ${items[i].materialDescription}`;
+					subMaterial.innerHTML = `<b>Sub Materials: </b> ${items[i].subMaterials}`;
+					subMaterialDescription.innerHTML = `<b>Sub Materials Description: </b> ${items[i].subMaterialsDescription}`;
+					condition.innerHTML = `<b>Condition: </b> ${items[i].condition}`;
+					stock.innerHTML = `<b>Quantity in Stock: </b> ${items[i].stockQuantity}`;
+					description.innerHTML = `<b>Description: </b> ${items[i].description}`;
+					dimensions.innerHTML = `<b>Dimensions: </b> ${items[i].dimensions}`;
+
+					let response2 = await fetch(`http://localhost:8080/findbyId/${sellerId}`);
+			    	let sellerDetails = await response2.json();
+					seller.innerHTML = `<b>Seller: </b> ${sellerDetails.storeName}`;
+
+					break;
+				}
+			}
 		}
+
+		setPageDetails();
+
+
+		// Purchase product
+		const purchase = async() => {
+			if(stockCount <= 0){
+				alert("Item is out of stock!");
+			}else{
+				alert("Purchased!");
+			}
+		}
+
+
+		// Open 3D view of the product
+		const open3DView = async() => {
+			let response3 = await fetch(`http://localhost:8080/getUser3DModels/${sellerId}`);
+			let items3 = await response3.json();
+			var m3d1 = "";
+			var m3d2 = "";
+			var m3d3 = "";
+
+			for (let i = 0; i < items3.length; i++) {
+				if(items3[i].productId == productId && items3[i].clrId == 1){
+					m3d1 = items3[i].model3d;
+				}
+
+				if(items3[i].productId == productId && items3[i].clrId == 2){
+					m3d2 = items3[i].model3d;
+				}
+
+				if(items3[i].productId == productId && items3[i].clrId == 3){
+					m3d3 = items3[i].model3d;
+				}
+			}
+
+			if(m3d1 == "" & m3d2 == "" & m3d3 == ""){
+				alert("No 3D models available to preview!");
+			}else{
+				open("../3d-preview-buyer/3d-preview-buyer.html", "_blank")
+			}
+		}
+
 	</script>
 
 </body>

@@ -13,11 +13,75 @@ const params = {
 };
 
 
+// id and productid of seller
+var sellerId = localStorage.getItem("sellerId");
+var productId = localStorage.getItem("productId");
+
+
+// Getting available material colors and setting colour buttons
+let response1 = await fetch(`http://localhost:8080/findUserProducts/${sellerId}`);
+let items = await response1.json();
+var clr1 = "";
+var clr2 = "";
+var clr3 = "";
+
+for (let i = 0; i < items.length; i++) {
+    if(items[i].itemId == productId){
+        clr1 = items[i].clr1;
+        clr2 = items[i].clr2;
+        clr3 = items[i].clr3;
+
+        break;
+    }
+}
+
+var colourButtons = document.getElementById("colour-buttons");
+var colourButtonsInnerHTML = "";
+
+colourButtonsInnerHTML += `<button type="button" id="mat1" class="btn btn-primary" style="width: 20px; height: 25px; background-color: ${clr1}; border-width: 2px; border-color: black;"></button>`;
+
+if(clr2 != ""){
+    colourButtonsInnerHTML += `<button type="button" id="mat2" class="btn btn-primary" style="width: 20px; height: 25px; background-color: ${clr2}; border-width: 2px; border-color: black; margin-left: 10px"></button>`;
+}
+
+if(clr3 != ""){
+    colourButtonsInnerHTML += `<button type="button" id="mat3" class="btn btn-primary" style="width: 20px; height: 25px; background-color: ${clr3}; border-width: 2px; border-color: black; margin-left: 10px"></button>`;
+}
+
+colourButtons.innerHTML = colourButtonsInnerHTML;
+
+
+// Setting path for available 3D models
+let response3 = await fetch(`http://localhost:8080/getUser3DModels/${sellerId}`);
+let items3 = await response3.json();
+
+var m3d1 = "";
+var m3d2 = "";
+var m3d3 = "";
+
+for (let i = 0; i < items3.length; i++) {
+    if(items3[i].productId == productId && items3[i].clrId == 1){
+        m3d1 = items3[i].model3d;
+    }
+
+    if(items3[i].productId == productId && items3[i].clrId == 2){
+        m3d2 = items3[i].model3d;
+    }
+
+    if(items3[i].productId == productId && items3[i].clrId == 3){
+        m3d3 = items3[i].model3d;
+    }
+}
+
+var path1 = m3d1;
+var path2 = m3d2;
+var path3 = m3d3;
+
+
 var root;
-var path = 'sofa - c3c3c3.glb';
 
 // Loading the source  3D file
-loader.load(path, function(glb){
+loader.load(path1, function(glb){
     root = glb.scene;
     root.scale.set(scale, scale, scale);
     scene.add(root);
@@ -126,8 +190,7 @@ zoomIn.onclick = zoomInObj;
 var mat1 = document.getElementById("mat1");
 
 const mat1Obj = async(event) => {
-    path = 'sofa - c3c3c3.glb';
-    loader.load(path, function(glb){
+    loader.load(path1, function(glb){
         scene.remove(root); // removes current object
 
         // adds new object
@@ -144,8 +207,7 @@ mat1.onclick = mat1Obj;
 var mat2 = document.getElementById("mat2");
 
 const mat2Obj = async(event) => {
-    path = 'sofa - 7177d8.glb';
-    loader.load(path, function(glb){
+    loader.load(path2, function(glb){
         scene.remove(root); // removes current object
 
         // adds new object
@@ -155,15 +217,16 @@ const mat2Obj = async(event) => {
     })
 }
 
-mat2.onclick = mat2Obj;
+if(clr2 != ""){
+    mat2.onclick = mat2Obj;
+}
 
 
 // Set material color 3
 var mat3 = document.getElementById("mat3");
 
 const mat3Obj = async(event) => {
-    path = 'sofa - 88001b.glb';
-    loader.load(path, function(glb){
+    loader.load(path3, function(glb){
         scene.remove(root); // removes current object
 
         // adds new object
@@ -173,7 +236,9 @@ const mat3Obj = async(event) => {
     })
 }
 
-mat3.onclick = mat3Obj;
+if(clr3 != ""){
+    mat3.onclick = mat3Obj;
+}
 
 
 // Define and run animate function
