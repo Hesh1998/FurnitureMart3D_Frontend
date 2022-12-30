@@ -53,7 +53,23 @@
 
 	<script src="../js/bootstrap.min.js"></script>
     <script>
+		var id = localStorage.getItem("id");
+
+		const setPageDetails = async() => {
+			let response = await fetch(`http://localhost:8080/findCartItems/${id}`);
+			let cartItems = await response.json();
+			var items_table = document.getElementById("items_table");
+
+			if(cartItems.length == 0){
+				items_table.innerHTML = '<tr> <td class="cart_product"> <h3>No items in cart !</h3> </td> </tr>';
+			}else{
+				
+			}
+
+		}
 		
+		setPageDetails();
+
     </script>
 </body>
 </html>
