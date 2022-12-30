@@ -109,7 +109,13 @@
   <!-- End Footer -->
 
   <script>
+    var sellerId = localStorage.getItem("sellerId");
+    var productId = localStorage.getItem("productId");
+
     localStorage.clear();
+
+    localStorage.setItem("sellerId", sellerId);
+    localStorage.setItem("productId", productId);
   </script>
   <!-- JS Files -->
   <script src="assets/framework/bootstrap/js/bootstrap.bundle.min.js"></script>

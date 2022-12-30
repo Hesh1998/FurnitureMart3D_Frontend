@@ -51,10 +51,10 @@
 							<button type="button" class="btn btn-fefault cart" onclick="open3DView()">
 								Open 3D View
 							</button>
-							<button type="button" class="btn btn-fefault cart">
+							<button type="button" class="btn btn-fefault cart" onclick="addToCart()">
 								Add to Cart
 							</button>
-							<button type="button" class="btn btn-fefault cart">
+							<button type="button" class="btn btn-fefault cart" onclick="addToWishlist()">
 								Add to Wishlist
 							</button>
 						</span>
@@ -93,6 +93,8 @@
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 	<script>
+		var buyerId = localStorage.getItem("id");
+
 		// Setting page details
 		var sellerId = localStorage.getItem("sellerId");
         var productId = localStorage.getItem("productId");
@@ -292,7 +294,11 @@
 
 		// Purchase product
 		const purchase = async() => {
-			if(stockCount <= 0){
+			if(buyerId == null){
+				open("../../../../sign-in.html", "_blank");
+			}else if(buyerId == sellerId){
+				alert("This is a product added by you. Please note that you can't purcahse a product added by you.");
+			}else if(stockCount <= 0){
 				alert("Item is out of stock!");
 			}else{
 				alert("Purchased!");
@@ -326,6 +332,100 @@
 				alert("No 3D models available to preview!");
 			}else{
 				open("../3d-preview-buyer/3d-preview-buyer.html", "_blank")
+			}
+		}
+
+
+		// Add item to cart
+		const addToCart = async() => {
+			if(buyerId == null){
+				open("../../../../sign-in.html", "_blank");
+			}else if(buyerId == sellerId){
+				alert("This is a product added by you. Please note that you can't add your own products to cart.");
+			}else{
+				if(stockCount <= 0){
+					alert("Item out of stock!");
+				}else{
+					var available = false;
+
+					let response2 = await fetch(`http://localhost:8080/findCartItems/${buyerId}`);
+					let cartItems = await response2.json();
+
+					for (let i = 0; i < cartItems.length; i++) {
+						if(cartItems[i].sellerID == sellerId & cartItems[i].productID == productId){
+							available = true;
+							break;
+						}
+					}
+
+					if(available == true){
+						alert("Iteam already added to cart!");
+					}else{
+						var object2 = {};
+						object2["id"] = buyerId;
+						object2["sellerID"] = sellerId;
+						object2["productID"] = productId;
+
+						var jsonText2 = JSON.stringify(object2);
+						
+						await fetch("http://localhost:8080/addItemToCart", {
+							method: "POST",
+							headers: {
+								'Accept': 'application/json',
+								'Content-Type': 'application/json'
+							},
+							body: jsonText2
+						})
+						.then(response => response.text())
+						.then(alert("Item added to your cart!"))
+						.catch(error => console.log('Authorization failed: ' + error.message));	
+					}					
+				}
+			}
+		}
+
+
+		// Add item to wishlist
+		const addToWishlist = async() => {
+			if(buyerId == null){
+				open("../../../../sign-in.html", "_blank");
+			}else if(buyerId == sellerId){
+				alert("This is a product added by you. Please note that you can't add your own products to wishlist.");
+			}else{
+				var available = false;
+
+				let response2 = await fetch(`http://localhost:8080/findWishlistItems/${buyerId}`);
+				let wishlistItems = await response2.json();
+
+				for (let i = 0; i < wishlistItems.length; i++) {
+					if(wishlistItems[i].sellerID == sellerId & wishlistItems[i].productID == productId){
+						available = true;
+						break;
+					}
+				}
+
+				if(available == true){
+					alert("Iteam already added to wishlist!");
+				}else{
+					var object2 = {};
+					object2["id"] = buyerId;
+					object2["sellerID"] = sellerId;
+					object2["productID"] = productId;
+
+					var jsonText2 = JSON.stringify(object2);
+					
+					await fetch("http://localhost:8080/addItemToWishlist", {
+						method: "POST",
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json'
+						},
+						body: jsonText2
+					})
+					.then(response => response.text())
+					.then(alert("Item added to your wishlist!"))
+					.catch(error => console.log('Authorization failed: ' + error.message));
+				}
 			}
 		}
 

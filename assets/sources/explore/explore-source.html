@@ -262,12 +262,119 @@
 
 			var productList = "";
 			for(let i = 0; i<products.length; i++){
-				productList += `<div class="col-sm-4"> <div class="product-image-wrapper"> <div class="single-products"> <div class="productinfo text-center"> <img src="${products[i].clr1Img}" alt="" /> <h2>LKR ${(products[i].price).toLocaleString('en-US')}</h2> <p>${products[i].itemName}</p> <a href="" class="btn btn-default add-to-cart" onclick="openItemView(${products[i].userId}, ${products[i].itemId})">View Details</a></div></div><div class="choose"><ul class="nav nav-pills nav-justified"><li><a href="#">Add to Cart</a></li><li><a href="#">Add to Wishlist</a></li></ul></div></div></div>`;
+				productList += `<div class="col-sm-4"> <div class="product-image-wrapper"> <div class="single-products"> <div class="productinfo text-center"> <img src="${products[i].clr1Img}" alt="" /> <h2>LKR ${(products[i].price).toLocaleString('en-US')}</h2> <p>${products[i].itemName}</p> <a href="" class="btn btn-default add-to-cart" onclick="openItemView(${products[i].userId}, ${products[i].itemId})">View Details</a></div></div><div class="choose"><ul class="nav nav-pills nav-justified"><li><a href="#" onclick="addToCart(${products[i].userId}, ${products[i].itemId})">Add to Cart</a></li><li><a href="#" onclick="addToWishlist(${products[i].userId}, ${products[i].itemId})">Add to Wishlist</a></li></ul></div></div></div>`;
 			}
 			document.getElementById("products_list_view").innerHTML = productList;
 		}
 
 		setProducts();
+
+
+		// Add item to cart / wishlist
+		var buyerId = localStorage.getItem("id");
+
+		const addToCart = async(sellerID, itemID) => {
+			if(buyerId == null){
+				open("../../../../sign-in.html", "_blank");
+			}else if(buyerId == sellerID){
+				alert("This is a product added by you. Please note that you can't add your own products to cart.");
+			}else{
+				let response1 = await fetch(`http://localhost:8080/findUserProducts/${sellerID}`);
+				let items = await response1.json();
+				
+				var stock = 0;
+				
+				for (let i = 0; i < items.length; i++) {
+					if(items[i].itemId == itemID){
+						stock = items[i].stockQuantity;
+						break;
+					}
+				}
+
+				if(stock <= 0){
+					alert("Item out of stock!");
+				}else{
+					var available = false;
+
+					let response2 = await fetch(`http://localhost:8080/findCartItems/${buyerId}`);
+					let cartItems = await response2.json();
+
+					for (let i = 0; i < cartItems.length; i++) {
+						if(cartItems[i].sellerID == sellerID & cartItems[i].productID == itemID){
+							available = true;
+							break;
+						}
+					}
+
+					if(available == true){
+						alert("Iteam already added to cart!");
+					}else{
+						var object2 = {};
+						object2["id"] = buyerId;
+						object2["sellerID"] = sellerID;
+						object2["productID"] = itemID;
+
+						var jsonText2 = JSON.stringify(object2);
+						
+						await fetch("http://localhost:8080/addItemToCart", {
+							method: "POST",
+							headers: {
+								'Accept': 'application/json',
+								'Content-Type': 'application/json'
+							},
+							body: jsonText2
+						})
+						.then(response => response.text())
+						.then(alert("Item added to your cart!"))
+						.catch(error => console.log('Authorization failed: ' + error.message));	
+					}					
+				}
+			}
+		}
+
+
+		const addToWishlist = async(sellerID, itemID) => {
+			if(buyerId == null){
+				open("../../../../sign-in.html", "_blank");
+			}else if(buyerId == sellerID){
+				alert("This is a product added by you. Please note that you can't add your own products to wishlist.");
+			}else{
+				var available = false;
+
+				let response2 = await fetch(`http://localhost:8080/findWishlistItems/${buyerId}`);
+				let wishlistItems = await response2.json();
+
+				for (let i = 0; i < wishlistItems.length; i++) {
+					if(wishlistItems[i].sellerID == sellerID & wishlistItems[i].productID == itemID){
+						available = true;
+						break;
+					}
+				}
+
+				if(available == true){
+					alert("Iteam already added to wishlist!");
+				}else{
+					var object2 = {};
+					object2["id"] = buyerId;
+					object2["sellerID"] = sellerID;
+					object2["productID"] = itemID;
+
+					var jsonText2 = JSON.stringify(object2);
+					
+					await fetch("http://localhost:8080/addItemToWishlist", {
+						method: "POST",
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json'
+						},
+						body: jsonText2
+					})
+					.then(response => response.text())
+					.then(alert("Item added to your wishlist!"))
+					.catch(error => console.log('Authorization failed: ' + error.message));
+				}
+			}
+		}
 		
 	</script>
 </body>
