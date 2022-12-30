@@ -204,8 +204,42 @@
 				body: jsonText
 			})
 			.then(response => response.text())
+			.then()
+			.catch(error => console.log('Authorization failed: ' + error.message));	
+
+
+			// Creating cart for user
+			var object2 = {};
+			object2["id"] = object["id"];
+
+			var jsonText2 = JSON.stringify(object2);
+			
+			await fetch("http://localhost:8080/createCart", {
+				method: "POST",
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: jsonText2
+			})
+			.then(response => response.text())
+			.then()
+			.catch(error => console.log('Authorization failed: ' + error.message));	
+
+
+			// Creating wishlist for user
+			await fetch("http://localhost:8080/createWishlist", {
+				method: "POST",
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: jsonText2
+			})
+			.then(response => response.text())
 			.then(alert("Registration Successful! Please Sign In to your account to continue!"))
 			.catch(error => console.log('Authorization failed: ' + error.message));	
+
 
 			document.getElementById("sign_up_username").value = "";
 			document.getElementById("sign_up_email").value = "";

@@ -382,6 +382,22 @@
                         method: "DELETE",
                     })
                     .then(response => response.text())
+                    .then()
+                    .catch(error => console.log('Authorization failed: ' + error.message));
+
+
+                    await fetch(`http://localhost:8080/deleteCart/${id}`, {
+                        method: "DELETE",
+                    })
+                    .then(response => response.text())
+                    .then()
+                    .catch(error => console.log('Authorization failed: ' + error.message));
+
+
+                    await fetch(`http://localhost:8080/deleteWishlist/${id}`, {
+                        method: "DELETE",
+                    })
+                    .then(response => response.text())
                     .then(closeUser())
                     .catch(error => console.log('Authorization failed: ' + error.message));
                 }
