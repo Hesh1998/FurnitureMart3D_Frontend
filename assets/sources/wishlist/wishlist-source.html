@@ -24,21 +24,8 @@
 							<td class="total"></td>
 							<td></td>
 						</tr>
-                        <tr> 
-                            <td class="cart_product"> <img src="Add img 1.jpg" alt="" width="150px" height="100px"> </td> 
-                            <td class="cart_description"> <h4>Quality Table Set</h4> <p>LKR 20,000</p> </td> 
-                            <td class="cart_price"> <p style="color: green;">Yes</p> </td> 
-                            <td class="cart_total"> <button class="btn btn-primary profile-button" type="button" style="font-size: medium;" onclick="">Add to Cart</button> </td> 
-                            <td class="cart_total"> <a href=""> <p class="cart_total_price">View Details</p></a> <br> <a href=""><p class="cart_total_price">Remove from Wishlist</p></a> </td> 
-                        </tr>
-                        <tr> 
-                            <td class="cart_product"> <img src="Add img 1.jpg" alt="" width="150px" height="100px"> </td> 
-                            <td class="cart_description"> <h4>Quality Table Set</h4> <p>LKR 20,000</p> </td> 
-                            <td class="cart_price"> <p style="color: red;">No</p> </td> 
-                            <td class="cart_total"> <button class="btn btn-primary profile-button" type="button" style="font-size: medium;" onclick="">Add to Cart</button> </td> 
-                            <td class="cart_total"> <a href=""> <p class="cart_total_price">View Details</p></a> <br> <a href=""><p class="cart_total_price">Remove from Wishlist</p></a> </td> 
-                        </tr>
 					</thead>
+
 					<tbody id="items_table">
 						
 					</tbody>
@@ -53,7 +40,133 @@
 
 	<script src="../js/bootstrap.min.js"></script>
     <script>
+		var id = localStorage.getItem("id");
+
+		const setPageDetails = async() => {
+			let response = await fetch(`http://localhost:8080/findWishlistItems/${id}`);
+			let wishlistItems = await response.json();
+			var items_table = document.getElementById("items_table");
+
+			if(wishlistItems.length == 0){
+				items_table.innerHTML = '<tr> <td class="cart_product"> <h3>No items in wishlist !</h3> </td> </tr>';
+			}else{
+				var in_html = "";
+
+				let response1 = await fetch("http://localhost:8080/getAllProducts");
+				let products = await response1.json();
+
+				for(i = 0; i < wishlistItems.length; i++){
+					for(j = 0; j < products.length; j++){
+						if(wishlistItems[i].sellerID == products[j].userId && wishlistItems[i].productID == products[j].itemId){
+							var InStock = "";
+							var colour = "";
+
+							if(products[j].stockQuantity <= 0){
+								InStock = "No";
+								colour = "red";
+							}else{
+								InStock = "Yes";
+								colour = "green";
+							}
+
+							in_html += `<tr> 
+                            <td class="cart_product"> <img src="${products[j].clr1Img}" alt="" width="150px" height="100px"> </td> 
+                            <td class="cart_description"> <h4>${products[j].itemName}</h4> <p>LKR ${(products[j].price).toLocaleString('en-US')}</p> </td> 
+                            <td class="cart_price"> <p style="color: ${colour};">${InStock}</p> </td> 
+                            <td class="cart_total"> <button class="btn btn-primary profile-button" type="button" style="font-size: medium;" onclick="addToCart(${products[j].userId}, ${products[j].itemId}, ${products[j].stockQuantity})">Add to Cart</button> </td> 
+                            <td class="cart_total"> <a href="" onclick="viewDetails(${products[j].userId}, ${products[j].itemId})"> <p class="cart_total_price">View Details</p></a> <br> <a href="" onclick="deleteItem(${wishlistItems[i].id}, ${products[j].userId}, ${products[j].itemId})"><p class="cart_total_price">Remove from Wishlist</p></a> </td> 
+                        	</tr>`;
+
+							break;
+						}
+					}
+				}
+
+				items_table.innerHTML = in_html;
+			}
+
+		}
 		
+		setPageDetails();
+
+
+		const addToCart = async(sellerId, productId, stockQuantity) => {
+			if(stockQuantity <= 0){
+				alert("Item out of stock!");
+			}else{
+				var available = false;
+
+				let response2 = await fetch(`http://localhost:8080/findCartItems/${id}`);
+				let cartItems = await response2.json();
+
+				for (let i = 0; i < cartItems.length; i++) {
+					if(cartItems[i].sellerID == sellerId & cartItems[i].productID == productId){
+						available = true;
+						break;
+					}
+				}
+
+				if(available == true){
+					alert("Iteam already added to cart!");
+				}else{
+					var object2 = {};
+					object2["id"] = id
+					object2["sellerID"] = sellerId;
+					object2["productID"] = productId;
+
+					var jsonText2 = JSON.stringify(object2);
+					
+					await fetch("http://localhost:8080/addItemToCart", {
+						method: "POST",
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json'
+						},
+						body: jsonText2
+					})
+					.then(response => response.text())
+					.then(alert("Item added to your cart!"))
+					.catch(error => console.log('Authorization failed: ' + error.message));	
+				}					
+			}
+		}
+
+
+		const viewDetails = async(sellerId, productId) => {
+			localStorage.setItem("sellerId", sellerId);
+			localStorage.setItem("productId", productId);
+			open("../../../item-demo.html", "_blank");
+		}
+
+
+		const deleteItem = async(buyerId, sellerId, productId) => {
+			var object = {};
+			object["id"] = buyerId;
+			object["sellerID"] = sellerId;
+			object["productID"] = productId;
+
+			var jsonText = JSON.stringify(object);
+
+			var res = false;
+
+			res = confirm("Are you sure you want to remove this item from wishlist?");
+
+			if(res){
+				await fetch("http://localhost:8080/deleteWishlistItem", {
+					method: "DELETE",
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					body: jsonText
+				})
+				.then(response => response.text())
+				.then("../../../wishlist.html", "_parent")
+				.catch(error => console.log('Authorization failed: ' + error.message));
+			}
+		}
+
+
     </script>
 </body>
 </html>

@@ -105,6 +105,69 @@
 				.catch(error => console.log('Authorization failed: ' + error.message));
 
 
+				// Delete all cart and wishlist items related to the product
+				let response5 = await fetch(`http://localhost:8080/getAllUserIds`);
+				let idsList = await response5.json();
+
+				for(i=0; i<idsList.length; i++){
+					let response6 = await fetch(`http://localhost:8080/findCartItems/${idsList[i].id}`);
+					let cartList = await response6.json();
+
+					for(j = 0; j < cartList.length; j++){
+						if(cartList[j].sellerID == id & cartList[j].productID == itemIndex){
+							var objectCart = {};
+							objectCart["id"] = idsList[i].id;
+							objectCart["sellerID"] = id;
+							objectCart["productID"] = itemIndex;
+
+							var jsonTextCart = JSON.stringify(objectCart);
+
+							await fetch("http://localhost:8080/deleteCartItem", {
+								method: "DELETE",
+								headers: {
+									'Accept': 'application/json',
+									'Content-Type': 'application/json'
+								},
+								body: jsonTextCart
+							})
+							.then(response => response.text())
+							.then()
+							.catch(error => console.log('Authorization failed: ' + error.message));
+
+							break;
+						}
+					}
+
+					let response7 = await fetch(`http://localhost:8080/findWishlistItems/${idsList[i].id}`);
+					let wishlistList = await response7.json();
+
+					for(j = 0; j < wishlistList.length; j++){
+						if(wishlistList[j].sellerID == id & wishlistList[j].productID == itemIndex){
+							var objectWishlist = {};
+							objectWishlist["id"] = idsList[i].id;
+							objectWishlist["sellerID"] = id;
+							objectWishlist["productID"] = itemIndex;
+
+							var jsonTextWishlist = JSON.stringify(objectWishlist);
+
+							await fetch("http://localhost:8080/deleteWishlistItem", {
+								method: "DELETE",
+								headers: {
+									'Accept': 'application/json',
+									'Content-Type': 'application/json'
+								},
+								body: jsonTextWishlist
+							})
+							.then(response => response.text())
+							.then()
+							.catch(error => console.log('Authorization failed: ' + error.message));
+
+							break;
+						}
+					}
+				}
+
+
 				// Delete 3D Model for colour 1
 				var object2 = {};
 				object2["userId"] = id;
@@ -124,6 +187,7 @@
 				.then(response => response.text())
 				.then()
 				.catch(error => console.log('Authorization failed: ' + error.message));
+
 
 				// Delete 3D Model for colour 2
 				var object3 = {};
@@ -145,6 +209,7 @@
 				.then()
 				.catch(error => console.log('Authorization failed: ' + error.message));
 
+				
 				// Delete 3D Model for colour 3
 				var object4 = {};
 				object4["userId"] = id;
