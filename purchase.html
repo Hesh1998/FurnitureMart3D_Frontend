@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>FurnitureMart 3D - Edit Product</title>
+  <title>FurnitureMart 3D - Checkout</title>
   
   
   <!-- Google Fonts -->
@@ -30,13 +30,13 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="">Overview</a></li> 
-          <li><a href="seller-dashboard.html">Store Info</a></li>
-          <li><a href="">Tasks</a></li>
-          <li><a href="seller-products.html">Products</a></li>
-          <li><a href="FurnitureMart3D - Seller Guidelines.pdf" target="_blank">Guidelines</a></li>
-          <li><a href="buyer-dashboard.html">Switch to Buying</a></li>
-          <li><a href="sign-in.html" class="getstarted" id="usernameBtn"></a></li>
+          <li><a href="index.html#hero">Home</a></li> 
+          <li><a href="explore.html">Products</a></li>
+          <li><a href="index.html#portfolio">Trending Products</a></li>
+          <li><a href="javascript:openWishlist()">Wishlist</a></li>
+          <li><a href="javascript:openCart()">Cart</a></li>
+          <li><a href="explore.html#footer">About Us</a></li>
+          <li><a href="sign-in.html" class="getstarted" id="usernameBtn">Sign In</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -45,7 +45,9 @@
   </header>
   <!-- End Header -->
 
-  <iframe src="assets/sources/edit-product/edit-product-source.html" width="100%" height="7900px" style="border:none;"></iframe>
+  
+  <iframe src="assets/sources/purchase/purchase-source.html" width="100%" height="2300px" style="border:none;"></iframe>
+    
   
   <!-- Footer -->
   <footer id="footer">
@@ -106,50 +108,74 @@
   </footer>
   <!-- End Footer -->
 
-
-  <script>
-    var id = localStorage.getItem("id");
-
-    if(id == null){
-      open("sign-in.html", "_parent");
-    }
-
-    const setPageDetails = async() => {
-        let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
-        let userDetails = await response1.json();
-
-        document.getElementById("usernameBtn").innerHTML = `Hi, ${userDetails.username}`;
-    }
-
-    setPageDetails();
-    
-
-    // Handle log in button
-    const signInBtn = document.getElementById("usernameBtn");
-
-    // Change text color on mouseover
-    signInBtn.addEventListener('mouseover', function handleMouseOver() {
-      let width =  signInBtn.offsetWidth + 'px';
-      let height =  signInBtn.offsetHeight + 'px';
-      console.log(width);
-      signInBtn.innerHTML = "Logout"
-
-      signInBtn.style.height = height;
-      signInBtn.style.width = width;
-      signInBtn.style.textAlign = "center";
-    });
-
-    // Change text color back on mouseout
-    signInBtn.addEventListener('mouseout', function handleMouseOut() {
-      setPageDetails();
-    });
-  </script>
-
   <!-- JS Files -->
   <script src="assets/framework/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/framework/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/js/landing_scripts.js"></script>
   <script src="assets/js/main.js"></script>
+
+  <script>
+		var id = localStorage.getItem("id");
+
+        if(id == null){
+            open("sign-in.html", "_parent");
+        }
+	
+		const setLogInBtn = async() => {
+			let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
+			let userDetails = await response1.json();
+	
+			document.getElementById("usernameBtn").innerHTML = `Hi, ${userDetails.username}`;
+		}
+	
+		if(id != null){
+		  setLogInBtn();
+		}
+	
+		// Handle log in button
+		const signInBtn = document.getElementById("usernameBtn");
+	
+		// Change text color on mouseover
+		signInBtn.addEventListener('mouseover', function handleMouseOver() {
+		  if(id != null){
+			let width =  signInBtn.offsetWidth + 'px';
+			let height =  signInBtn.offsetHeight + 'px';
+			signInBtn.innerHTML = "Logout"
+	
+			signInBtn.style.height = height;
+			signInBtn.style.width = width;
+			signInBtn.style.textAlign = "center";
+		  }
+		});
+	
+		// Change text color back on mouseout
+		signInBtn.addEventListener('mouseout', function handleMouseOut() {
+		  if(id != null){
+			setLogInBtn();
+		  }
+		});
+
+
+        // Open Wishlist
+        const openWishlist = async() => {
+            if(id == null){
+                open("sign-in.html", "_blank");
+            }else{
+                open("wishlist.html", "_blank");
+            }
+        }
+
+        // Open Cart
+        const openCart = async() => {
+            if(id == null){
+                open("sign-in.html", "_blank");
+            }else{
+                open("cart.html", "_blank");
+            }
+        }
+	
+	</script>
+
 </body>
 
 </html>
