@@ -110,6 +110,10 @@
   <script>
     var id = localStorage.getItem("id");
 
+    if(id == null){
+      open("sign-in.html", "_parent");
+    }
+
     const setPageDetails = async() => {
         let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
         let userDetails = await response1.json();
