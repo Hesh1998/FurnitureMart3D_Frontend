@@ -16,13 +16,12 @@
             <div class="row">
                 <div class="col-md-3 border-right">
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <img id="clr1Img" src="Add img 1.jpg" width="306" height="229.5">
+                        <img id="itemImg" src="" width="306" height="229.5">
 
                         <div class="col-md-12" style="padding-top: 20px; padding-bottom: 20px;">
                             <br>
-                            <h2>Modern Sofa</h2>
-                            <br>
-                            <h4 style="color: #4CA48C;">LKR 200,000</h4>
+                            <h2 id="itemName"></h2>
+                            <h5 style="color: #4CA48C;" id="itemPrice"></h5>
                         </div>
                     </div>
                 </div>
@@ -31,18 +30,18 @@
                     <div class="p-3 py-5">
                         <div class="row mt-3">
                             <div class="col-md-12">
-                                <label class="labels">Username</label>
-                                <input id = "username" type="text" class="form-control" placeholder="" value="" readonly="readonly">
+                                <label class="labels">Select Color *</label>
+                                <div id="colours" style="margin-top: 15px;"> 
+                                    
+                                </div>
+                            </div>
+
+                            <div class="col-md-4" style="padding-top: 15px;" id="quantityDiv">
                             </div>
 
                             <div class="col-md-12" style="padding-top: 15px;">
                                 <label class="labels">Email Address</label>
-                                <input id = "email" type="text" class="form-control" placeholder="" value="" readonly="readonly">
-                            </div>
-
-                            <div class="col-md-12" style="padding-top: 15px;">
-                                <label class="labels">Accouty Type</label>
-                                <input id="account" type="text" class="form-control" placeholder="" value="" readonly="readonly">
+                                <input id="email" type="text" class="form-control" placeholder="" value="" readonly="readonly">
                             </div>
 
                             <div class="col-md-12" style="padding-top: 15px;">
@@ -85,11 +84,16 @@
                                 </select>
                             </div>
 
-                        </div>
-                        
-                        <div class="mt-5 text-right">
-                            <button class="btn btn-primary profile-button" type="button" onclick="saveBtn()">Save Edited Details</button>
-                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="deleteUser()">Delete Account</button>
+                            <div class="col-md-12" style="padding-top: 15px;">
+                                <label class="labels">Delivery Charge</label>
+                                <input id="deliveryCharge" type="text" class="form-control" placeholder="" value="" readonly="readonly">
+                            </div>
+
+                            <div class="col-md-12" style="padding-top: 15px;">
+                                <label class="labels">Estimated Arrival (days)</label>
+                                <input id="estimatedArrival" type="text" class="form-control" placeholder="" value="" readonly="readonly">
+                            </div>
+
                         </div>
 
                     </div>
@@ -97,28 +101,163 @@
 
                 <div class="col-md-4">
                     <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center experience">Change Password</div><br>
+                        <div class="d-flex justify-content-between align-items-center experience">Payment Details</div><br>
                         
                         <div class="col-md-12">
-                            <label class="labels" style="padding-top: 15px;">Current Password *</label>
-                            <input id="currentPass" type="password" class="form-control" placeholder="Enter current password" value="">
+                            <label class="labels" style="padding-top: 15px;">Sub Total</label>
+                            <input id="currentPass" type="text" class="form-control" value="LKR 50,000" readonly="readonly">
                         </div>
+
                         <div class="col-md-12">
-                            <label class="labels" style="padding-top: 15px;">New Password *</label>
-                            <input id="newPass" type="password" class="form-control" placeholder="Enter new password" value="">
+                            <label class="labels" style="padding-top: 15px;">Delivery Charge</label>
+                            <input id="currentPass" type="text" class="form-control" value="LKR 500" readonly="readonly">
                         </div>
+
                         <div class="col-md-12">
-                            <label class="labels" style="padding-top: 15px;">Confirm New Password *</label>
-                            <input id="confirmNewPass" type="password" class="form-control" placeholder="Confirm new password" value="">
+                            <label class="labels" style="padding-top: 15px;">Total Payment</label>
+                            <input id="currentPass" type="text" class="form-control" value="LKR 50,500" readonly="readonly">
+                        </div>
+
+                        <br><br>
+                        <div class="d-flex justify-content-between align-items-center experience">Payment Method *</div><br>
+                        <div class="col-md-12">
+                            <input type="radio" id="cash" value="Cash on Delivery">
+                            <label class="labels" for="cash">Cash on Delivery</label><br>
+                            <input type="radio" id="card" value="Card Payment">
+                            <label class="labels" for="card">Card Payment</label><br>
                         </div>
 
                         <div class="mt-5 text-right">
-                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="resetPass()">Reset Password</button>
+                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="resetPass()">Checkout</button>
                         </div>
                     </div>
                 </div>
                 
             </div>
         </div>
+
+        <script>
+            var buyerId = localStorage.getItem("id");
+
+            // Setting page details
+            var sellerId = localStorage.getItem("sellerId");
+            var productId = localStorage.getItem("productId");
+            var stockQuantity = 0;
+            var clr1 = "";
+            var clr2 = "";
+            var clr3 = "";
+            var itemImg = document.getElementById("itemImg");
+            var itemName = document.getElementById("itemName");
+            var itemPrice = document.getElementById("itemPrice");
+            var colours = document.getElementById("colours");
+            var quantityDiv = document.getElementById("quantityDiv");
+
+
+            const setPageDetails = async() => {
+                // Set buyer details
+                let response2 = await fetch(`http://localhost:8080/findbyId/${buyerId}`);
+			    let userDetails = await response2.json();
+
+                document.getElementById("email").value = userDetails.email;
+
+                if(userDetails.contactNo != "NA"){
+                    document.getElementById("phone").value = userDetails.contactNo;
+                }
+
+                if(userDetails.deliveryAddress != "NA"){
+                    document.getElementById("address").value = userDetails.deliveryAddress;
+                }
+                
+                if(userDetails.buyerDistrict != "NA"){
+                    document.getElementById("district").value = userDetails.buyerDistrict;
+                }
+
+
+                // Set product details
+                let response1 = await fetch(`http://localhost:8080/findUserProducts/${sellerId}`);
+                let items = await response1.json();
+
+                for (let i = 0; i < items.length; i++) {
+                    if(items[i].itemId == productId){
+                        itemImg.src = items[i].clr1Img;
+                        itemName.innerHTML = items[i].itemName;
+                        itemPrice.innerHTML = `LKR ${(items[i].price).toLocaleString('en-US')}`;
+
+                        coloursInnerHTML = "";
+                        
+                        coloursInnerHTML += `<span style="height: 30px; width: 30px; background-color: ${items[i].clr1}; border-radius: 50%; display: inline-block; border: 3px solid black;" onclick="setImage1()" id="clr1Img"></span>`;
+                        clr1 = items[i].clr1Img;
+
+                        if(items[i].clr2 != ""){
+                            coloursInnerHTML += `<span style="height: 30px; width: 30px; background-color: ${items[i].clr2}; border-radius: 50%; display: inline-block; border: 1px solid black; margin-left: 10px;" onclick="setImage2()" id="clr2Img"></span>`;
+                            clr2 = items[i].clr2Img;
+                        }
+
+                        if(items[i].clr3 != ""){
+                            coloursInnerHTML += `<span style="height: 30px; width: 30px; background-color: ${items[i].clr3}; border-radius: 50%; display: inline-block; border: 1px solid black; margin-left: 10px;" onclick="setImage3()" id="clr3Img"></span>`;
+                            clr3 = items[i].clr3Img;
+                        }
+
+                        colours.innerHTML = coloursInnerHTML;
+
+                        quantityDiv.innerHTML = `<label class="labels">Set Quantity *</label> <input id="quantity" type="number" class="form-control" placeholder="" value="1" style="text-align: center;" min="1" max="${items[i].stockQuantity}">`;
+                        
+                        var deliveryDistrict = document.getElementById("district").value;
+                        
+                        if(deliveryDistrict == "Colombo" & items[i].deliveryColombo != 0){
+                            document.getElementById("deliveryCharge").value = items[i].deliveryColombo;
+                            document.getElementById("deliveryCharge").style.color = "black";
+                        }else if(deliveryDistrict == "Colombo" & items[i].deliveryColombo == 0){
+                            document.getElementById("deliveryCharge").value = "Delivery not available for Colombo";
+                            document.getElementById("deliveryCharge").style.color = "red";
+                        }
+
+                        if(deliveryDistrict == "Galle" & items[i].deliveryGalle != 0){
+                            document.getElementById("deliveryCharge").value = items[i].deliveryGalle;
+                            document.getElementById("deliveryCharge").style.color = "black";
+                        }else if(deliveryDistrict == "Galle" & items[i].deliveryGalle == 0){
+                            document.getElementById("deliveryCharge").value = "Delivery not available for Galle";
+                            document.getElementById("deliveryCharge").style.color = "red";
+                        }
+                    }
+                }
+
+
+                
+            }
+
+            setPageDetails();
+
+
+            const setImage1 = async() => {
+                itemImg.src = clr1;
+
+                document.getElementById("clr1Img").style.border = "3px solid black";
+                document.getElementById("clr2Img").style.border = "1px solid black";
+                document.getElementById("clr3Img").style.border = "1px solid black";
+            }
+
+
+            const setImage2 = async() => {
+                itemImg.src = clr2;
+
+                document.getElementById("clr1Img").style.border = "1px solid black";
+                document.getElementById("clr2Img").style.border = "3px solid black";
+                document.getElementById("clr3Img").style.border = "1px solid black";
+            }
+
+
+            const setImage3 = async() => {
+                itemImg.src = clr3;
+
+                document.getElementById("clr1Img").style.border = "1px solid black";
+                document.getElementById("clr2Img").style.border = "1px solid black";
+                document.getElementById("clr3Img").style.border = "3px solid black";
+            }
+
+
+
+            
+        </script>
     </body>
 </html>
