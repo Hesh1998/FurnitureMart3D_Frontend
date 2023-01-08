@@ -128,6 +128,7 @@
         </div>
 
         <script>
+            // Seller id
             var id = localStorage.getItem("id");
 
 
@@ -175,7 +176,7 @@
             setPageDetails();
 
 
-            // Update seller details
+            // Update seller profile details
             const saveBtn = async() => {
                 var storeAddress = document.getElementById("address").value;
                 
@@ -235,7 +236,7 @@
             }
 
 
-            // Save account details
+            // Save seller payment details
             const accountBtn = async() => {
                 var accountName = document.getElementById("accountName").value;
                 var accountNo = document.getElementById("accountNo").value;
@@ -314,7 +315,7 @@
             }
 
 
-            // Delete User account
+            // Delete seller account section of a user
             const deleteStore = async() => {
                 const res = confirm("Are you sure you want to remove your store?")
 

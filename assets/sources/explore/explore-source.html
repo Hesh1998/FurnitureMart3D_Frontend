@@ -210,25 +210,6 @@
 			<div class="col-sm-9 padding-right">
 				<div class="features_items" id="products_list_view">
 
-					<!--div class="col-sm-4">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-									<div class="productinfo text-center">
-										<img src="Item.jpg" alt="" />
-										<h2>LKR 15,000.00</h2>
-										<p>Classy Dining Table</p>
-										<a href="../../../item-demo.html" target="_parent" class="btn btn-default add-to-cart">View Details</a>
-									</div>
-							</div>
-							<div class="choose">
-								<ul class="nav nav-pills nav-justified">
-									<li><a href="#">Add to Cart</a></li>
-									<li><a href="#">Add to Wishlist</a></li>
-								</ul>
-							</div>
-						</div>
-					</div-->
-					
 				</div>
 			</div>
 
@@ -249,13 +230,15 @@
     <script src="../js/script.js"></script>
 		
 	<script>
-		// View item details
+		// View selected item details
 		const openItemView = async(userId, itemId) =>{
 			localStorage.setItem("sellerId", userId);
 			localStorage.setItem("productId", itemId);
 			open("../../../item-demo.html", "_parent");
 		}
 
+
+		// Set all the products to view
 		const setProducts = async() => {
 			let response = await fetch("http://localhost:8080/getAllProducts");
 			let products = await response.json();
@@ -270,9 +253,11 @@
 		setProducts();
 
 
-		// Add item to cart / wishlist
+		// Buyer id
 		var buyerId = localStorage.getItem("id");
 
+
+		// Add selected item to cart
 		const addToCart = async(sellerID, itemID) => {
 			if(buyerId == null){
 				open("../../../../sign-in.html", "_blank");
@@ -333,6 +318,7 @@
 		}
 
 
+		// Add selected item to wishlist
 		const addToWishlist = async(sellerID, itemID) => {
 			if(buyerId == null){
 				open("../../../../sign-in.html", "_blank");

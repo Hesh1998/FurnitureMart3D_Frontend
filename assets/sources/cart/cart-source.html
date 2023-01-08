@@ -40,8 +40,11 @@
 
 	<script src="../js/bootstrap.min.js"></script>
     <script>
+		// Get id of the buyer
 		var id = localStorage.getItem("id");
 
+
+		// Set cart details
 		const setPageDetails = async() => {
 			let response = await fetch(`http://localhost:8080/findCartItems/${id}`);
 			let cartItems = await response.json();
@@ -90,11 +93,13 @@
 		setPageDetails();
 
 		
+		// Purchase the selected product
 		const checkout = async(sellerId, productId) => {
 			alert("Will be developed later!");
 		}
 
 
+		// View details of selected product
 		const viewDetails = async(sellerId, productId) => {
 			localStorage.setItem("sellerId", sellerId);
 			localStorage.setItem("productId", productId);
@@ -102,6 +107,7 @@
 		}
 
 
+		// Remove selected product from cart
 		const deleteItem = async(buyerId, sellerId, productId) => {
 			var object = {};
 			object["id"] = buyerId;

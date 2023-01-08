@@ -115,12 +115,17 @@
   <script src="assets/js/main.js"></script>
 
   <script>
+    // User id
 		var id = localStorage.getItem("id");
 
-        if(id == null){
-            open("sign-in.html", "_parent");
-        }
+
+    // Not logged in
+    if(id == null){
+        open("sign-in.html", "_parent");
+    }
 	
+
+    // Set login button if logged in
 		const setLogInBtn = async() => {
 			let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
 			let userDetails = await response1.json();
@@ -132,6 +137,7 @@
 		  setLogInBtn();
 		}
 	
+
 		// Handle log in button
 		const signInBtn = document.getElementById("usernameBtn");
 	
@@ -156,23 +162,24 @@
 		});
 
 
-        // Open Wishlist
-        const openWishlist = async() => {
-            if(id == null){
-                open("sign-in.html", "_blank");
-            }else{
-                open("wishlist.html", "_blank");
-            }
+    // Open Wishlist
+    const openWishlist = async() => {
+        if(id == null){
+            open("sign-in.html", "_blank");
+        }else{
+            open("wishlist.html", "_blank");
         }
+    }
 
-        // Open Cart
-        const openCart = async() => {
-            if(id == null){
-                open("sign-in.html", "_blank");
-            }else{
-                open("cart.html", "_blank");
-            }
+    
+    // Open Cart
+    const openCart = async() => {
+        if(id == null){
+            open("sign-in.html", "_blank");
+        }else{
+            open("cart.html", "_blank");
         }
+    }
 	
 	</script>
 

@@ -73,6 +73,7 @@
 		setPageDetails();
 
 
+		// Delete a selected product
 		const deleteProducts = async(itemIndex, inOrder) => {
 			let response1 = await fetch(`http://localhost:8080/findUserProducts/${id}`);
 			let items = await response1.json();
@@ -232,6 +233,8 @@
 			}
 		}
 
+
+		// Edit details of selected product
 		const viewEditProducts = async(itemIndex) => {
 			localStorage.setItem("itemId", itemIndex);
 			open("../../../edit-product.html", "_blank")

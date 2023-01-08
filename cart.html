@@ -108,12 +108,17 @@
 
 
   <script>
+    // User id
     var id = localStorage.getItem("id");
 
+
+    // Not logged in
     if(id == null){
       open("sign-in.html", "_parent");
     }
 
+
+    // Set page details
     const setPageDetails = async() => {
         let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
         let userDetails = await response1.json();
@@ -123,6 +128,8 @@
 
     setPageDetails();
     
+
+    // Switch to selling
     const openSeller = async() => {
         let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
         let userDetails = await response1.json();

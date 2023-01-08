@@ -13,11 +13,12 @@ const params = {
 };
 
 
-var root;
+// Set path
 var path = localStorage.getItem("path");
 localStorage.setItem("path", "");
 
 // Loading the source  3D file
+var root;
 loader.load(path, function(glb){
     root = glb.scene;
     root.scale.set(scale, scale, scale);
@@ -39,7 +40,7 @@ const sizes = {
 
 
 // Adding the camera 
-// (Width camera sees in degress, aspect ratio - entire widow, min distance to see an object, max distance to seen an object)
+// (Width camera sees in degress, Aspect ratio - entire widow, Min distance to see an object, Max distance to seen an object)
 const camera = new THREE.PerspectiveCamera(75, sizes.width/sizes.height, 0.1, 100);
 camera.position.set(0, 0.05, 2);
 scene.add(camera)
@@ -60,25 +61,26 @@ renderer.gammaOutput = true;
 renderer.render(scene, camera);
 
 
-// Rotating 3D model in mouse move
+// Rotating 3D model in pressed mouse move
 var mx = 0;
 var my = 0;
 
-
+// Do this when the mouse is down, on mouse move
 const saveMouse = async(event) => {
-    // Do this when the mouse is down, on mouse move
     let mxTemp = event.clientX;
     var myTemp = event.clientY;
     var el = document.elementFromPoint(mxTemp, myTemp);
     
+    // Rotate modal only when mouse moves within the canvas
     if(el == canvas){
         mx = mxTemp;
         my = myTemp;
     }
 }
 
+// Do nothing when the mouse is up, on mouse move
 const saveMouse2 = async(event) => {
-    // Do nothing when the mouse is up, on mouse move
+    
 }
 
 document.onmousedown = function(event) {

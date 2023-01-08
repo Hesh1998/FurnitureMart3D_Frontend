@@ -93,13 +93,16 @@
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 	<script>
+		// Buyer id
 		var buyerId = localStorage.getItem("id");
 
-		// Setting page details
+		// Seller id and product id
 		var sellerId = localStorage.getItem("sellerId");
         var productId = localStorage.getItem("productId");
 		var stockCount = 0;
 
+
+		// Setting page details (product details)
 		const setPageDetails = async() => {
 			let response1 = await fetch(`http://localhost:8080/findUserProducts/${sellerId}`);
 			let items = await response1.json();

@@ -115,8 +115,11 @@
   <script src="assets/js/main.js"></script>
 
   <script>
+    // User id
 		var id = localStorage.getItem("id");
 	
+
+    // Set login button if logged in
 		const setLogInBtn = async() => {
 			let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
 			let userDetails = await response1.json();
@@ -128,6 +131,7 @@
 		  setLogInBtn();
 		}
 	
+
 		// Handle log in button
 		const signInBtn = document.getElementById("usernameBtn");
 	
@@ -162,6 +166,7 @@
       }
     }
 
+    
     // Open Cart
     const openCart = async() => {
       if(id == null){

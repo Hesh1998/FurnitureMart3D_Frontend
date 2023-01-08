@@ -31,8 +31,11 @@
         </div>
 
         <script>
+            // Buyer / Seller id
             var id = localStorage.getItem("id");
             
+
+            // Create new Store
             const createStore = async() => {
                 let storenameValid = validateStoreName();
                 storenameValid.then(value => {
@@ -42,13 +45,14 @@
                         alert("Store name already exists!");
                     }else{
                         registerStore();
-                        // open("../../../seller-dashboard.html", "_parent");
                     }
                 }).catch(err => {
                     console.log(err);
                 });
             }
 
+
+            // Validate store name
             const validateStoreName = async() => {
                 const storenameVar = document.getElementById("storename").value;
                 
@@ -67,6 +71,8 @@
                 }
             }
 
+
+            // Register new store after all validations
             const registerStore = async() => {
                 let response = await fetch(`http://localhost:8080/findbyId/${id}`);
 			    let userDetails = await response.json();

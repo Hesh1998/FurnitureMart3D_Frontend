@@ -105,17 +105,17 @@
                         
                         <div class="col-md-12">
                             <label class="labels" style="padding-top: 15px;">Sub Total</label>
-                            <input id="currentPass" type="text" class="form-control" value="LKR 50,000" readonly="readonly">
+                            <input id="subtotal" type="text" class="form-control" value="" readonly="readonly">
                         </div>
 
                         <div class="col-md-12">
                             <label class="labels" style="padding-top: 15px;">Delivery Charge</label>
-                            <input id="currentPass" type="text" class="form-control" value="LKR 500" readonly="readonly">
+                            <input id="delivery2" type="text" class="form-control" value="LKR 500" readonly="readonly">
                         </div>
 
                         <div class="col-md-12">
                             <label class="labels" style="padding-top: 15px;">Total Payment</label>
-                            <input id="currentPass" type="text" class="form-control" value="LKR 50,500" readonly="readonly">
+                            <input id="totalPay" type="text" class="form-control" value="LKR 50,500" readonly="readonly">
                         </div>
 
                         <br><br>
@@ -137,9 +137,11 @@
         </div>
 
         <script>
+            // Buyer id
             var buyerId = localStorage.getItem("id");
 
-            // Setting page details
+
+            // Details related to the product
             var sellerId = localStorage.getItem("sellerId");
             var productId = localStorage.getItem("productId");
             var stockQuantity = 0;
@@ -153,6 +155,7 @@
             var quantityDiv = document.getElementById("quantityDiv");
 
 
+            // Set page details
             const setPageDetails = async() => {
                 // Set buyer details
                 let response2 = await fetch(`http://localhost:8080/findbyId/${buyerId}`);
@@ -205,30 +208,56 @@
                         var deliveryDistrict = document.getElementById("district").value;
                         
                         if(deliveryDistrict == "Colombo" & items[i].deliveryColombo != 0){
-                            document.getElementById("deliveryCharge").value = items[i].deliveryColombo;
+                            document.getElementById("deliveryCharge").value = "LKR " + (items[i].deliveryColombo).toLocaleString('en-US');
+                            document.getElementById("delivery2").value = "LKR " + (items[i].deliveryColombo).toLocaleString('en-US');
+                            document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryColombo).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
+                            document.getElementById("delivery2").style.color = "black";
+                            
+                            document.getElementById("estimatedArrival").value = items[i].arrivalColombo;
+                            document.getElementById("estimatedArrival").style.color = "black";
                         }else if(deliveryDistrict == "Colombo" & items[i].deliveryColombo == 0){
                             document.getElementById("deliveryCharge").value = "Delivery not available for Colombo";
+                            document.getElementById("delivery2").value = "Delivery not available for Colombo";
+                            document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryColombo).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
+                            document.getElementById("delivery2").style.color = "red";
+
+                            document.getElementById("estimatedArrival").value = "Delivery not available for Colombo";
+                            document.getElementById("estimatedArrival").style.color = "red";
                         }
 
                         if(deliveryDistrict == "Galle" & items[i].deliveryGalle != 0){
-                            document.getElementById("deliveryCharge").value = items[i].deliveryGalle;
+                            document.getElementById("deliveryCharge").value = "LKR " + (items[i].deliveryGalle).toLocaleString('en-US');
+                            document.getElementById("delivery2").value = "LKR " + (items[i].deliveryGalle).toLocaleString('en-US');
+                            document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryGalle).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
+                            document.getElementById("delivery2").style.color = "black";
+
+                            document.getElementById("estimatedArrival").value = items[i].arrivalGalle;
+                            document.getElementById("estimatedArrival").style.color = "black";
                         }else if(deliveryDistrict == "Galle" & items[i].deliveryGalle == 0){
                             document.getElementById("deliveryCharge").value = "Delivery not available for Galle";
+                            document.getElementById("delivery2").value = "Delivery not available for Galle";
+                            document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryGalle).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
+                            document.getElementById("delivery2").style.color = "red";
+
+                            document.getElementById("estimatedArrival").value = "Delivery not available for Galle";
+                            document.getElementById("estimatedArrival").style.color = "red";
                         }
+
+
+                        document.getElementById("subtotal").value = "LKR " + (items[i].price).toLocaleString('en-US');
                     }
                 }
-
-
-                
+ 
             }
 
             setPageDetails();
 
 
+            // Switch to image 1 (colour 1)
             const setImage1 = async() => {
                 itemImg.src = clr1;
 
@@ -238,6 +267,7 @@
             }
 
 
+            // Switch to image 2 (colour 2)
             const setImage2 = async() => {
                 itemImg.src = clr2;
 
@@ -247,6 +277,7 @@
             }
 
 
+            // Switch to image 3 (colour 3)
             const setImage3 = async() => {
                 itemImg.src = clr3;
 
@@ -256,6 +287,60 @@
             }
 
 
+
+            document.getElementById("district").onchange = function() {setDFEA()};
+
+            const setDFEA = async() => {
+                // Set product details
+                let response1 = await fetch(`http://localhost:8080/findUserProducts/${sellerId}`);
+                let items = await response1.json();
+
+                for (let i = 0; i < items.length; i++) {
+                    if(items[i].itemId == productId){
+                        var deliveryDistrict = document.getElementById("district").value;
+                        
+                        if(deliveryDistrict == "Colombo" & items[i].deliveryColombo != 0){
+                            document.getElementById("deliveryCharge").value = "LKR " + (items[i].deliveryColombo).toLocaleString('en-US');
+                            document.getElementById("delivery2").value = "LKR " + (items[i].deliveryColombo).toLocaleString('en-US');
+                            document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryColombo).toLocaleString('en-US');
+                            document.getElementById("deliveryCharge").style.color = "black";
+                            document.getElementById("delivery2").style.color = "black";
+
+                            document.getElementById("estimatedArrival").value = items[i].arrivalColombo;
+                            document.getElementById("estimatedArrival").style.color = "black";
+                        }else if(deliveryDistrict == "Colombo" & items[i].deliveryColombo == 0){
+                            document.getElementById("deliveryCharge").value = "Delivery not available for Colombo";
+                            document.getElementById("delivery2").value = "Delivery not available for Colombo";
+                            document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryColombo).toLocaleString('en-US');
+                            document.getElementById("deliveryCharge").style.color = "red";
+                            document.getElementById("delivery2").style.color = "red";
+
+                            document.getElementById("estimatedArrival").value = "Delivery not available for Colombo";
+                            document.getElementById("estimatedArrival").style.color = "red";
+                        }
+
+                        if(deliveryDistrict == "Galle" & items[i].deliveryGalle != 0){
+                            document.getElementById("deliveryCharge").value = "LKR " + (items[i].deliveryGalle).toLocaleString('en-US');
+                            document.getElementById("delivery2").value = "LKR " + (items[i].deliveryGalle).toLocaleString('en-US');
+                            document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryGalle).toLocaleString('en-US');
+                            document.getElementById("deliveryCharge").style.color = "black";
+                            document.getElementById("delivery2").style.color = "black";
+
+                            document.getElementById("estimatedArrival").value = items[i].arrivalGalle;
+                            document.getElementById("estimatedArrival").style.color = "black";
+                        }else if(deliveryDistrict == "Galle" & items[i].deliveryGalle == 0){
+                            document.getElementById("deliveryCharge").value = "Delivery not available for Galle";
+                            document.getElementById("delivery2").value = "Delivery not available for Galle";
+                            document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryGalle).toLocaleString('en-US');
+                            document.getElementById("deliveryCharge").style.color = "red";
+                            document.getElementById("delivery2").style.color = "red";
+
+                            document.getElementById("estimatedArrival").value = "Delivery not available for Galle";
+                            document.getElementById("estimatedArrival").style.color = "red";
+                        }
+                    }
+                }
+            }
 
             
         </script>
