@@ -8,6 +8,7 @@
     <link href="../css/font-awesome.min.css" rel="stylesheet">
 	<link href="../css/style.css" rel="stylesheet">
 	<link href="../css/responsive.css" rel="stylesheet">
+	<link href="../../alert-box/alert-style.css" rel="stylesheet">
 
 </head>
 
@@ -57,6 +58,11 @@
 			</div>
 		</div>
 	</section>
+
+	<div class="toast" style="position: absolute;"> </div>
+
+	<script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../alert-box/alert-script.js"></script>
 	
 	<script>
 		// JS code related to Sign Up
@@ -68,19 +74,19 @@
 			let usernameValid = validateUsername();
 			usernameValid.then(value => {
 				if(value == "No"){
-					alert("Please enter a username!");
+					errorToast("Please enter a username!");
 				}else if(value == "Have"){
-					alert("Username already exists!");
+					errorToast("Username already exists!");
 				}else{
 					let emailValid = validateEmail();
 					
 					emailValid.then(value => {
 						if(value == "No"){
-							alert("Please enter an email!");
+							errorToast("Please enter an email!");
 						}else if(value == "Have"){
-							alert("You have already registered with this email address! Please sign in to your account.");
+							errorToast("You have already registered with this email address! Please sign in to your account.");
 						}else if(checkPasswordStrength() == false){
-							alert("Password must have at least one lowercase letter, one uppercase letter, one digit, one special character, and is at least eight characters long.");
+							errorToast("Password must have at least one lowercase letter, one uppercase letter, one digit, one special character, and is at least eight characters long.");
 						}else{
 							registerNewUser();
 						}
@@ -241,7 +247,7 @@
 				body: jsonText2
 			})
 			.then(response => response.text())
-			.then(alert("Registration Successful! Please Sign In to your account to continue!"))
+			.then(infoToast("Registration Successful! Please Sign In to your account to continue."))
 			.catch(error => console.log('Authorization failed: ' + error.message));	
 
 
@@ -293,10 +299,10 @@
 					localStorage.setItem("id", ids[index].id);
 					open("../../../buyer-dashboard.html", "_parent");
 				}else{
-					alert("Invalid username or password!");
+					errorToast("Invalid username or password!");
 				}
 			}else{
-				alert("Invalid username or password!");
+				errorToast("Invalid username or password!");
 			}
 
 
