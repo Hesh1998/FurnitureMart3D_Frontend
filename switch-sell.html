@@ -16,7 +16,7 @@
   <link href="assets/framework/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/framework/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="assets/css/common_styles.css" rel="stylesheet">
-  
+  <link href="assets/alert-box/alert-style.css" rel="stylesheet">
 
 </head>
 
@@ -31,8 +31,8 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="buyer-dashboard.html">Personal Info</a></li>
-          <li><a href="">Cart</a></li>
-          <li><a href="">Wishlist</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="wishlist.html">Wishlist</a></li>
           <li><a href="">Purchase History</a></li>
           <li><a href="FurnitureMart3D - Buyer Guidelines.pdf" target="_blank">Guidelines</a></li>
           <li><a href="javascript:openSeller()">Switch to Selling</a></li>
@@ -46,7 +46,8 @@
   <!-- End Header -->
 
   <iframe src="assets/sources/switch-sell/switch-sell-source.html" width="100%" height="900px" style="border:none;"></iframe>
-  
+  <div class="toast" style="position: absolute;"> </div>
+
   <!-- Footer -->
   <footer id="footer">
     <div class="footer-top">
@@ -107,6 +108,9 @@
   <!-- End Footer -->
 
 
+  <script src="assets/framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/alert-box/alert-script.js"></script>
+
   <script>
     // User id
     var id = localStorage.getItem("id");
@@ -135,7 +139,7 @@
         let userDetails = await response1.json();
 
         if(userDetails.contactNo == "NA" || userDetails.deliveryAddress == "NA"){
-          alert("Please set contact no and delivery address to be eligible to extend to seller account!")
+          errorToast("Please set contact no and delivery address to be eligible to extend to seller account!")
         }else{
           if(userDetails.storeName == "NA"){
             open("switch-sell.html", "_parent");

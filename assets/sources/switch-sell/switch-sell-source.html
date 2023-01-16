@@ -8,6 +8,7 @@
         
         <link href="../buyer-dashboard/bootstrap.min.css" rel="stylesheet">
         <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+        <link href="alert-style.css" rel="stylesheet">
     </head>
 
     <body>
@@ -30,6 +31,12 @@
             </div>
         </div>
 
+
+        <div class="toast" style="position: absolute;"> </div>
+        <script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../../alert-box/alert-script.js"></script>
+
+
         <script>
             // Buyer / Seller id
             var id = localStorage.getItem("id");
@@ -40,9 +47,9 @@
                 let storenameValid = validateStoreName();
                 storenameValid.then(value => {
                     if(value == "No"){
-                        alert("Please enter a store name!");
+                        errorToast("Please enter a store name!");
                     }else if(value == "Have"){
-                        alert("Store name already exists!");
+                        errorToast("Store name already exists!");
                     }else{
                         registerStore();
                     }

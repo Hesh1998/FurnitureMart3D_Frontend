@@ -8,6 +8,7 @@
     <link href="../css/style.css" rel="stylesheet">
 	<link href="../css/responsive.css" rel="stylesheet">
     <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+	<link href="alert-style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -42,8 +43,13 @@
 	</section>
 
     
-
+	<div class="toast" style="position: absolute;"> </div>
+	
+    
+	<script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../alert-box/alert-script.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+
     <script>
         // List product button
 		const listProduct = async() => {
@@ -63,7 +69,7 @@
 			}else{
 				var in_html = "";
 				for (let i = 0; i < items.length; i++) {
-					in_html += `<tr> <td class="cart_product"> <img src=${items[i].clr1Img} alt="" width="150px" height="100px"> </td> <td class="cart_description"> <h4>${items[i].itemName}</h4> <p>LKR ${(items[i].price).toLocaleString('en-US')}</p> </td> <td class="cart_price"> <p>${items[i].stockQuantity}</p> </td> <td class="cart_price"> <p>${items[i].totalSold}</p> </td> <td class="cart_total"> <a href="javascript:viewEditProducts(${items[i].itemId})"><p class="cart_total_price">View / Edit</p></a> <br> <a href="javascript:deleteProducts(${items[i].itemId}, ${items[i].inOrder})"><p class="cart_total_price">Delete</p></a> </td> </tr>`;
+					in_html += `<tr> <td class="cart_product"> <img src=${items[i].clr1Img} alt="" width="150px" height="100px"> </td> <td class="cart_description"> <h4>${items[i].itemName}</h4> <p>LKR ${(items[i].price).toLocaleString('en-US')}</p> </td> <td class="cart_price"> <p>${items[i].stockQuantity}</p> </td> <td class="cart_price"> <p>${items[i].totalSold}</p> </td> <td class="cart_total"> <a href="javascript:viewEditProducts(${items[i].itemId})"><p class="cart_total_price">View / Edit</p></a> <br> <a onclick="deleteProductsConfirm(${items[i].itemId}, ${items[i].inOrder})"><p class="cart_total_price">Delete</p></a> </td> </tr>`;
 					itemIndexes[i] = items[i].itemId;
 				}
 				items_table.innerHTML = in_html;
@@ -74,7 +80,22 @@
 
 
 		// Delete a selected product
-		const deleteProducts = async(itemIndex, inOrder) => {
+		const buttonToastDeleteProduct = async(message, itemIndex, inOrder) => {
+			document.querySelector(".toast").innerHTML  = `<div class="toast-header" style="background-color: #ADD8E6;"> <img src="info-24.png" class="me-auto"> <button type="button" class="btn-close" data-bs-dismiss="toast"></button> </div> <div class="toast-body" style="background-color: white; border-radius: 10px;"> <h5 style="text-align: center;  font-size: 16px;">${message}</h5> <center> <button type="button" class="btn btn-success" onclick="deleteProducts(true, ${itemIndex}, ${inOrder})">Yes</button> <button type="button" class="btn btn-danger" style="margin-left: 15px;" onclick="deleteProducts(false, ${itemIndex}, ${inOrder})">No</button> </center> </div>`;
+			toastSetup();
+		}
+
+		const deleteProductsConfirm = async(itemIndex, inOrder) => {
+			if(inOrder == 0){
+				buttonToastDeleteProduct("Are you sure you want to remove this item?", itemIndex, inOrder);
+			}else{
+				errorToast("You cannot delete this item, because there are already existing orders for this item!");
+			}
+		}
+
+		const deleteProducts = async(res, itemIndex, inOrder) => {
+			toastClose();
+
 			let response1 = await fetch(`http://localhost:8080/findUserProducts/${id}`);
 			let items = await response1.json();
 
@@ -83,14 +104,6 @@
 			object["productId"] = itemIndex;
 			
 			var jsonText = JSON.stringify(object);
-			
-			var res = false;
-
-			if(inOrder == 0){
-				res = confirm("Are you sure you want to remove this item?");
-			}else{
-				alert("You cannot delete this item, because there are already existing orders for this item!");
-			}
 			
 			if(res){
 				await fetch("http://localhost:8080/deleteProduct", {

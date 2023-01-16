@@ -8,6 +8,7 @@
         
         <link href="bootstrap.min.css" rel="stylesheet">
         <link href="buyer-dashboard-style.css" rel="stylesheet">
+        <link href="alert-style.css" rel="stylesheet">
     </head>
 
     <body>
@@ -93,7 +94,7 @@
                         
                         <div class="mt-5 text-right">
                             <button class="btn btn-primary profile-button" type="button" onclick="saveBtn()">Save Edited Details</button>
-                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="deleteUser()">Delete Account</button>
+                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="deleteUserConfirm()">Delete Account</button>
                         </div>
 
                     </div>
@@ -126,6 +127,11 @@
         </div>
         </div>
         </div>
+
+        <div class="toast" style="position: absolute;"> </div>
+
+        <script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../../alert-box/alert-script.js"></script>
 
         <script>
             var id = localStorage.getItem("id");
@@ -168,7 +174,7 @@
                 var contactNo = document.getElementById("phone").value;
                 
                 if(isNaN(contactNo) || contactNo.length != 10){
-                    alert("Invalid contact number! New profile details not saved.");
+                    errorToast("Invalid contact number! New profile details not saved!")
                 }else{
                     updateProfile();
                 }
@@ -223,7 +229,7 @@
                     body: jsonText
                 })
                 .then(response => response.text())
-                .then(alert("Profile updated!"))
+                .then(infoToast("Profile updated!"))
                 .catch(error => console.log('Authorization failed: ' + error.message));	
 
                 let response2 = await fetch(`http://localhost:8080/findbyId/${id}`);
@@ -253,11 +259,11 @@
 			    let userDetails = await response1.json();
 
                 if(currentPassword != userDetails.password){
-                    alert("Current password incorrect! Try again.");
+                    errorToast("Current password incorrect! Try again.");
                 }else if(checkPasswordStrength() == false){
-                    alert("New password must have at least one lowercase letter, one uppercase letter, one digit, one special character, and is at least eight characters long.");
+                    errorToast("New password must have at least one lowercase letter, one uppercase letter, one digit, one special character, and is at least eight characters long.");
                 }else if(newPassword != confirmNewPassword){
-                    alert("New password doesn't match with Confirm new password!");
+                    errorToast("New password doesn't match with Confirm new password!");
                 }else{
                     var object = {};
                     object["id"] = userDetails.id;
@@ -288,7 +294,7 @@
                         body: jsonText
                     })
                     .then(response => response.text())
-                    .then(alert("Password changed!"))
+                    .then(infoToast("Password changed!"))
                     .catch(error => console.log('Authorization failed: ' + error.message));
 
                     document.getElementById("currentPass").value = "";
@@ -366,21 +372,30 @@
                         body: jsonText
                     })
                     .then(response => response.text())
-                    .then(alert("New profile picture uploaded!"))
+                    .then(infoToast("New profile picture uploaded!"))
                     .catch(error => console.log('Authorization failed: ' + error.message));
 
                     let response2 = await fetch(`http://localhost:8080/findbyId/${id}`);
                     let userDetails2 = await response2.json();
                     document.getElementById("userdp").src = userDetails2.dp;
                 }else{
-                    alert("Please upload a profile picture!")
+                    errorToast("Please upload a profile picture!")
                 }
             }
             
 
             // Delete User account
-            const deleteUser = async() => {
-                const res = confirm("Are you sure you want to remove your account?");
+            const buttonToastDeleteUser = async(message) => {
+                document.querySelector(".toast").innerHTML  = `<div class="toast-header" style="background-color: #ADD8E6;"> <img src="info-24.png" class="me-auto"> <button type="button" class="btn-close" data-bs-dismiss="toast"></button> </div> <div class="toast-body" style="background-color: white; border-radius: 10px;"> <h5 style="text-align: center;  font-size: 16px;">${message}</h5> <center> <button type="button" class="btn btn-success" onclick="deleteUser(true)">Yes</button> <button type="button" class="btn btn-danger" style="margin-left: 15px;" onclick="deleteUser(false)">No</button> </center> </div>`;
+                toastSetup();
+            }
+
+            const deleteUserConfirm = async() => {
+                buttonToastDeleteUser("Are you sure you want to remove your account?");
+            }
+
+            const deleteUser = async(res) => {
+                toastClose();
 
                 if(res){
                     await fetch(`http://localhost:8080/deleteUser/${id}`, {
@@ -411,7 +426,6 @@
 
             // Remove user details from browser history
             const closeUser = async() => {
-                alert("User account deleted!");
                 localStorage.clear();
 				open("../../../sign-in.html", "_parent");
             }

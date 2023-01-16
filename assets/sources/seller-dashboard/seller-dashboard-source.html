@@ -8,6 +8,7 @@
         
         <link href="../buyer-dashboard/bootstrap.min.css" rel="stylesheet">
         <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+        <link href="alert-style.css" rel="stylesheet">
     </head>
 
     <body>
@@ -89,7 +90,7 @@
                         
                         <div class="mt-5 text-right">
                             <button class="btn btn-primary profile-button" type="button" onclick="saveBtn()">Save Edited Details</button>
-                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="deleteStore()">Remove Store</button>
+                            <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="deleteStoreConfirm()">Remove Store</button>
                         </div>
 
                     </div>
@@ -126,6 +127,13 @@
         </div>
         </div>
         </div>
+
+
+        <div class="toast" style="position: absolute;"> </div>
+
+        <script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../../alert-box/alert-script.js"></script>
+
 
         <script>
             // Seller id
@@ -181,7 +189,7 @@
                 var storeAddress = document.getElementById("address").value;
                 
                 if(storeAddress == ""){
-                    alert("Please enter store address details.");
+                    errorToast("Please enter store address details.");
                 }else{
                     updateProfile();
                 }
@@ -223,7 +231,7 @@
                     body: jsonText
                 })
                 .then(response => response.text())
-                .then(alert("Profile updated!"))
+                .then(infoToast("Profile updated!"))
                 .catch(error => console.log('Authorization failed: ' + error.message));	
 
                 let response2 = await fetch(`http://localhost:8080/findbyId/${id}`);
@@ -244,9 +252,9 @@
                 var bankBranch = document.getElementById("bankBranch").value;
                 
                 if(isNaN(accountNo)){
-                    alert("Account Number can only contain digits!");
+                    errorToast("Account Number can only contain digits!");
                 }else if(accountName == "" || accountNo == "" || bankName == "" || bankBranch == ""){
-                    alert("Invalid account details!");
+                    errorToast("Invalid account details!");
                 }else{
                     updateAccount();
                 }
@@ -290,7 +298,7 @@
                     body: jsonText
                 })
                 .then(response => response.text())
-                .then(alert("Account Details updated! Please recheck your account details. Payments for sold products will be deposited to this bank account"))
+                .then(infoToast("Account Details updated! Please recheck your account details. Payments for sold products will be deposited to this bank account"))
                 .catch(error => console.log('Authorization failed: ' + error.message));	
 
                 let response2 = await fetch(`http://localhost:8080/findbyId/${id}`);
@@ -316,8 +324,17 @@
 
 
             // Delete seller account section of a user
-            const deleteStore = async() => {
-                const res = confirm("Are you sure you want to remove your store?")
+            const buttonToastDeleteStore = async(message) => {
+                document.querySelector(".toast").innerHTML  = `<div class="toast-header" style="background-color: #ADD8E6;"> <img src="info-24.png" class="me-auto"> <button type="button" class="btn-close" data-bs-dismiss="toast"></button> </div> <div class="toast-body" style="background-color: white; border-radius: 10px;"> <h5 style="text-align: center;  font-size: 16px;">${message}</h5> <center> <button type="button" class="btn btn-success" onclick="deleteStore(true)">Yes</button> <button type="button" class="btn btn-danger" style="margin-left: 15px;" onclick="deleteStore(false)">No</button> </center> </div>`;
+                toastSetup();
+            }
+
+            const deleteStoreConfirm = async() => {
+                buttonToastDeleteStore("Are you sure you want to remove your store?");
+            }
+
+            const deleteStore = async(res) => {
+                toastClose();
 
                 if(res){
                     let response = await fetch(`http://localhost:8080/findbyId/${id}`);
@@ -358,7 +375,7 @@
             }
 
             const closeSeller = async() => {
-                alert("Store deleted!");
+                infoToast("Store deleted!");
 				open("../../../buyer-dashboard.html", "_parent");
             }
         </script>

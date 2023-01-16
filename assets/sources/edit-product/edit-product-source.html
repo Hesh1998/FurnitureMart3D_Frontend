@@ -6,9 +6,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/style.css" rel="stylesheet">
-        <link href="../list-product/list-product-style.css" rel="stylesheet">
         <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+        <link href="../list-product/list-product-style.css" rel="stylesheet">
+        <link href="alert-style.css" rel="stylesheet">
     </head>
 
     <body>
@@ -419,7 +421,7 @@
                     <video id="vid1" width="320" height="240" controls>
                         <source id="mp4_src1" src="" type="video/mp4">
                     </video>
-                    <input type="file" id="vid1Input" class="form-control"  style="width: 84.9%;">
+                    <input type="file" id="vid1Input" style="width: 84.9%;">
                     <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding-top: 10px; padding-bottom: 10px; padding-left: 13px; padding-right: 13px; margin-left: 20px;" onclick="resetVid1()"> Clear Video </button>
                 </div>
                 <br>
@@ -433,6 +435,11 @@
         </div>
 
 
+        <div class="toast" style="position: absolute;"> </div>
+        <script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../../alert-box/alert-script.js"></script>
+
+
         <script>
             // Upload Color 1 Image
             const clr1ImgInput = document.getElementById("clr1ImgInput");
@@ -444,7 +451,7 @@
                 const fSize = Math.round((file.size / 1024));
 
                 if(fSize > 300){
-                    alert("Please upload an Image of maximum size 300 KB");
+                    errorToast("Please upload an Image of maximum size 300 KB");
                     document.getElementById("clr1Img").src = "istockphoto-1357365823-612x612.jpg";
                     document.getElementById("clr1ImgInput").value = "";
                 }else{
@@ -473,7 +480,7 @@
                 const fSize = Math.round((file.size / 1024));
 
                 if(fSize > 300){
-                    alert("Please upload an Image of maximum size 300 KB");
+                    errorToast("Please upload an Image of maximum size 300 KB");
                     document.getElementById("clr2Img").src = "istockphoto-1357365823-612x612.jpg";
                     document.getElementById("clr2ImgInput").value = "";
                 }else{
@@ -502,7 +509,7 @@
                 const fSize = Math.round((file.size / 1024));
 
                 if(fSize > 300){
-                    alert("Please upload an Image of maximum size 300 KB");
+                    errorToast("Please upload an Image of maximum size 300 KB");
                     document.getElementById("clr3Img").src = "istockphoto-1357365823-612x612.jpg";
                     document.getElementById("clr3ImgInput").value = "";
                 }else{
@@ -531,7 +538,7 @@
                 const fSize = Math.round((file.size / 1024));
 
                 if(fSize > 300){
-                    alert("Please upload an Image of maximum size 300 KB");
+                    errorToast("Please upload an Image of maximum size 300 KB");
                     document.getElementById("add1Img").src = "istockphoto-1357365823-612x612.jpg";
                     document.getElementById("add1ImgInput").value = "";
                 }else{
@@ -560,7 +567,7 @@
                 const fSize = Math.round((file.size / 1024));
 
                 if(fSize > 300){
-                    alert("Please upload an Image of maximum size 300 KB");
+                    errorToast("Please upload an Image of maximum size 300 KB");
                     document.getElementById("add2Img").src = "istockphoto-1357365823-612x612.jpg";
                     document.getElementById("add2ImgInput").value = "";
                 }else{
@@ -595,7 +602,7 @@
                 reader.addEventListener("load", () => {
                     if(extension == "mp4"){
                         if(fSize > 1000){
-                            alert("Please upload a Video of maximum size 1000 KB");
+                            errorToast("Please upload a Video of maximum size 1000 KB");
                             vid1.src = "";
                             vid1Input.value = "";
                         }else{
@@ -603,7 +610,7 @@
                             vid1.load();
                         }
                     }else{
-                        alert("Only MP4 videos are allowed!");
+                        errorToast("Only MP4 videos are allowed!");
                     }
                 });
 
@@ -633,7 +640,7 @@
                 reader.addEventListener("load", () => {
                     if(extension == "glb"){
                         if(fSize > 2000){
-                            alert("Please upload a 3D model of maximum size 2000 KB");
+                            errorToast("Please upload a 3D model of maximum size 2000 KB");
                             m3d1 = "";
                             clr13dInput.value = "";
                             document.getElementById("clr13dNotice").innerHTML = "3D Model Not Available";
@@ -644,7 +651,7 @@
                             document.getElementById("clr13dInput").style.width = "61.6%";
                         }
                     }else{
-                        alert("Only GLB 3D models are allowed!");
+                        errorToast("Only GLB 3D models are allowed!");
                         clr13dInput.value = "";
                     }
                 });
@@ -663,7 +670,7 @@
             // Preview 3D Model for Color 1
             const previewModel1 = async() => {
                 if(m3d1 == ""){
-                    alert("No 3D Model added to preview!");
+                    errorToast("No 3D Model added to preview!");
                 }else{
                     localStorage.setItem("path", m3d1);
                     open("../3d-preview-seller/3d-preview-seller-source.html", "_blank")
@@ -687,7 +694,7 @@
                 reader.addEventListener("load", () => {
                     if(extension == "glb"){
                         if(fSize > 2000){
-                            alert("Please upload a 3D model of maximum size 2000 KB");
+                            errorToast("Please upload a 3D model of maximum size 2000 KB");
                             m3d2 = "";
                             clr23dInput.value = "";
                             document.getElementById("clr23dNotice").innerHTML = "3D Model Not Available";
@@ -698,7 +705,7 @@
                             document.getElementById("clr23dInput").style.width = "61.6%";
                         }
                     }else{
-                        alert("Only GLB 3D models are allowed!");
+                        errorToast("Only GLB 3D models are allowed!");
                         clr23dInput.value = "";
                     }
                 });
@@ -717,7 +724,7 @@
             // Preview 3D Model for Color 2
             const previewModel2 = async() => {
                 if(m3d2 == ""){
-                    alert("No 3D Model added to preview!");
+                    errorToast("No 3D Model added to preview!");
                 }else{
                     localStorage.setItem("path", m3d2);
                     open("../3d-preview-seller/3d-preview-seller-source.html", "_blank")
@@ -741,7 +748,7 @@
                 reader.addEventListener("load", () => {
                     if(extension == "glb"){
                         if(fSize > 2000){
-                            alert("Please upload a 3D model of maximum size 2000 KB");
+                            errorToast("Please upload a 3D model of maximum size 2000 KB");
                             m3d3 = "";
                             clr33dInput.value = "";
                             document.getElementById("clr33dNotice").innerHTML = "3D Model Not Available";
@@ -752,7 +759,7 @@
                             document.getElementById("clr33dInput").style.width = "61.6%";
                         }
                     }else{
-                        alert("Only GLB 3D models are allowed!");
+                        errorToast("Only GLB 3D models are allowed!");
                         clr33dInput.value = "";
                     }
                 });
@@ -771,7 +778,7 @@
             // Preview 3D Model for Color 3
             const previewModel3 = async() => {
                 if(m3d3 == ""){
-                    alert("No 3D Model added to preview!");
+                    errorToast("No 3D Model added to preview!");
                 }else{
                     localStorage.setItem("path", m3d3);
                     open("../3d-preview-seller/3d-preview-seller-source.html", "_blank")
@@ -1281,365 +1288,365 @@
 
                 // Validations
                 if(itemName == ""){
-                    alert("Please enter an item name!");
+                    errorToast("Please enter an item name!");
                 }else if(livingroom == false & dining == false & bedroom == false & office == false & outdoor == false & other == false){
-                    alert("Please select atleaset one location!");
+                    errorToast("Please select atleaset one location!");
                 }else if(chair == false & table == false & sofa == false & cupboard == false & bed == false & bench == false & bookcase == false & desk == false & otherT == false){
-                    alert("Please select atleaset one item type!");
+                    errorToast("Please select atleaset one item type!");
                 }else if(classy == false & antique == false & traditional == false & modern == false & contemporary == false & transitional == false & coastal == false & minimalist == false){
-                    alert("Please select atleaset one category!");
+                    errorToast("Please select atleaset one category!");
                 }else if(condition == ""){
-                    alert("Please enter item condition!");
+                    errorToast("Please enter item condition!");
                 }else if(description == ""){
-                    alert("Please enter item description!");
+                    errorToast("Please enter item description!");
                 }else if(dimensions == ""){
-                    alert("Please enter item dimensions!");
+                    errorToast("Please enter item dimensions!");
                 }else if(stock == ""){
-                    alert("Please enter a valid number for quantity in stock!");
+                    errorToast("Please enter a valid number for quantity in stock!");
                 }else if(isNaN(stock)){
-                    alert("Please enter a valid number for quantity in stock!");
+                    errorToast("Please enter a valid number for quantity in stock!");
                 }else if(stock.includes(".")){
-                    alert("Please enter a valid number for quantity in stock!");
+                    errorToast("Please enter a valid number for quantity in stock!");
                 }else if(price == "" || isNaN(price)){
-                    alert("Please enter a valid item price!");
+                    errorToast("Please enter a valid item price!");
                 }else if(deliveryColombo == "" & arrivalColombo == "" & deliveryGampaha == "" & arrivalGampaha == "" & deliveryKalutara == "" & arrivalKalutara == "" & deliveryKandy == "" & arrivalKandy == "" & deliveryMatale == "" & arrivalMatale == "" & deliveryNuwaraEliya == "" & arrivalNuwaraEliya == "" & deliveryGalle == "" & arrivalGalle == "" & deliveryMatara == "" & arrivalMatara == "" & deliveryHambantota == "" & arrivalHambantota == "" & deliveryJaffna == "" & arrivalJaffna == "" & deliveryKilinochchi == "" & arrivalKilinochchi == "" & deliveryMannar == "" & arrivalMannar == "" & deliveryVavuniya == "" & arrivalVavuniya == "" & deliveryMullaitivu == "" & arrivalMullaitivu == "" & deliveryBatticallo == "" & arrivalBatticallo == "" & deliveryAmpara == "" & arrivalAmpara == "" & deliveryTrincomalee == "" & arrivalTrincomalee == "" & deliveryKurunegala == "" & arrivalKurunegala == "" & deliveryPuttalam == "" & arrivalPuttalam == "" & deliveryAnuradhapura == "" & arrivalAnuradhapura == "" & deliveryPolonnaruwa == "" & arrivalPolonnaruwa == "" & deliveryBadulla == "" & arrivalBadulla == "" & deliveryMoneragala == "" & arrivalMoneragala == "" & deliveryRatnapura == "" & arrivalRatnapura == "" & deliveryKegalle == "" & arrivalKegalle == ""){
-                    alert("Please enter item delivery fee and estimated arrival days for atleast one district!");
+                    errorToast("Please enter item delivery fee and estimated arrival days for atleast one district!");
                 }
                 
                 else if(deliveryColombo != "" && isNaN(deliveryColombo)){
-                    alert("Please enter a valid item delivery fee for Colombo!");
+                    errorToast("Please enter a valid item delivery fee for Colombo!");
                 }else if(arrivalColombo != "" && isNaN(arrivalColombo)){
-                    alert("Please enter a valid number for estimated arrival days for Colombo!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Colombo!");  
                 }else if(arrivalColombo != "" && arrivalColombo.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Colombo!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Colombo!");  
                 }else if(deliveryColombo == "" && arrivalColombo != ""){
-                    alert("Please enter a valid item delivery fee for Colombo!");
+                    errorToast("Please enter a valid item delivery fee for Colombo!");
                 }else if(deliveryColombo != "" && arrivalColombo == ""){
-                    alert("Please enter a valid number for estimated arrival days for Colombo!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Colombo!"); 
                 }
                 
                 else if(deliveryGampaha != "" && isNaN(deliveryGampaha)){
-                    alert("Please enter a valid item delivery fee for Gampaha!");
+                    errorToast("Please enter a valid item delivery fee for Gampaha!");
                 }else if(arrivalGampaha != "" && isNaN(arrivalGampaha)){
-                    alert("Please enter a valid number for estimated arrival days for Gampaha!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Gampaha!");  
                 }else if(arrivalGampaha != "" && arrivalGampaha.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Gampaha!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Gampaha!");  
                 }else if(deliveryGampaha == "" && arrivalGampaha != ""){
-                    alert("Please enter a valid item delivery fee for Gampaha!");
+                    errorToast("Please enter a valid item delivery fee for Gampaha!");
                 }else if(deliveryGampaha != "" && arrivalGampaha == ""){
-                    alert("Please enter a valid number for estimated arrival days for Gampaha!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Gampaha!"); 
                 }
                 
                 else if(deliveryKalutara != "" && isNaN(deliveryKalutara)){
-                    alert("Please enter a valid item delivery fee for Kalutara!");
+                    errorToast("Please enter a valid item delivery fee for Kalutara!");
                 }else if(arrivalKalutara != "" && isNaN(arrivalKalutara)){
-                    alert("Please enter a valid number for estimated arrival days for Kalutara!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Kalutara!");  
                 }else if(arrivalKalutara != "" && arrivalKalutara.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Kalutara!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Kalutara!");  
                 }else if(deliveryKalutara == "" && arrivalKalutara != ""){
-                    alert("Please enter a valid item delivery fee for Kalutara!");
+                    errorToast("Please enter a valid item delivery fee for Kalutara!");
                 }else if(deliveryKalutara != "" && arrivalKalutara == ""){
-                    alert("Please enter a valid number for estimated arrival days for Kalutara!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Kalutara!"); 
                 }
 
                 else if(deliveryKandy != "" && isNaN(deliveryKandy)){
-                    alert("Please enter a valid item delivery fee for Kandy!");
+                    errorToast("Please enter a valid item delivery fee for Kandy!");
                 }else if(arrivalKandy != "" && isNaN(arrivalKandy)){
-                    alert("Please enter a valid number for estimated arrival days for Kandy!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Kandy!");  
                 }else if(arrivalKandy != "" && arrivalKandy.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Kandy!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Kandy!");  
                 }else if(deliveryKandy == "" && arrivalKandy != ""){
-                    alert("Please enter a valid item delivery fee for Kandy!");
+                    errorToast("Please enter a valid item delivery fee for Kandy!");
                 }else if(deliveryKandy != "" && arrivalKandy == ""){
-                    alert("Please enter a valid number for estimated arrival days for Kandy!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Kandy!"); 
                 }
 
                 else if(deliveryMatale != "" && isNaN(deliveryMatale)){
-                    alert("Please enter a valid item delivery fee for Matale!");
+                    errorToast("Please enter a valid item delivery fee for Matale!");
                 }else if(arrivalMatale != "" && isNaN(arrivalMatale)){
-                    alert("Please enter a valid number for estimated arrival days for Matale!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Matale!");  
                 }else if(arrivalMatale != "" && arrivalMatale.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Matale!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Matale!");  
                 }else if(deliveryMatale == "" && arrivalMatale != ""){
-                    alert("Please enter a valid item delivery fee for Matale!");
+                    errorToast("Please enter a valid item delivery fee for Matale!");
                 }else if(deliveryMatale != "" && arrivalMatale == ""){
-                    alert("Please enter a valid number for estimated arrival days for Matale!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Matale!"); 
                 }
 
                 else if(deliveryNuwaraEliya != "" && isNaN(deliveryNuwaraEliya)){
-                    alert("Please enter a valid item delivery fee for NuwaraEliya!");
+                    errorToast("Please enter a valid item delivery fee for NuwaraEliya!");
                 }else if(arrivalNuwaraEliya != "" && isNaN(arrivalNuwaraEliya)){
-                    alert("Please enter a valid number for estimated arrival days for NuwaraEliya!");  
+                    errorToast("Please enter a valid number for estimated arrival days for NuwaraEliya!");  
                 }else if(arrivalNuwaraEliya != "" && arrivalNuwaraEliya.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for NuwaraEliya!");  
+                    errorToast("Please enter a valid number for estimated arrival days for NuwaraEliya!");  
                 }else if(deliveryNuwaraEliya == "" && arrivalNuwaraEliya != ""){
-                    alert("Please enter a valid item delivery fee for NuwaraEliya!");
+                    errorToast("Please enter a valid item delivery fee for NuwaraEliya!");
                 }else if(deliveryNuwaraEliya != "" && arrivalNuwaraEliya == ""){
-                    alert("Please enter a valid number for estimated arrival days for NuwaraEliya!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for NuwaraEliya!"); 
                 }
                 
                 else if(deliveryGalle != "" && isNaN(deliveryGalle)){
-                    alert("Please enter a valid item delivery fee for Galle!");
+                    errorToast("Please enter a valid item delivery fee for Galle!");
                 }else if(arrivalGalle != "" && isNaN(arrivalGalle)){
-                    alert("Please enter a valid number for estimated arrival days for Galle!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Galle!");  
                 }else if(arrivalGalle != "" && arrivalGalle.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Galle!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Galle!");  
                 }else if(deliveryGalle == "" && arrivalGalle != ""){
-                    alert("Please enter a valid item delivery fee for Galle!");
+                    errorToast("Please enter a valid item delivery fee for Galle!");
                 }else if(deliveryGalle != "" && arrivalGalle == ""){
-                    alert("Please enter a valid number for estimated arrival days for Galle!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Galle!"); 
                 }
 
                 else if(deliveryMatara != "" && isNaN(deliveryMatara)){
-                    alert("Please enter a valid item delivery fee for Matara!");
+                    errorToast("Please enter a valid item delivery fee for Matara!");
                 }else if(arrivalMatara != "" && isNaN(arrivalMatara)){
-                    alert("Please enter a valid number for estimated arrival days for Matara!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Matara!");  
                 }else if(arrivalMatara != "" && arrivalMatara.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Matara!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Matara!");  
                 }else if(deliveryMatara == "" && arrivalMatara != ""){
-                    alert("Please enter a valid item delivery fee for Matara!");
+                    errorToast("Please enter a valid item delivery fee for Matara!");
                 }else if(deliveryMatara != "" && arrivalMatara == ""){
-                    alert("Please enter a valid number for estimated arrival days for Matara!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Matara!"); 
                 }
                 
                 else if(deliveryHambantota != "" && isNaN(deliveryHambantota)){
-                    alert("Please enter a valid item delivery fee for Hambantota!");
+                    errorToast("Please enter a valid item delivery fee for Hambantota!");
                 }else if(arrivalHambantota != "" && isNaN(arrivalHambantota)){
-                    alert("Please enter a valid number for estimated arrival days for Hambantota!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Hambantota!");  
                 }else if(arrivalHambantota != "" && arrivalHambantota.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Hambantota!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Hambantota!");  
                 }else if(deliveryHambantota == "" && arrivalHambantota != ""){
-                    alert("Please enter a valid item delivery fee for Hambantota!");
+                    errorToast("Please enter a valid item delivery fee for Hambantota!");
                 }else if(deliveryHambantota != "" && arrivalHambantota == ""){
-                    alert("Please enter a valid number for estimated arrival days for Hambantota!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Hambantota!"); 
                 }
                 
                 else if(deliveryJaffna != "" && isNaN(deliveryJaffna)){
-                    alert("Please enter a valid item delivery fee for Jaffna!");
+                    errorToast("Please enter a valid item delivery fee for Jaffna!");
                 }else if(arrivalJaffna != "" && isNaN(arrivalJaffna)){
-                    alert("Please enter a valid number for estimated arrival days for Jaffna!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Jaffna!");  
                 }else if(arrivalJaffna != "" && arrivalJaffna.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Jaffna!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Jaffna!");  
                 }else if(deliveryJaffna == "" && arrivalJaffna != ""){
-                    alert("Please enter a valid item delivery fee for Jaffna!");
+                    errorToast("Please enter a valid item delivery fee for Jaffna!");
                 }else if(deliveryJaffna != "" && arrivalJaffna == ""){
-                    alert("Please enter a valid number for estimated arrival days for Jaffna!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Jaffna!"); 
                 }
                 
                 else if(deliveryKilinochchi != "" && isNaN(deliveryKilinochchi)){
-                    alert("Please enter a valid item delivery fee for Kilinochchi!");
+                    errorToast("Please enter a valid item delivery fee for Kilinochchi!");
                 }else if(arrivalKilinochchi != "" && isNaN(arrivalKilinochchi)){
-                    alert("Please enter a valid number for estimated arrival days for Kilinochchi!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Kilinochchi!");  
                 }else if(arrivalKilinochchi != "" && arrivalKilinochchi.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Kilinochchi!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Kilinochchi!");  
                 }else if(deliveryKilinochchi == "" && arrivalKilinochchi != ""){
-                    alert("Please enter a valid item delivery fee for Kilinochchi!");
+                    errorToast("Please enter a valid item delivery fee for Kilinochchi!");
                 }else if(deliveryKilinochchi != "" && arrivalKilinochchi == ""){
-                    alert("Please enter a valid number for estimated arrival days for Kilinochchi!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Kilinochchi!"); 
                 }
 
                 else if(deliveryMannar != "" && isNaN(deliveryMannar)){
-                    alert("Please enter a valid item delivery fee for Mannar!");
+                    errorToast("Please enter a valid item delivery fee for Mannar!");
                 }else if(arrivalMannar != "" && isNaN(arrivalMannar)){
-                    alert("Please enter a valid number for estimated arrival days for Mannar!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Mannar!");  
                 }else if(arrivalMannar != "" && arrivalMannar.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Mannar!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Mannar!");  
                 }else if(deliveryMannar == "" && arrivalMannar != ""){
-                    alert("Please enter a valid item delivery fee for Mannar!");
+                    errorToast("Please enter a valid item delivery fee for Mannar!");
                 }else if(deliveryMannar != "" && arrivalMannar == ""){
-                    alert("Please enter a valid number for estimated arrival days for Mannar!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Mannar!"); 
                 }
                 
                 else if(deliveryVavuniya != "" && isNaN(deliveryVavuniya)){
-                    alert("Please enter a valid item delivery fee for Vavuniya!");
+                    errorToast("Please enter a valid item delivery fee for Vavuniya!");
                 }else if(arrivalVavuniya != "" && isNaN(arrivalVavuniya)){
-                    alert("Please enter a valid number for estimated arrival days for Vavuniya!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Vavuniya!");  
                 }else if(arrivalVavuniya != "" && arrivalVavuniya.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Vavuniya!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Vavuniya!");  
                 }else if(deliveryVavuniya == "" && arrivalVavuniya != ""){
-                    alert("Please enter a valid item delivery fee for Vavuniya!");
+                    errorToast("Please enter a valid item delivery fee for Vavuniya!");
                 }else if(deliveryVavuniya != "" && arrivalVavuniya == ""){
-                    alert("Please enter a valid number for estimated arrival days for Vavuniya!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Vavuniya!"); 
                 }
 
                 else if(deliveryMullaitivu != "" && isNaN(deliveryMullaitivu)){
-                    alert("Please enter a valid item delivery fee for Mullaitivu!");
+                    errorToast("Please enter a valid item delivery fee for Mullaitivu!");
                 }else if(arrivalMullaitivu != "" && isNaN(arrivalMullaitivu)){
-                    alert("Please enter a valid number for estimated arrival days for Mullaitivu!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Mullaitivu!");  
                 }else if(arrivalMullaitivu != "" && arrivalMullaitivu.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Mullaitivu!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Mullaitivu!");  
                 }else if(deliveryMullaitivu == "" && arrivalMullaitivu != ""){
-                    alert("Please enter a valid item delivery fee for Mullaitivu!");
+                    errorToast("Please enter a valid item delivery fee for Mullaitivu!");
                 }else if(deliveryMullaitivu != "" && arrivalMullaitivu == ""){
-                    alert("Please enter a valid number for estimated arrival days for Mullaitivu!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Mullaitivu!"); 
                 }
 
                 else if(deliveryBatticallo != "" && isNaN(deliveryBatticallo)){
-                    alert("Please enter a valid item delivery fee for Batticallo!");
+                    errorToast("Please enter a valid item delivery fee for Batticallo!");
                 }else if(arrivalBatticallo != "" && isNaN(arrivalBatticallo)){
-                    alert("Please enter a valid number for estimated arrival days for Batticallo!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Batticallo!");  
                 }else if(arrivalBatticallo != "" && arrivalBatticallo.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Batticallo!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Batticallo!");  
                 }else if(deliveryBatticallo == "" && arrivalBatticallo != ""){
-                    alert("Please enter a valid item delivery fee for Batticallo!");
+                    errorToast("Please enter a valid item delivery fee for Batticallo!");
                 }else if(deliveryBatticallo != "" && arrivalBatticallo == ""){
-                    alert("Please enter a valid number for estimated arrival days for Batticallo!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Batticallo!"); 
                 }
 
                 else if(deliveryAmpara != "" && isNaN(deliveryAmpara)){
-                    alert("Please enter a valid item delivery fee for Ampara!");
+                    errorToast("Please enter a valid item delivery fee for Ampara!");
                 }else if(arrivalAmpara != "" && isNaN(arrivalAmpara)){
-                    alert("Please enter a valid number for estimated arrival days for Ampara!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Ampara!");  
                 }else if(arrivalAmpara != "" && arrivalAmpara.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Ampara!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Ampara!");  
                 }else if(deliveryAmpara == "" && arrivalAmpara != ""){
-                    alert("Please enter a valid item delivery fee for Ampara!");
+                    errorToast("Please enter a valid item delivery fee for Ampara!");
                 }else if(deliveryAmpara != "" && arrivalAmpara == ""){
-                    alert("Please enter a valid number for estimated arrival days for Ampara!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Ampara!"); 
                 }
 
                 else if(deliveryTrincomalee != "" && isNaN(deliveryTrincomalee)){
-                    alert("Please enter a valid item delivery fee for Trincomalee!");
+                    errorToast("Please enter a valid item delivery fee for Trincomalee!");
                 }else if(arrivalTrincomalee != "" && isNaN(arrivalTrincomalee)){
-                    alert("Please enter a valid number for estimated arrival days for Trincomalee!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Trincomalee!");  
                 }else if(arrivalTrincomalee != "" && arrivalTrincomalee.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Trincomalee!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Trincomalee!");  
                 }else if(deliveryTrincomalee == "" && arrivalTrincomalee != ""){
-                    alert("Please enter a valid item delivery fee for Trincomalee!");
+                    errorToast("Please enter a valid item delivery fee for Trincomalee!");
                 }else if(deliveryTrincomalee != "" && arrivalTrincomalee == ""){
-                    alert("Please enter a valid number for estimated arrival days for Trincomalee!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Trincomalee!"); 
                 }
 
                 else if(deliveryKurunegala != "" && isNaN(deliveryKurunegala)){
-                    alert("Please enter a valid item delivery fee for Kurunegala!");
+                    errorToast("Please enter a valid item delivery fee for Kurunegala!");
                 }else if(arrivalKurunegala != "" && isNaN(arrivalKurunegala)){
-                    alert("Please enter a valid number for estimated arrival days for Kurunegala!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Kurunegala!");  
                 }else if(arrivalKurunegala != "" && arrivalKurunegala.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Kurunegala!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Kurunegala!");  
                 }else if(deliveryKurunegala == "" && arrivalKurunegala != ""){
-                    alert("Please enter a valid item delivery fee for Kurunegala!");
+                    errorToast("Please enter a valid item delivery fee for Kurunegala!");
                 }else if(deliveryKurunegala != "" && arrivalKurunegala == ""){
-                    alert("Please enter a valid number for estimated arrival days for Kurunegala!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Kurunegala!"); 
                 }
                 
                 else if(deliveryPuttalam != "" && isNaN(deliveryPuttalam)){
-                    alert("Please enter a valid item delivery fee for Puttalam!");
+                    errorToast("Please enter a valid item delivery fee for Puttalam!");
                 }else if(arrivalPuttalam != "" && isNaN(arrivalPuttalam)){
-                    alert("Please enter a valid number for estimated arrival days for Puttalam!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Puttalam!");  
                 }else if(arrivalPuttalam != "" && arrivalPuttalam.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Puttalam!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Puttalam!");  
                 }else if(deliveryPuttalam == "" && arrivalPuttalam != ""){
-                    alert("Please enter a valid item delivery fee for Puttalam!");
+                    errorToast("Please enter a valid item delivery fee for Puttalam!");
                 }else if(deliveryPuttalam != "" && arrivalPuttalam == ""){
-                    alert("Please enter a valid number for estimated arrival days for Puttalam!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Puttalam!"); 
                 }
 
                 else if(deliveryAnuradhapura != "" && isNaN(deliveryAnuradhapura)){
-                    alert("Please enter a valid item delivery fee for Anuradhapura!");
+                    errorToast("Please enter a valid item delivery fee for Anuradhapura!");
                 }else if(arrivalAnuradhapura != "" && isNaN(arrivalAnuradhapura)){
-                    alert("Please enter a valid number for estimated arrival days for Anuradhapura!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Anuradhapura!");  
                 }else if(arrivalAnuradhapura != "" && arrivalAnuradhapura.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Anuradhapura!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Anuradhapura!");  
                 }else if(deliveryAnuradhapura == "" && arrivalAnuradhapura != ""){
-                    alert("Please enter a valid item delivery fee for Anuradhapura!");
+                    errorToast("Please enter a valid item delivery fee for Anuradhapura!");
                 }else if(deliveryAnuradhapura != "" && arrivalAnuradhapura == ""){
-                    alert("Please enter a valid number for estimated arrival days for Anuradhapura!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Anuradhapura!"); 
                 }
 
                 else if(deliveryPolonnaruwa != "" && isNaN(deliveryPolonnaruwa)){
-                    alert("Please enter a valid item delivery fee for Polonnaruwa!");
+                    errorToast("Please enter a valid item delivery fee for Polonnaruwa!");
                 }else if(arrivalPolonnaruwa != "" && isNaN(arrivalPolonnaruwa)){
-                    alert("Please enter a valid number for estimated arrival days for Polonnaruwa!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Polonnaruwa!");  
                 }else if(arrivalPolonnaruwa != "" && arrivalPolonnaruwa.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Polonnaruwa!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Polonnaruwa!");  
                 }else if(deliveryPolonnaruwa == "" && arrivalPolonnaruwa != ""){
-                    alert("Please enter a valid item delivery fee for Polonnaruwa!");
+                    errorToast("Please enter a valid item delivery fee for Polonnaruwa!");
                 }else if(deliveryPolonnaruwa != "" && arrivalPolonnaruwa == ""){
-                    alert("Please enter a valid number for estimated arrival days for Polonnaruwa!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Polonnaruwa!"); 
                 }
 
                 else if(deliveryBadulla != "" && isNaN(deliveryBadulla)){
-                    alert("Please enter a valid item delivery fee for Badulla!");
+                    errorToast("Please enter a valid item delivery fee for Badulla!");
                 }else if(arrivalBadulla != "" && isNaN(arrivalBadulla)){
-                    alert("Please enter a valid number for estimated arrival days for Badulla!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Badulla!");  
                 }else if(arrivalBadulla != "" && arrivalBadulla.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Badulla!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Badulla!");  
                 }else if(deliveryBadulla == "" && arrivalBadulla != ""){
-                    alert("Please enter a valid item delivery fee for Badulla!");
+                    errorToast("Please enter a valid item delivery fee for Badulla!");
                 }else if(deliveryBadulla != "" && arrivalBadulla == ""){
-                    alert("Please enter a valid number for estimated arrival days for Badulla!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Badulla!"); 
                 }
 
                 else if(deliveryMoneragala != "" && isNaN(deliveryMoneragala)){
-                    alert("Please enter a valid item delivery fee for Moneragala!");
+                    errorToast("Please enter a valid item delivery fee for Moneragala!");
                 }else if(arrivalMoneragala != "" && isNaN(arrivalMoneragala)){
-                    alert("Please enter a valid number for estimated arrival days for Moneragala!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Moneragala!");  
                 }else if(arrivalMoneragala != "" && arrivalMoneragala.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Moneragala!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Moneragala!");  
                 }else if(deliveryMoneragala == "" && arrivalMoneragala != ""){
-                    alert("Please enter a valid item delivery fee for Moneragala!");
+                    errorToast("Please enter a valid item delivery fee for Moneragala!");
                 }else if(deliveryMoneragala != "" && arrivalMoneragala == ""){
-                    alert("Please enter a valid number for estimated arrival days for Moneragala!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Moneragala!"); 
                 }
 
                 else if(deliveryRatnapura != "" && isNaN(deliveryRatnapura)){
-                    alert("Please enter a valid item delivery fee for Ratnapura!");
+                    errorToast("Please enter a valid item delivery fee for Ratnapura!");
                 }else if(arrivalRatnapura != "" && isNaN(arrivalRatnapura)){
-                    alert("Please enter a valid number for estimated arrival days for Ratnapura!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Ratnapura!");  
                 }else if(arrivalRatnapura != "" && arrivalRatnapura.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Ratnapura!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Ratnapura!");  
                 }else if(deliveryRatnapura == "" && arrivalRatnapura != ""){
-                    alert("Please enter a valid item delivery fee for Ratnapura!");
+                    errorToast("Please enter a valid item delivery fee for Ratnapura!");
                 }else if(deliveryRatnapura != "" && arrivalRatnapura == ""){
-                    alert("Please enter a valid number for estimated arrival days for Ratnapura!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Ratnapura!"); 
                 }
 
                 else if(deliveryKegalle != "" && isNaN(deliveryKegalle)){
-                    alert("Please enter a valid item delivery fee for Kegalle!");
+                    errorToast("Please enter a valid item delivery fee for Kegalle!");
                 }else if(arrivalKegalle != "" && isNaN(arrivalKegalle)){
-                    alert("Please enter a valid number for estimated arrival days for Kegalle!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Kegalle!");  
                 }else if(arrivalKegalle != "" && arrivalKegalle.includes(".")){
-                    alert("Please enter a valid number for estimated arrival days for Kegalle!");  
+                    errorToast("Please enter a valid number for estimated arrival days for Kegalle!");  
                 }else if(deliveryKegalle == "" && arrivalKegalle != ""){
-                    alert("Please enter a valid item delivery fee for Kegalle!");
+                    errorToast("Please enter a valid item delivery fee for Kegalle!");
                 }else if(deliveryKegalle != "" && arrivalKegalle == ""){
-                    alert("Please enter a valid number for estimated arrival days for Kegalle!"); 
+                    errorToast("Please enter a valid number for estimated arrival days for Kegalle!"); 
                 }
 
                 else if(material == ""){
-                    alert("Please enter item main material!");
+                    errorToast("Please enter item main material!");
                 }else if(materialDescription == ""){
-                    alert("Please enter item main material description!");
+                    errorToast("Please enter item main material description!");
                 }else if(subMaterials == "" & subMaterialsDescription != ""){
-                    alert("Please enter item sub materials!");
+                    errorToast("Please enter item sub materials!");
                 }else if(subMaterials != "" & subMaterialsDescription == ""){
-                    alert("Please enter item sub materials description!");
+                    errorToast("Please enter item sub materials description!");
                 }
                 
                 else if(clr1 == ""){
-                    alert("Please enter a valid main material color code 1!");
+                    errorToast("Please enter a valid main material color code 1!");
                 }else if(clr1.length != 7 || clr1.charAt(0) != "#"){
-                    alert("Please enter a valid main material color code 1!");
+                    errorToast("Please enter a valid main material color code 1!");
                 }else if(clr1Img == "NA"){
-                    alert("Please enter color 1 item image!");
+                    errorToast("Please enter color 1 item image!");
                 }else if(clr2 != "" & clr2Img != "NA" & (clr2.length != 7 || clr2.charAt(0) != "#")){
-                    alert("Please enter a valid main material color code 2!");
+                    errorToast("Please enter a valid main material color code 2!");
                 }else if(clr2 != "" & clr2Img == "NA"){
-                    alert("Please enter color 2 item image!");
+                    errorToast("Please enter color 2 item image!");
                 }else if(clr2 == "" & clr2Img != "NA"){
-                    alert("Please enter a valid main material color code 2!");
+                    errorToast("Please enter a valid main material color code 2!");
                 }else if((clr2 == "" | clr2Img == "NA") & m3d2 != ""){
-                    alert("Please enter valid main material color 2 details!");
+                    errorToast("Please enter valid main material color 2 details!");
                 }else if(clr3 != "" & clr3Img != "NA" & (clr3.length != 7 || clr3.charAt(0) != "#")){
-                    alert("Please enter a valid main material color code 3!");
+                    errorToast("Please enter a valid main material color code 3!");
                 }else if(clr3 != "" & clr3Img == "NA"){
-                    alert("Please enter color 3 item image!");
+                    errorToast("Please enter color 3 item image!");
                 }else if(clr3 == "" & clr3Img != "NA"){
-                    alert("Please enter a valid main material color code 3!");
+                    errorToast("Please enter a valid main material color code 3!");
                 }else if((clr3 == "" | clr3Img == "NA") & m3d3 != ""){
-                    alert("Please enter valid main material color 3 details!");
+                    errorToast("Please enter valid main material color 3 details!");
                 }else if(add1Img == "NA"){
-                    alert("Please enter additional image 1!");
+                    errorToast("Please enter additional image 1!");
                 }else{
                     var object = {};
 

@@ -8,6 +8,7 @@
     <link href="../css/style.css" rel="stylesheet">
 	<link href="../css/responsive.css" rel="stylesheet">
     <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+	<link href="alert-style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -37,8 +38,14 @@
 	</section>
 
     
-
+	<div class="toast" style="position: absolute;"> </div>
+	
+    
+	<script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../alert-box/alert-script.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
+
+
     <script>
 		// Buyer id
 		var id = localStorage.getItem("id");
@@ -77,7 +84,7 @@
                             <td class="cart_description"> <h4>${products[j].itemName}</h4> <p>LKR ${(products[j].price).toLocaleString('en-US')}</p> </td> 
                             <td class="cart_price"> <p style="color: ${colour};">${InStock}</p> </td> 
                             <td class="cart_total"> <button class="btn btn-primary profile-button" type="button" style="font-size: medium;" onclick="addToCart(${products[j].userId}, ${products[j].itemId}, ${products[j].stockQuantity})">Add to Cart</button> </td> 
-                            <td class="cart_total"> <a href="" onclick="viewDetails(${products[j].userId}, ${products[j].itemId})"> <p class="cart_total_price">View Details</p></a> <br> <a href="" onclick="deleteItem(${wishlistItems[i].id}, ${products[j].userId}, ${products[j].itemId})"><p class="cart_total_price">Remove from Wishlist</p></a> </td> 
+                            <td class="cart_total"> <a href="" onclick="viewDetails(${products[j].userId}, ${products[j].itemId})"> <p class="cart_total_price">View Details</p></a> <br> <a onclick="deleteItemConfirm(${wishlistItems[i].id}, ${products[j].userId}, ${products[j].itemId})"><p class="cart_total_price">Remove from Wishlist</p></a> </td> 
                         	</tr>`;
 
 							break;
@@ -96,7 +103,7 @@
 		// Add selected item to cart
 		const addToCart = async(sellerId, productId, stockQuantity) => {
 			if(stockQuantity <= 0){
-				alert("Item out of stock!");
+				errorToast("Item out of stock!");
 			}else{
 				var available = false;
 
@@ -111,7 +118,7 @@
 				}
 
 				if(available == true){
-					alert("Iteam already added to cart!");
+					errorToast("Iteam already added to cart!");
 				}else{
 					var object2 = {};
 					object2["id"] = id
@@ -129,7 +136,7 @@
 						body: jsonText2
 					})
 					.then(response => response.text())
-					.then(alert("Item added to your cart!"))
+					.then(infoToast("Item added to your cart!"))
 					.catch(error => console.log('Authorization failed: ' + error.message));	
 				}					
 			}
@@ -145,17 +152,24 @@
 
 
 		// Remove selected item from wishlist
-		const deleteItem = async(buyerId, sellerId, productId) => {
+		const buttonToastDeleteItem = async(message, buyerId, sellerId, productId) => {
+			document.querySelector(".toast").innerHTML  = `<div class="toast-header" style="background-color: #ADD8E6;"> <img src="info-24.png" class="me-auto"> <button type="button" class="btn-close" data-bs-dismiss="toast"></button> </div> <div class="toast-body" style="background-color: white; border-radius: 10px;"> <h5 style="text-align: center;  font-size: 16px;">${message}</h5> <center> <button type="button" class="btn btn-success" onclick="deleteItem(true, ${buyerId}, ${sellerId}, ${productId})">Yes</button> <button type="button" class="btn btn-danger" style="margin-left: 15px;" onclick="deleteItem(false, ${buyerId}, ${sellerId}, ${productId})">No</button> </center> </div>`;
+			toastSetup();
+		}
+
+		const deleteItemConfirm = async(buyerId, sellerId, productId) => {
+			buttonToastDeleteItem("Are you sure you want to remove this item from wishlist?", buyerId, sellerId, productId);
+		}
+
+		const deleteItem = async(res, buyerId, sellerId, productId) => {
+			toastClose();
+
 			var object = {};
 			object["id"] = buyerId;
 			object["sellerID"] = sellerId;
 			object["productID"] = productId;
 
 			var jsonText = JSON.stringify(object);
-
-			var res = false;
-
-			res = confirm("Are you sure you want to remove this item from wishlist?");
 
 			if(res){
 				await fetch("http://localhost:8080/deleteWishlistItem", {
@@ -167,7 +181,7 @@
 					body: jsonText
 				})
 				.then(response => response.text())
-				.then("../../../wishlist.html", "_parent")
+				.then(open("../../../wishlist.html", "_parent"))
 				.catch(error => console.log('Authorization failed: ' + error.message));
 			}
 		}

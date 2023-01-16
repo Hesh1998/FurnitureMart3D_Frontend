@@ -1,6 +1,6 @@
 .toast {
     left: 50%;
-    top: 40%;
+    top: 50%;
     position: fixed;
     transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);

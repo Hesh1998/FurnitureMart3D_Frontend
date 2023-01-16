@@ -9,6 +9,7 @@
 	<link href="../css/font-awesome.min.css" rel="stylesheet">
 	<link href="../css/style.css" rel="stylesheet">
 	<link href="../css/responsive.css" rel="stylesheet">
+	<link href="alert-style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -226,7 +227,12 @@
 			</div>
 		</div>
 	</div>
-				
+
+
+	<div class="toast" style="position: absolute;"> </div>
+
+	<script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../alert-box/alert-script.js"></script>
     <script src="../js/script.js"></script>
 		
 	<script>
@@ -262,7 +268,7 @@
 			if(buyerId == null){
 				open("../../../../sign-in.html", "_blank");
 			}else if(buyerId == sellerID){
-				alert("This is a product added by you. Please note that you can't add your own products to cart.");
+				errorToast("This is a product added by you. Please note that you can't add your own products to cart.");
 			}else{
 				let response1 = await fetch(`http://localhost:8080/findUserProducts/${sellerID}`);
 				let items = await response1.json();
@@ -277,7 +283,7 @@
 				}
 
 				if(stock <= 0){
-					alert("Item out of stock!");
+					errorToast("Item out of stock!");
 				}else{
 					var available = false;
 
@@ -292,7 +298,7 @@
 					}
 
 					if(available == true){
-						alert("Iteam already added to cart!");
+						errorToast("Iteam already added to cart!");
 					}else{
 						var object2 = {};
 						object2["id"] = buyerId;
@@ -310,7 +316,7 @@
 							body: jsonText2
 						})
 						.then(response => response.text())
-						.then(alert("Item added to your cart!"))
+						.then(infoToast("Item added to your cart!"))
 						.catch(error => console.log('Authorization failed: ' + error.message));	
 					}					
 				}
@@ -323,7 +329,7 @@
 			if(buyerId == null){
 				open("../../../../sign-in.html", "_blank");
 			}else if(buyerId == sellerID){
-				alert("This is a product added by you. Please note that you can't add your own products to wishlist.");
+				errorToast("This is a product added by you. Please note that you can't add your own products to wishlist.");
 			}else{
 				var available = false;
 
@@ -338,7 +344,7 @@
 				}
 
 				if(available == true){
-					alert("Iteam already added to wishlist!");
+					errorToast("Iteam already added to wishlist!");
 				}else{
 					var object2 = {};
 					object2["id"] = buyerId;
@@ -356,7 +362,7 @@
 						body: jsonText2
 					})
 					.then(response => response.text())
-					.then(alert("Item added to your wishlist!"))
+					.then(infoToast("Item added to your wishlist!"))
 					.catch(error => console.log('Authorization failed: ' + error.message));
 				}
 			}

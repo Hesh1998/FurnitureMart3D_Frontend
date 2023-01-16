@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<link href="../css/style.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="alert-style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -88,7 +89,13 @@
 			</div>
 		</div>		
 	</div>
+
+
+	<div class="toast" style="position: absolute;"> </div>
 	
+
+	<script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../alert-box/alert-script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -300,9 +307,9 @@
 			if(buyerId == null){
 				open("../../../../sign-in.html", "_blank");
 			}else if(buyerId == sellerId){
-				alert("This is a product added by you. Please note that you can't purcahse a product added by you.");
+				errorToast("This is a product added by you. Please note that you can't purcahse a product added by you.");
 			}else if(stockCount <= 0){
-				alert("Item is out of stock!");
+				errorToast("Item is out of stock!");
 			}else{
 				open("../../../../purchase.html", "_parent");
 			}
@@ -332,7 +339,7 @@
 			}
 
 			if(m3d1 == "" & m3d2 == "" & m3d3 == ""){
-				alert("No 3D models available to preview!");
+				errorToast("No 3D models available to preview!");
 			}else{
 				open("../3d-preview-buyer/3d-preview-buyer.html", "_blank")
 			}
@@ -344,10 +351,10 @@
 			if(buyerId == null){
 				open("../../../../sign-in.html", "_blank");
 			}else if(buyerId == sellerId){
-				alert("This is a product added by you. Please note that you can't add your own products to cart.");
+				errorToast("This is a product added by you. Please note that you can't add your own products to cart.");
 			}else{
 				if(stockCount <= 0){
-					alert("Item out of stock!");
+					errorToast("Item out of stock!");
 				}else{
 					var available = false;
 
@@ -362,7 +369,7 @@
 					}
 
 					if(available == true){
-						alert("Iteam already added to cart!");
+						errorToast("Iteam already added to cart!");
 					}else{
 						var object2 = {};
 						object2["id"] = buyerId;
@@ -380,7 +387,7 @@
 							body: jsonText2
 						})
 						.then(response => response.text())
-						.then(alert("Item added to your cart!"))
+						.then(infoToast("Item added to your cart!"))
 						.catch(error => console.log('Authorization failed: ' + error.message));	
 					}					
 				}
@@ -393,7 +400,7 @@
 			if(buyerId == null){
 				open("../../../../sign-in.html", "_blank");
 			}else if(buyerId == sellerId){
-				alert("This is a product added by you. Please note that you can't add your own products to wishlist.");
+				errorToast("This is a product added by you. Please note that you can't add your own products to wishlist.");
 			}else{
 				var available = false;
 
@@ -408,7 +415,7 @@
 				}
 
 				if(available == true){
-					alert("Iteam already added to wishlist!");
+					errorToast("Iteam already added to wishlist!");
 				}else{
 					var object2 = {};
 					object2["id"] = buyerId;
@@ -426,7 +433,7 @@
 						body: jsonText2
 					})
 					.then(response => response.text())
-					.then(alert("Item added to your wishlist!"))
+					.then(infoToast("Item added to your wishlist!"))
 					.catch(error => console.log('Authorization failed: ' + error.message));
 				}
 			}
