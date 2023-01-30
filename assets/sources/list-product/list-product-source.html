@@ -135,12 +135,6 @@
                 <br>
 
                 <div class="cls1">
-                    <label for="stock" style="padding-right: 10px;">Quantity in Stock *</label><br>
-                    <input type="text" id="stock" placeholder="Enter quantity in stock"><br>
-                </div>
-                <br>
-
-                <div class="cls1">
                     <label for="price" style="padding-right: 10px;">Price (LKR) *</label><br>
                     <input type="text" id="price" placeholder="Enter item price"><br>
                 </div>
@@ -326,6 +320,12 @@
                 <br>
 
                 <div class="cls1">
+                    <label for="stockClr1" style="padding-right: 10px;">Quantity in Stock for Color 1 *</label><br>
+                    <input type="text" id="stockClr1" placeholder="Enter quantity in stock for color 1"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
                     <label style="padding-right: 10px;">Color 1 item image *</label><br><br>
                     <img id="clr1Img" src="istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
                     <input type="file" id="clr1ImgInput" style="width: 85%;">
@@ -348,6 +348,12 @@
                 <br>
 
                 <div class="cls1">
+                    <label for="stockClr2" style="padding-right: 10px;">Quantity in Stock for Color 2</label><br>
+                    <input type="text" id="stockClr2" placeholder="Enter quantity in stock for color 2"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
                     <label style="padding-right: 10px;">Color 2 item image</label><br><br>
                     <img id="clr2Img" src="istockphoto-1357365823-612x612.jpg" width="306" height="229.5">
                     <input type="file" id="clr2ImgInput" style="width: 85%;">
@@ -366,6 +372,12 @@
                 <div class="cls1">
                     <label for="clr3" style="padding-right: 10px;">Main Material Color Code 3</label><br>
                     <input type="text" id="clr3" placeholder="Enter item material color code 3 (e.g. - #FFFFFF)"><br>
+                </div>
+                <br>
+
+                <div class="cls1">
+                    <label for="stockClr3" style="padding-right: 10px;">Quantity in Stock for Color 3</label><br>
+                    <input type="text" id="stockClr3" placeholder="Enter quantity in stock for color 3"><br>
                 </div>
                 <br>
 
@@ -775,7 +787,7 @@
                 let response1 = await fetch(`http://localhost:8080/findUserProducts/${id}`);
                 let items = await response1.json();
                 
-                var newId
+                var newId;
                 if(items.length == 0){
                     newId = 1;
                 }else{
@@ -814,7 +826,6 @@
                 var condition = document.getElementById("condition").value;
                 var description = document.getElementById("description").value;
                 var dimensions = document.getElementById("dimensions").value;
-                var stock = document.getElementById("stock").value;
                 var price = document.getElementById("price").value;
 
                 var deliveryColombo = document.getElementById("deliveryColombo").value;
@@ -900,10 +911,13 @@
                 
                 var clr1 = document.getElementById("clr1").value;
                 var clr1Img = document.getElementById("clr1Img").src;
+                var stockClr1 = document.getElementById("stockClr1").value;
                 var clr2 = document.getElementById("clr2").value;
                 var clr2Img = document.getElementById("clr2Img").src;
+                var stockClr2 = document.getElementById("stockClr2").value;
                 var clr3 = document.getElementById("clr3").value;
                 var clr3Img = document.getElementById("clr3Img").src;
+                var stockClr3 = document.getElementById("stockClr3").value;
                 
                 var add1Img = document.getElementById("add1Img").src;
                 var add2Img = document.getElementById("add2Img").src;
@@ -955,12 +969,6 @@
                     errorToast("Please enter item description!");
                 }else if(dimensions == ""){
                     errorToast("Please enter item dimensions!");
-                }else if(stock == ""){
-                    errorToast("Please enter a valid number for quantity in stock!");
-                }else if(isNaN(stock)){
-                    errorToast("Please enter a valid number for quantity in stock!");
-                }else if(stock.includes(".")){
-                    errorToast("Please enter a valid number for quantity in stock!");
                 }else if(price == "" || isNaN(price)){
                     errorToast("Please enter a valid item price!");
                 }else if(deliveryColombo == "" & arrivalColombo == "" & deliveryGampaha == "" & arrivalGampaha == "" & deliveryKalutara == "" & arrivalKalutara == "" & deliveryKandy == "" & arrivalKandy == "" & deliveryMatale == "" & arrivalMatale == "" & deliveryNuwaraEliya == "" & arrivalNuwaraEliya == "" & deliveryGalle == "" & arrivalGalle == "" & deliveryMatara == "" & arrivalMatara == "" & deliveryHambantota == "" & arrivalHambantota == "" & deliveryJaffna == "" & arrivalJaffna == "" & deliveryKilinochchi == "" & arrivalKilinochchi == "" & deliveryMannar == "" & arrivalMannar == "" & deliveryVavuniya == "" & arrivalVavuniya == "" & deliveryMullaitivu == "" & arrivalMullaitivu == "" & deliveryBatticallo == "" & arrivalBatticallo == "" & deliveryAmpara == "" & arrivalAmpara == "" & deliveryTrincomalee == "" & arrivalTrincomalee == "" & deliveryKurunegala == "" & arrivalKurunegala == "" & deliveryPuttalam == "" & arrivalPuttalam == "" & deliveryAnuradhapura == "" & arrivalAnuradhapura == "" & deliveryPolonnaruwa == "" & arrivalPolonnaruwa == "" & deliveryBadulla == "" & arrivalBadulla == "" & deliveryMoneragala == "" & arrivalMoneragala == "" & deliveryRatnapura == "" & arrivalRatnapura == "" & deliveryKegalle == "" & arrivalKegalle == ""){
@@ -1281,6 +1289,12 @@
                     errorToast("Please enter a valid main material color code 1!");
                 }else if(clr1.length != 7 || clr1.charAt(0) != "#"){
                     errorToast("Please enter a valid main material color code 1!");
+                }else if(stockClr1 == ""){
+                    errorToast("Please enter a valid number for quantity in stock for color 1!");
+                }else if(isNaN(stockClr1)){
+                    errorToast("Please enter a valid number for quantity in stock color 1!");
+                }else if(stockClr1.includes(".")){
+                    errorToast("Please enter a valid number for quantity in stock color 1!");
                 }else if(clr1Img == "NA"){
                     errorToast("Please enter color 1 item image!");
                 }else if(clr2 != "" & clr2Img != "NA" & (clr2.length != 7 || clr2.charAt(0) != "#")){
@@ -1302,6 +1316,14 @@
                 }else if(add1Img == "NA"){
                     errorToast("Please enter additional image 1!");
                 }else{
+                    if(isNaN(stockClr2)){
+                        stockClr2 = 0;
+                    }
+
+                    if(isNaN(stockClr3)){
+                        stockClr3 = 0;
+                    }
+
                     var object = {};
 
                     object["userId"] = id;
@@ -1337,7 +1359,7 @@
                     object["condition"] = condition;
                     object["description"] = description;
                     object["dimensions"] = dimensions;
-                    object["stockQuantity"] = stock;
+                    object["stockQuantity"] = stockClr1 + stockClr2 + stockClr3;
                     object["inOrder"] = 0;
                     object["totalSold"] = 0;
                     object["price"] = price;
@@ -1422,10 +1444,13 @@
                     object["subMaterials"] = subMaterials;
                     object["subMaterialsDescription"] = subMaterialsDescription;
                     object["clr1"] = clr1;
+                    object["stockClr1"] = stockClr1;
                     object["clr1Img"] = clr1Img;
                     object["clr2"] = clr2;
+                    object["stockClr2"] = stockClr2;
                     object["clr2Img"] = clr2Img;
                     object["clr3"] = clr3;
+                    object["stockClr3"] = stockClr3;
                     object["clr3Img"] = clr3Img;
                     object["add1Img"] = add1Img;
                     object["add2Img"] = add2Img;
