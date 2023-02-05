@@ -69,7 +69,8 @@
 			}else{
 				var in_html = "";
 				for (let i = 0; i < items.length; i++) {
-					in_html += `<tr> <td class="cart_product"> <img src=${items[i].clr1Img} alt="" width="150px" height="100px"> </td> <td class="cart_description"> <h4>${items[i].itemName}</h4> <p>LKR ${(items[i].price).toLocaleString('en-US')}</p> </td> <td class="cart_price"> <p>${items[i].stockQuantity}</p> </td> <td class="cart_price"> <p>${items[i].totalSold}</p> </td> <td class="cart_total"> <a href="javascript:viewEditProducts(${items[i].itemId})"><p class="cart_total_price">View / Edit</p></a> <br> <a onclick="deleteProductsConfirm(${items[i].itemId}, ${items[i].inOrder})"><p class="cart_total_price">Delete</p></a> </td> </tr>`;
+					var stock = items[i].stockClr1 + items[i].stockClr2 + items[i].stockClr3;
+					in_html += `<tr> <td class="cart_product"> <img src=${items[i].clr1Img} alt="" width="150px" height="100px"> </td> <td class="cart_description"> <h4>${items[i].itemName}</h4> <p>LKR ${(items[i].price).toLocaleString('en-US')}</p> </td> <td class="cart_price"> <p>${stock}</p> </td> <td class="cart_price"> <p>${items[i].totalSold}</p> </td> <td class="cart_total"> <a href="javascript:viewEditProducts(${items[i].itemId})"><p class="cart_total_price">View / Edit</p></a> <br> <a onclick="deleteProductsConfirm(${items[i].itemId}, ${items[i].inOrder})"><p class="cart_total_price">Delete</p></a> </td> </tr>`;
 					itemIndexes[i] = items[i].itemId;
 				}
 				items_table.innerHTML = in_html;

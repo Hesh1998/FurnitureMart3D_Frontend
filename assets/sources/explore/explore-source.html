@@ -277,7 +277,7 @@
 				
 				for (let i = 0; i < items.length; i++) {
 					if(items[i].itemId == itemID){
-						stock = items[i].stockQuantity;
+						stock = items[i].stockClr1 + items[i].stockClr2 + items[i].stockClr3;
 						break;
 					}
 				}

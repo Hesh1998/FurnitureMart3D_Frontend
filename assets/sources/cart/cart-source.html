@@ -69,12 +69,13 @@
 						if(cartItems[i].sellerID == products[j].userId && cartItems[i].productID == products[j].itemId){
 							var InStock = "";
 							var colour = "";
+							var stockQuantity = products[j].stockClr1 + products[j].stockClr2 + products[j].stockClr3;
 
-							if(products[j].stockQuantity <= 0){
+							if(stockQuantity <= 0){
 								InStock = "No";
 								colour = "red";
 							}else{
-								InStock = products[j].stockQuantity;
+								InStock = stockQuantity;
 								colour = "green";
 							}
 							

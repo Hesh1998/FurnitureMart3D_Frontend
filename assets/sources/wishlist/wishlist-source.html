@@ -70,12 +70,13 @@
 						if(wishlistItems[i].sellerID == products[j].userId && wishlistItems[i].productID == products[j].itemId){
 							var InStock = "";
 							var colour = "";
-
-							if(products[j].stockQuantity <= 0){
+							var stockQuantity = products[j].stockClr1 + products[j].stockClr2 + products[j].stockClr3;
+			
+							if(stockQuantity <= 0){
 								InStock = "No";
 								colour = "red";
 							}else{
-								InStock = products[j].stockQuantity;
+								InStock = stockQuantity;
 								colour = "green";
 							}
 
@@ -83,7 +84,7 @@
                             <td class="cart_product"> <img src="${products[j].clr1Img}" alt="" width="150px" height="100px"> </td> 
                             <td class="cart_description"> <h4>${products[j].itemName}</h4> <p>LKR ${(products[j].price).toLocaleString('en-US')}</p> </td> 
                             <td class="cart_price"> <p style="color: ${colour};">${InStock}</p> </td> 
-                            <td class="cart_total"> <button class="btn btn-primary profile-button" type="button" style="font-size: medium;" onclick="addToCart(${products[j].userId}, ${products[j].itemId}, ${products[j].stockQuantity})">Add to Cart</button> </td> 
+                            <td class="cart_total"> <button class="btn btn-primary profile-button" type="button" style="font-size: medium;" onclick="addToCart(${products[j].userId}, ${products[j].itemId}, ${stockQuantity})">Add to Cart</button> </td> 
                             <td class="cart_total"> <a href="" onclick="viewDetails(${products[j].userId}, ${products[j].itemId})"> <p class="cart_total_price">View Details</p></a> <br> <a onclick="deleteItemConfirm(${wishlistItems[i].id}, ${products[j].userId}, ${products[j].itemId})"><p class="cart_total_price">Remove from Wishlist</p></a> </td> 
                         	</tr>`;
 

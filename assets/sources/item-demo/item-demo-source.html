@@ -182,8 +182,8 @@
 
 
 					// Setting item name and in-stock or out-of-stock
-					stockCount = items[i].stockQuantity;
-					if(items[i].stockQuantity <= 0){
+					stockCount = items[i].stockClr1 + items[i].stockClr2 + items[i].stockClr3;
+					if(stockCount <= 0){
 						itemName.innerHTML = `${items[i].itemName} <span style="font-size: 20px; color: red;">(Out of Stock)</span>`;
 					}else{
 						itemName.innerHTML = `${items[i].itemName} <span style="font-size: 20px; color: green;">(In Stock)</span>`;
@@ -286,7 +286,7 @@
 					subMaterial.innerHTML = `<b>Sub Materials: </b> ${items[i].subMaterials}`;
 					subMaterialDescription.innerHTML = `<b>Sub Materials Description: </b> ${items[i].subMaterialsDescription}`;
 					condition.innerHTML = `<b>Condition: </b> ${items[i].condition}`;
-					stock.innerHTML = `<b>Quantity in Stock: </b> ${items[i].stockQuantity}`;
+					stock.innerHTML = `<b>Quantity in Stock: </b> ${stockCount}`;
 					description.innerHTML = `<b>Description: </b> ${items[i].description}`;
 					dimensions.innerHTML = `<b>Dimensions: </b> ${items[i].dimensions}`;
 
