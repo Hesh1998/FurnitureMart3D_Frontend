@@ -1327,7 +1327,7 @@
                 var address = document.getElementById("address").value;
 
 
-                // Validations
+                // Validate and proceed
                 if(isNaN(phone) || phone.length != 10){
                     errorToast("Please enter a valid phone number!");
                 }else if(address == ""){
@@ -1336,6 +1336,7 @@
                     var errorMsg = document.getElementById("deliveryCharge").value + "!";
                     errorToast(errorMsg);
                 }else if(document.getElementById("card").checked == true){
+                    // Card payment
                     open("../card-payment/card-payment-source.html", "_parent");
                 }else if(document.getElementById("cash").checked == true){
                     alert("Cash payment!");
