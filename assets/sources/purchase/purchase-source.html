@@ -141,6 +141,7 @@
 
         <script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="../../alert-box/alert-script.js"></script>
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
 
         <script>
             // Buyer id
@@ -1535,20 +1536,28 @@
                     let response5 = await fetch(`http://localhost:8080/findUserProducts/${sellerId}`);
                     let items2 = await response5.json();
 
+                    var imgVal = "";
+                    var prdName = "";
                     // Set itemImg and clr based on selected colour when purchasing product
                     for (let i = 0; i < items2.length; i++) {
                         if(items2[i].itemId == productId){
                             if(selectedClr == 1){
                                 object2["itemImg"] = items2[i].clr1Img;
+                                img = items2[i].clr1Img;
                                 object2["itemName"] = items2[i].itemName;
+                                prdName = items2[i].itemName;
                                 object2["clr"] = items2[i].clr1;
                             }else if(selectedClr == 2){
                                 object2["itemImg"] = items2[i].clr2Img;
+                                img = items2[i].clr2Img;
                                 object2["itemName"] = items2[i].itemName;
+                                prdName = items2[i].itemName;
                                 object2["clr"] = items2[i].clr2;
                             }else if(selectedClr == 3){
                                 object2["itemImg"] = items2[i].clr3Img;
+                                img = items2[i].clr3Img;
                                 object2["itemName"] = items2[i].itemName;
+                                prdName = items2[i].itemName;
                                 object2["clr"] = items2[i].clr3;
                             }
                         }
@@ -1593,12 +1602,71 @@
                         body: jsonText2
                     })
                     .then(response => response.text())
-                    .then(alert("Product added Successfully!"))
+                    .then()
                     .catch(error => console.log('Authorization failed: ' + error.message));
 
 
                     // 3) Send invoice as an email to buyer
                     
+                    // Body of the invoice email
+                    var emailBody = `<div style="font-family: Open Sans, sans-serif; color: #444444;">
+                                        <br>
+                                        <center>
+                                            <hr style="background-color: #444444;">
+                                            <h2 style="color: #4CA48C">FurnitureMart 3D - Invoice</h2>
+                                            <hr style="background-color: #444444;">
+                                            <br>
+                                        </center>
+                                
+                                        <div> 
+                                            <p><b>Invoice No : </b>${noOfOrders + 1}</p>
+                                            <p><b>Issue Date : </b>${date.toLocaleDateString('en-CA')}</p>
+                                            <p><b>Email : </b>${document.getElementById("email").value}</p>
+                                            <p><b>Contact No : </b>${document.getElementById("phone").value}</p>
+                                            <p><b>Delivery Address : </b>${document.getElementById("address").value}</p>
+                                        </div>
+                                        <br>
+
+                                        <table style="border-collapse: collapse; width: 100%;">
+                                            <tr style="background-color: #4CA48C;">
+                                                <th style="color: white; padding-top: 15px; padding-bottom: 15px; text-align: center; width: 40%;">Product</th>
+                                                <th style="color: white; padding-top: 15px; padding-bottom: 15px; text-align: center; width: 60%;">Description</th>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="padding-top: 15px; padding-left: 8px; padding-bottom: 15px; border: 1px solid #dddddd; vertical-align: center;">
+                                                    <center>
+                                                        <img src="${imgVal}" width="300px" height="200px"><br>
+                                                    </center>
+                                                </td>
+
+                                                <td style="padding-left: 25px; padding-top: 15px; padding-bottom: 15px; border: 1px solid #dddddd; vertical-align: top;">
+                                                    <p style="color: #444444; text-align: left;"><b>Product Name : </b>${prdName}</p>
+                                                    <p style="color: #444444; text-align: left;"><b>Order Quantity : </b>${document.getElementById("quantity").value}</p>
+                                                    <p style="color: #444444; text-align: left;"><b>Estimated Arrival (days) : </b>${document.getElementById("estimatedArrival").value}</p>
+                                                    <p style="color: #444444; text-align: left;"><b>Sub Total : </b>${document.getElementById("subtotal").value}</p>
+                                                    <p style="color: #444444; text-align: left;"><b>Delivery Charge : </b>${document.getElementById("delivery2").value}</p>
+                                                    <p style="color: #444444; text-align: left;"><b>Total Payment : </b>${document.getElementById("totalPay").value}</p>
+                                                    <p style="color: #444444; text-align: left;"><b>Payment Method : </b>Cash on Delivery</p>
+                                                    <p style="color: #444444; text-align: left;"><b>Delivery Status : </b>Packaging</p>
+                                                </td> 
+                                            </tr>
+                                        </table>
+                                    </div>`;
+                    
+                    // Email of the Receiver (Buyer)
+                    var emailReceiver = `${document.getElementById("email").value}`;
+
+                    // Send email using SmtpJS library
+                    Email.send({
+                        SecureToken : "75734402-c5b4-471f-899f-8973dbb71783",
+                        To : emailReceiver,
+                        From : "furnituremart3d@gmail.com",
+                        Subject : "Thank You for Shopping at FurnitureMart 3D !!!",
+                        Body : emailBody
+                    }).then(
+                        message => alert("Success")
+                    );
                 }
             }
 
