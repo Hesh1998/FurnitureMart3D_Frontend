@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+	<link href="../css/responsive.css" rel="stylesheet">
+    <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+</head>
+
+<body>
+	<section id="cart_items" style="margin-top: 180px;">
+		<div class="container">
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image" style="width: 28%;">Purchased Item Details</td>
+							<td class="description" style="width: 20%;"></td>
+                            <td class="description" style="width: 32.5%;"></td>
+							<td class="total"></td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody id="items_table">
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+        
+	</section>
+	
+    
+	<script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+
+    <script>
+		// Buyer id
+		var id = localStorage.getItem("id");
+
+
+        // Setting page details
+		const setPageDetails = async() => {
+			let response1 = await fetch(`http://localhost:8080/findAllOrderDetails`);
+			let orders = await response1.json();
+            
+			var items_table = document.getElementById("items_table");
+			var hasOrders = false;
+
+            var in_html = "";
+            for (let i=orders.length-1; i >= 0; i--) {
+                if(orders[i].buyerId == id){
+                    in_html += `<tr> <td class="cart_product"> <img src=${orders[i].itemImg} alt="" width="150px" height="100px"> </td> <td class="cart_description"> <h4>${orders[i].itemName}</h4><br> <p><b>Ordered Quantity : </b>${orders[i].orderQuantity}</p> <p><b>Order Date : </b>${orders[i].orderDate}</p> </td> <td class="cart_description"> <h4 style="color: white;">Test</h4><br> <p><b>Totay Payment : </b>LKR ${(orders[i].totalPay).toLocaleString('en-US')}</p> <p><b>Delivery Status : </b>${orders[i].deliveryStatus}</p> </td> <td class="cart_total"> <a href="javascript:viewOrderStatus(${orders[i].id})"><p class="cart_total_price">View Order Status</p></a> </td> </tr>`;
+                    hasOrders = true;
+                }
+            }
+
+            if(hasOrders == false){
+                items_table.innerHTML = '<tr> <td class="cart_product"> <h3>No items purchased yet !</h3> </td> </tr>';
+            }else{
+                items_table.innerHTML = in_html;
+            }
+			
+		}
+
+		setPageDetails();
+
+
+        // Handle a specific Order
+		const viewOrderStatus = async(orderId) => {
+			alert(orderId);
+		}
+
+    </script>
+</body>
+</html>

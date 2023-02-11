@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>FurnitureMart 3D - Cart</title>
+  <title>FurnitureMart 3D - Handle Order</title>
   
   
   <!-- Google Fonts -->
@@ -31,12 +31,12 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="buyer-dashboard.html">Personal Info</a></li>
-          <li><a href="cart.html">Cart</a></li>
-          <li><a href="wishlist.html">Wishlist</a></li>
-          <li><a href="buyer-purchase-history.html">Purchase History</a></li>
-          <li><a href="FurnitureMart3D - Buyer Guidelines.pdf" target="_blank">Guidelines</a></li>
-          <li><a href="javascript:openSeller()">Switch to Selling</a></li>
+          <li><a href="">Overview</a></li> 
+          <li><a href="seller-dashboard.html">Store Info</a></li>
+          <li><a href="seller-tasks.html">Tasks</a></li>
+          <li><a href="javascript:openProducts()">Products</a></li>
+          <li><a href="FurnitureMart3D - Seller Guidelines.pdf" target="_blank">Guidelines</a></li>
+          <li><a href="buyer-dashboard.html">Switch to Buying</a></li>
           <li><a href="sign-in.html" class="getstarted" id="usernameBtn"></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -46,7 +46,7 @@
   </header>
   <!-- End Header -->
 
-  <iframe src="assets/sources/cart/cart-source.html" width="100%" height="1500px" style="border:none;"></iframe>
+  <iframe src="assets/sources/handle-order/handle-order-source.html" width="100%" height="1050px" style="border:none;"></iframe>
   <div class="toast" style="position: absolute;"> </div>
 
   <!-- Footer -->
@@ -134,22 +134,18 @@
     setPageDetails();
     
 
-    // Switch to selling
-    const openSeller = async() => {
+    // View list of added products
+    const openProducts = async() => {
         let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
         let userDetails = await response1.json();
 
-        if(userDetails.contactNo == "NA" || userDetails.deliveryAddress == "NA"){
-          errorToast("Please set contact no and delivery address to be eligible to extend to seller account!")
+        if(userDetails.paymentAccountName == "NA"){
+          errorToast("Please add your payment details to list products!")
         }else{
-          if(userDetails.storeName == "NA"){
-            open("switch-sell.html", "_parent");
-          }else{
-            open("seller-dashboard.html", "_parent");
-          }
+          open("seller-products.html", "_parent");
         }
     }
-
+    
 
     // Handle log in button
     const signInBtn = document.getElementById("usernameBtn");
@@ -170,7 +166,6 @@
     signInBtn.addEventListener('mouseout', function handleMouseOut() {
       setPageDetails();
     });
-
   </script>
 
   <!-- JS Files -->

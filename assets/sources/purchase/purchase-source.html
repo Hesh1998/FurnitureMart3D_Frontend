@@ -752,8 +752,14 @@
                     selectedClr = 1;
 
                     document.getElementById("clr1Img").style.border = "3px solid black";
-                    document.getElementById("clr2Img").style.border = "1px solid black";
-                    document.getElementById("clr3Img").style.border = "1px solid black";
+
+                    if(clr2 != ""){
+                        document.getElementById("clr2Img").style.border = "1px solid black";
+                    }
+                    
+                    if(clr3 != ""){
+                        document.getElementById("clr3Img").style.border = "1px solid black";
+                    }
 
                     quantityDiv.innerHTML = `<label class="labels">Set Quantity *</label> <input id="quantity" type="number" onKeyDown="return false" class="form-control" placeholder="" value="1" style="text-align: center;" min="1" max="${stockClr1}">`;
                 }else{
@@ -769,7 +775,10 @@
 
                     document.getElementById("clr1Img").style.border = "1px solid black";
                     document.getElementById("clr2Img").style.border = "3px solid black";
-                    document.getElementById("clr3Img").style.border = "1px solid black";
+
+                    if(clr3 != ""){
+                        document.getElementById("clr3Img").style.border = "1px solid black";
+                    }
 
                     quantityDiv.innerHTML = `<label class="labels">Set Quantity *</label> <input id="quantity" type="number" onKeyDown="return false" class="form-control" placeholder="" value="1" style="text-align: center;" min="1" max="${stockClr2}">`;
                 }else{
@@ -1665,7 +1674,7 @@
                         Subject : "Thank You for Shopping at FurnitureMart 3D !!!",
                         Body : emailBody
                     }).then(
-                        message => alert("Success")
+                        message => open("../../../buyer-purchase-history.html", "_parent")
                     );
                 }
             }

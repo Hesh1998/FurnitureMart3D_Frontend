@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="../buyer-dashboard/bootstrap.min.css" rel="stylesheet">
+        <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="alert-style.css" rel="stylesheet">
+        
+    </head>
+
+    <body>
+        <div class="container rounded bg-white mt-5 mb-5" style="padding-top: 80px;">
+            <div class="row">
+                <div class="col-md-3 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img id="itemImg" src="" width="306" height="229.5">
+
+                        <div class="col-md-12" style="padding-top: 20px; padding-bottom: 20px;">
+                            <br>
+                            <h2 id="itemName"></h2>
+                            <p id="orderStatus"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5 border-right">
+                    <div class="p-3 py-5">
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <div> 
+                                    <h4>Buyer Details</h4><br>
+                                    <p><b>Buyer Email : </b><span id="buyerEmail"></span></p>
+                                    <p><b>Buyer Contact No : </b><span id="buyerContactNo"></span></p>
+                                    <p><b>Delivery Address : </b><span id="address"></span></p>
+                                    <p><b>Delivery District : </b><span id="district"></span></p>
+                                    <hr>
+                                </div>
+
+                                <div style="padding-top: 15px;"> 
+                                    <h4>Order Details</h4><br>
+                                    <p><b>Ordered Quantity : </b><span id="quantity"></span></p>
+                                    <p><b>Selected Colour : </b><span id="colour"></span></p>
+                                    <p><b>Order Date : </b><span id="orderDate"></span></p>
+                                    <p><b>Estimated Arrival (Days) : </b><span id="estimatedDays"></span></p>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-3 py-5">
+                        <div> 
+                            <h4>Payment Details</h4><br>
+                            <p><b>Sub Total : </b><span id="subTotal"></span></p>
+                            <p><b>Delivery Charge : </b><span id="deliveryCharge"></span></p>
+                            <p><b>Total Payment : </b><span id="totalPay"></span></p>
+                            <p><b>Payment Method : </b><span id="paymentMethod"></span></p>
+                            <hr>
+                        </div>
+
+                        <div style="padding-top: 15px;"> 
+                            <span><b>Delivery Status : </b></span>
+                            <select id="deliveryStatus" style="color: #676a70; margin-left: 25px;">
+                                <option value="Packaging">Packaging</option>
+                                <option value="In Delivery">In Delivery</option>
+                                <option value="Delivered">Delivered</option>
+                            </select>
+
+                            <div class="mt-5 text-right">
+                                <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="setDeliveryStatus()">Set Delivery Status</button>
+                            </div>
+                            
+                            <hr>
+                        </div>
+
+                        <div style="padding-top: 15px;"> 
+                            <h4>Buyer Rating</h4><br>
+                            <div id="review"></div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="toast" style="position: absolute;"> </div>
+
+        <script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../../alert-box/alert-script.js"></script>
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+        <script>
+            // Order id
+            var orderId = localStorage.getItem("orderId");
+
+
+            // Set page details
+            const setPageDetails = async() => {
+                let response1 = await fetch(`http://localhost:8080/findAllOrderDetails`);
+			    let orders = await response1.json();
+
+                for(let i=0; i < orders.length; i++){
+                    if(orders[i].id == orderId){
+                        document.getElementById("itemImg").src = orders[i].itemImg;
+                        document.getElementById("itemName").innerHTML = orders[i].itemName;
+                        
+                        if(orders[i].deliveryStatus == "Packaging" || orders[i].deliveryStatus == "In Delivery" || orders[i].deliveryStatus == "Delivered"){
+                            document.getElementById("orderStatus").innerHTML = '<span style="color: green;">Order Active</span>';
+                        }else if(orders[i].deliveryStatus == "Completed"){
+                            document.getElementById("orderStatus").innerHTML = '<span style="color: red;">Order Completed</span>';
+                        }else if(orders[i].deliveryStatus == "Cancelled"){
+                            document.getElementById("orderStatus").innerHTML = "<span style='color: red;'>Buyer cancelled the order! Please don't deliver.</span>";
+                        }
+                        
+                        document.getElementById("buyerEmail").innerHTML = orders[i].buyerEmail;
+                        document.getElementById("buyerContactNo").innerHTML = orders[i].buyerContactNo;
+                        document.getElementById("address").innerHTML = orders[i].buyerAddress;
+                        document.getElementById("district").innerHTML = orders[i].buyerDistrict;
+
+                        document.getElementById("quantity").innerHTML = orders[i].orderQuantity;
+                        document.getElementById("colour").innerHTML = orders[i].clr;
+                        document.getElementById("orderDate").innerHTML = orders[i].orderDate;
+                        document.getElementById("estimatedDays").innerHTML = `Max ${orders[i].estimatedArrival} days from order date`;
+
+                        document.getElementById("subTotal").innerHTML = `LKR ${(orders[i].subTotal).toLocaleString('en-US')}`;
+                        document.getElementById("deliveryCharge").innerHTML = `LKR ${(orders[i].deliveryCharge).toLocaleString('en-US')}`;
+                        document.getElementById("totalPay").innerHTML = `LKR ${(orders[i].totalPay).toLocaleString('en-US')}`;
+                        document.getElementById("paymentMethod").innerHTML = orders[i].paymentMethod;
+
+                        if(orders[i].deliveryStatus == "Cancelled"){
+                            document.getElementById("deliveryStatus").value = "Packaging";    
+                        }else if(orders[i].deliveryStatus == "Completed"){
+                            document.getElementById("deliveryStatus").value = "Delivered";
+                        }else{
+                            document.getElementById("deliveryStatus").value = orders[i].deliveryStatus;
+                        }
+
+                        if(orders[i].stars != -1 && orders[i].buyerReview != "N/A"){
+                            var inHTML = "";
+
+                            if(orders[i].stars == 0){
+                                inHTML += `<span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span>`;
+                            }else if(orders[i].stars == 1){
+                                inHTML += `<span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span>`;
+                            }else if(orders[i].stars == 2){
+                                inHTML += `<span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span>`;
+                            }else if(orders[i].stars == 3){
+                                inHTML += `<span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span>`;
+                            }else if(orders[i].stars == 4){
+                                inHTML += `<span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star"></span>`;
+                            }else if(orders[i].stars == 5){
+                                inHTML += `<span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span>`;
+                            }
+
+                            if(orders[i].buyerReview != ""){
+                                inHTML += `<p style="padding-top: 20px;"><b>Review : </b>${orders[i].buyerReview}</p>`;
+                            }
+
+                            document.getElementById("review").innerHTML = inHTML;
+                        }else{
+                            document.getElementById("review").innerHTML = "<p>Buyer hasn't given a review for the product.</p>";
+                        }
+
+                        break;
+                    }
+                }
+ 
+            }
+
+            setPageDetails();
+
+
+            
+            const setDeliveryStatus = async() => {
+            
+            }
+
+        </script>
+    </body>
+</html>
