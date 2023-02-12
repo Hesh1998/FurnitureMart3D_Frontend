@@ -75,7 +75,7 @@
                             </select>
 
                             <div class="mt-5 text-right">
-                                <button class="btn btn-primary profile-button" type="button" style="margin-left: 30px;" onclick="setDeliveryStatus()">Set Delivery Status</button>
+                                <button class="btn btn-primary profile-button" id="deliveryBtn" type="button" style="margin-left: 30px;" onclick="setDeliveryStatus()">Set Delivery Status</button>
                             </div>
                             
                             <hr>
@@ -99,8 +99,12 @@
         <script src="https://smtpjs.com/v3/smtp.js"></script>
 
         <script>
-            // Order id
+            // Set initial details
             var orderId = localStorage.getItem("orderId");
+            var buyerId = 0;
+            var sellerId = 0;
+            var itemId = 0;
+            var orderedQuantity = 0;
 
 
             // Set page details
@@ -110,6 +114,14 @@
 
                 for(let i=0; i < orders.length; i++){
                     if(orders[i].id == orderId){
+                        // Setting values for initial details
+                        buyerId = orders[i].buyerId;
+                        sellerId = orders[i].sellerId;
+                        itemId = orders[i].itemId;
+                        orderedQuantity = orders[i].orderQuantity;
+
+
+                        // Setting order details
                         document.getElementById("itemImg").src = orders[i].itemImg;
                         document.getElementById("itemName").innerHTML = orders[i].itemName;
                         
@@ -142,6 +154,10 @@
                             document.getElementById("deliveryStatus").value = "Delivered";
                         }else{
                             document.getElementById("deliveryStatus").value = orders[i].deliveryStatus;
+                        }
+
+                        if(orders[i].deliveryStatus == "Delivered"){
+                            document.getElementById("deliveryBtn").disabled = true;
                         }
 
                         if(orders[i].stars != -1 && orders[i].buyerReview != "N/A"){
@@ -179,9 +195,219 @@
             setPageDetails();
 
 
-            
+            // Update delivery status and product details if required
             const setDeliveryStatus = async() => {
+                var deliveryStatusNew = document.getElementById("deliveryStatus").value;
+
+
+                // 1) Update product details if Delivery status is set to Delivered
+                if(deliveryStatusNew == "Delivered"){
+                    let response3 = await fetch(`http://localhost:8080/findUserProducts/${sellerId}`);
+                    let items = await response3.json();
+
+                    for (let i = 0; i < items.length; i++) {
+                        if(items[i].itemId == itemId){
+                            var object = {};
+
+                            object["userId"] = items[i].userId;
+                            object["itemId"] = items[i].itemId;
+                            object["itemName"] = items[i].itemName;
+
+                            object["living"] = items[i].living;
+                            object["dining"] = items[i].dining;
+                            object["bedroom"] = items[i].bedroom;
+                            object["office"] = items[i].office;
+                            object["outdoor"] = items[i].outdoor;
+                            object["other"] = items[i].other;
+
+                            object["chair"] = items[i].chair;
+                            object["table"] = items[i].table;
+                            object["sofa"] = items[i].sofa;
+                            object["cupboard"] = items[i].cupboard;
+                            object["bed"] = items[i].bed;
+                            object["bench"] = items[i].bench;
+                            object["bookcase"] = items[i].bookcase;
+                            object["desk"] = items[i].desk;
+                            object["otherT"] = items[i].otherT;
+
+                            object["classy"] = items[i].classy;
+                            object["antique"] = items[i].antique;
+                            object["traditional"] = items[i].traditional;
+                            object["modern"] = items[i].modern;
+                            object["contemporary"] = items[i].contemporary;
+                            object["transitional"] = items[i].transitional;
+                            object["coastal"] = items[i].coastal;
+                            object["minimalist"] = items[i].minimalist;
+
+                            object["condition"] = items[i].condition;
+                            object["description"] = items[i].description;
+                            object["dimensions"] = items[i].dimensions;
+                            object["stockQuantity"] = items[i].stockQuantity;
+
+                            // Update inOrder quantity and totalSold quantitiy
+                            object["inOrder"] = items[i].inOrder - orderedQuantity;
+                            object["totalSold"] = items[i].totalSold + orderedQuantity;
+
+                            object["price"] = items[i].price;
+
+                            object["deliveryColombo"] = items[i].deliveryColombo;
+                            object["arrivalColombo"] = items[i].arrivalColombo;
+
+                            object["deliveryGampaha"] = items[i].deliveryGampaha;
+                            object["arrivalGampaha"] = items[i].arrivalGampaha;
+
+                            object["deliveryKalutara"] = items[i].deliveryKalutara;
+                            object["arrivalKalutara"] = items[i].arrivalKalutara;
+
+                            object["deliveryKandy"] = items[i].deliveryKandy;
+                            object["arrivalKandy"] = items[i].arrivalKandy;
+
+                            object["deliveryMatale"] = items[i].deliveryMatale;
+                            object["arrivalMatale"] = items[i].arrivalMatale;
+
+                            object["deliveryNuwaraEliya"] = items[i].deliveryNuwaraEliya;
+                            object["arrivalNuwaraEliya"] = items[i].arrivalNuwaraEliya;
+
+                            object["deliveryGalle"] = items[i].deliveryGalle;
+                            object["arrivalGalle"] = items[i].arrivalGalle;
+
+                            object["deliveryMatara"] = items[i].deliveryMatara;
+                            object["arrivalMatara"] = items[i].arrivalMatara;
+
+                            object["deliveryHambantota"] = items[i].deliveryHambantota;
+                            object["arrivalHambantota"] = items[i].arrivalHambantota;
+
+                            object["deliveryJaffna"] = items[i].deliveryJaffna;
+                            object["arrivalJaffna"] = items[i].arrivalJaffna;
+
+                            object["deliveryKilinochchi"] = items[i].deliveryKilinochchi;
+                            object["arrivalKilinochchi"] = items[i].arrivalKilinochchi;
+                            
+                            object["deliveryMannar"] = items[i].deliveryMannar;
+                            object["arrivalMannar"] = items[i].arrivalMannar;
+
+                            object["deliveryVavuniya"] = items[i].deliveryVavuniya;
+                            object["arrivalVavuniya"] = items[i].arrivalVavuniya;
+
+                            object["deliveryMullaitivu"] = items[i].deliveryMullaitivu;
+                            object["arrivalMullaitivu"] = items[i].arrivalMullaitivu;
+
+                            object["deliveryBatticallo"] = items[i].deliveryBatticallo;
+                            object["arrivalBatticallo"] = items[i].arrivalBatticallo;
+
+                            object["deliveryAmpara"] = items[i].deliveryAmpara;
+                            object["arrivalAmpara"] = items[i].arrivalAmpara;
+
+                            object["deliveryTrincomalee"] = items[i].deliveryTrincomalee;
+                            object["arrivalTrincomalee"] = items[i].arrivalTrincomalee;
+
+                            object["deliveryKurunegala"] = items[i].deliveryKurunegala;
+                            object["arrivalKurunegala"] = items[i].arrivalKurunegala;
+
+                            object["deliveryPuttalam"] = items[i].deliveryPuttalam;
+                            object["arrivalPuttalam"] = items[i].arrivalPuttalam;
+
+                            object["deliveryAnuradhapura"] = items[i].deliveryAnuradhapura;
+                            object["arrivalAnuradhapura"] = items[i].arrivalAnuradhapura;
+
+                            object["deliveryPolonnaruwa"] = items[i].deliveryPolonnaruwa;
+                            object["arrivalPolonnaruwa"] = items[i].arrivalPolonnaruwa;
+
+                            object["deliveryBadulla"] = items[i].deliveryBadulla;
+                            object["arrivalBadulla"] = items[i].arrivalBadulla;
+
+                            object["deliveryMoneragala"] = items[i].deliveryMoneragala;
+                            object["arrivalMoneragala"] = items[i].arrivalMoneragala;
+
+                            object["deliveryRatnapura"] = items[i].deliveryRatnapura;
+                            object["arrivalRatnapura"] = items[i].arrivalRatnapura;
+
+                            object["deliveryKegalle"] = items[i].deliveryKegalle;
+                            object["arrivalKegalle"] = items[i].arrivalKegalle;
+
+                            object["material"] = items[i].material;
+                            object["materialDescription"] = items[i].materialDescription;
+                            object["subMaterials"] = items[i].subMaterials;
+                            object["subMaterialsDescription"] = items[i].subMaterialsDescription;
+                            object["clr1"] = items[i].clr1;
+                            object["stockClr1"] = items[i].stockClr1;                            
+                            object["clr1Img"] = items[i].clr1Img;
+                            object["clr2"] = items[i].clr2;
+                            object["stockClr2"] = items[i].stockClr2;
+                            object["clr2Img"] = items[i].clr2Img;
+                            object["clr3"] = items[i].clr3;
+                            object["stockClr3"] = items[i].stockClr3;
+                            object["clr3Img"] = items[i].clr3Img;
+                            object["add1Img"] = items[i].add1Img;
+                            object["add2Img"] = items[i].add2Img;
+                            object["vid1"] = items[i].vid1;
+
+                            var jsonText = JSON.stringify(object);
             
+                            await fetch("http://localhost:8080/updateProduct", {
+                                method: "POST",
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: jsonText
+                            })
+                            .then(response => response.text())
+                            .then()
+                            .catch(error => console.log('Authorization failed: ' + error.message));
+                        }
+                    }
+                }
+                
+
+                // 1) Update order details
+                let response4 = await fetch(`http://localhost:8080/findAllOrderDetails`);
+                let orders = await response4.json();
+                
+                for(let i=0; i < orders.length; i++){
+                    if(orders[i].id == orderId){
+                        var object2 = {};
+
+                        object2["id"] = orders[i].id;
+                        object2["buyerId"] = orders[i].buyerId;
+                        object2["sellerId"] = orders[i].sellerId;
+                        object2["itemId"] = orders[i].itemId;
+                        object2["itemImg"] = orders[i].itemImg;
+                        object2["itemName"] = orders[i].itemName;
+                        object2["clr"] = orders[i].clr;
+                        object2["orderQuantity"] = orders[i].orderQuantity;
+                        object2["buyerEmail"] = orders[i].buyerEmail;
+                        object2["buyerContactNo"] = orders[i].buyerContactNo;
+                        object2["buyerAddress"] = orders[i].buyerAddress;
+                        object2["buyerDistrict"] = orders[i].buyerDistrict;
+                        object2["subTotal"] = orders[i].subTotal;
+                        object2["deliveryCharge"] = orders[i].deliveryCharge;
+                        object2["orderDate"] = orders[i].orderDate;
+                        object2["estimatedArrival"] = orders[i].estimatedArrival;
+                        object2["totalPay"] = orders[i].totalPay;
+                        object2["paymentMethod"] = orders[i].paymentMethod;
+                        object2["deliveryStatus"] = deliveryStatusNew;
+                        object2["buyerReview"] = orders[i].buyerReview;
+                        object2["stars"] = orders[i].stars;
+
+                        var jsonText2 = JSON.stringify(object2);
+                
+                        await fetch("http://localhost:8080/addOrder", {
+                            method: "POST",
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: jsonText2
+                        })
+                        .then(response => response.text())
+                        .then(infoToast("Delivery status set successfully!"))
+                        .catch(error => console.log('Authorization failed: ' + error.message));
+                        
+                        break;
+                    }
+                }
+                
             }
 
         </script>
