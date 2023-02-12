@@ -54,7 +54,14 @@
             var in_html = "";
             for (let i=orders.length-1; i >= 0; i--) {
                 if(orders[i].sellerId == id){
-                    in_html += `<tr> <td class="cart_product"> <img src=${orders[i].itemImg} alt="" width="150px" height="100px"> </td> <td class="cart_description"> <h4>${orders[i].itemName}</h4><br> <p><b>Ordered Quantity : </b>${orders[i].orderQuantity}</p> <p><b>Colour Selection : </b>${orders[i].clr}</p> </td> <td class="cart_description"> <h4 style="color: white;">Test</h4><br> <p><b>Totay Payment : </b>LKR ${(orders[i].totalPay).toLocaleString('en-US')}</p> <p><b>Delivery Status : </b>${orders[i].deliveryStatus}</p> </td> <td class="cart_total"> <a href="javascript:handleOrder(${orders[i].id})"><p class="cart_total_price">Handle Order</p></a> </td> </tr>`;
+					var colour = "";
+					if(orders[i].deliveryStatus == "Packaging" || orders[i].deliveryStatus == "In Delivery" || orders[i].deliveryStatus == "Delivered"){
+						colour = "green";
+					}else if(orders[i].deliveryStatus == "Completed" || orders[i].deliveryStatus == "Cancelled"){
+						colour = "red";
+					}
+
+                    in_html += `<tr> <td class="cart_product"> <img src=${orders[i].itemImg} alt="" width="150px" height="100px"> </td> <td class="cart_description"> <h4>${orders[i].itemName}</h4><br> <p><b>Ordered Quantity : </b>${orders[i].orderQuantity}</p> <p><b>Colour Selection : </b>${orders[i].clr}</p> </td> <td class="cart_description"> <h4 style="color: white;">Test</h4><br> <p><b>Totay Payment : </b>LKR ${(orders[i].totalPay).toLocaleString('en-US')}</p> <p><b>Order Status : </b><span style="color: ${colour};">${orders[i].deliveryStatus}</span></p> </td> <td class="cart_total"> <a href="javascript:handleOrder(${orders[i].id})"><p class="cart_total_price">Handle Order</p></a> </td> </tr>`;
                     hasOrders = true;
                 }
             }

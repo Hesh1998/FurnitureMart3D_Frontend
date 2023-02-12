@@ -63,32 +63,66 @@
             }
         }
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div>
-        <div class="container">
-            <img src="Photo Ash.PNG" alt="Avatar" style="width:90px; height: 90px;">
-            <h2>Chris Fox</h2>
-            <p>Very good durable product. Early arrival. Good price.</p>
-        </div>
-    
-        <div class="container">
-            <img src="Photo Ash.PNG" alt="Avatar" style="width:90px; height: 90px;">
-            <h2>Chris Fox</h2>
-            <p>Very good durable product. Early arrival. Good price.</p>
-        </div>
-    
-        <div class="container">
-            <img src="Photo Ash.PNG" alt="Avatar" style="width:90px; height: 90px;">
-            <h2>Chris Fox</h2>
-            <p>Very good durable product. Early arrival. Good price.</p>
-        </div>
-    
-        <div class="container">
-            <img src="Photo Ash.PNG" alt="Avatar" style="width:90px; height: 90px;">
-            <h2>Chris Fox</h2>
-            <p>Very good durable product. Early arrival. Good price.</p>
-        </div>
+    <div id="reviews">
+        <h2>No Reviews Placed Yet!</h2>
     </div>
+
+
+    <script>
+        // Set initial details
+        var sellerId = localStorage.getItem("sellerId");
+        var productId = localStorage.getItem("productId");
+        var noOfReviews = 0;
+
+
+        // Set page details (reviews, if available)
+        const setPageDetails = async() => {
+            let response1 = await fetch(`http://localhost:8080/findAllOrderDetails`);
+            let orders = await response1.json();
+
+            var inHTML = "";
+            for(let i=0; i < orders.length; i++){
+                if(orders[i].sellerId == sellerId && orders[i].itemId == productId && orders[i].stars != -1 && orders[i].buyerReview != "N/A"){
+                    let response0 = await fetch(`http://localhost:8080/findbyId/${orders[i].buyerId}`);
+                    let buyerDetails = await response0.json();
+
+                    inHTML += `<div class="container"> <img src="${buyerDetails.dp}" style="width:90px; height: 90px;"> <h2 style="margin-top: 35px; margin-left: 120px;">${buyerDetails.username}</h2> <br><br>`;
+
+                    if(orders[i].stars == 0){
+                        inHTML += `<div> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> </div>`;
+                    }else if(orders[i].stars == 1){
+                        inHTML += `<div> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> </div>`;
+                    }else if(orders[i].stars == 2){
+                        inHTML += `<div> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> </div>`;
+                    }else if(orders[i].stars == 3){
+                        inHTML += `<div> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> </div>`;
+                    }else if(orders[i].stars == 4){
+                        inHTML += `<div> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star"></span> </div>`;
+                    }else if(orders[i].stars == 5){
+                        inHTML += `<div> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> <span class="fa fa-star" style="color: orange;"></span> </div>`;
+                    }
+
+                    if(orders[i].buyerReview != ""){
+                        inHTML += `<p>${orders[i].buyerReview}</p> </div>`;
+                    }
+
+                    noOfReviews += 1;
+                }
+            }
+
+            if(noOfReviews == 0){
+                document.getElementById("reviews").innerHTML = ``;
+            }else{
+                document.getElementById("reviews").innerHTML = inHTML;
+            }
+        }
+
+        setPageDetails();
+             
+    </script>
 </body>
 </html>

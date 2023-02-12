@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="../buyer-dashboard/bootstrap.min.css" rel="stylesheet">
+        <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="alert-style.css" rel="stylesheet">
+        
+    </head>
+
+    <body>
+        <div class="container rounded bg-white mt-5 mb-5" style="padding-top: 80px;">
+            <div class="row">
+                <div class="col-md-3 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img id="itemImg" src="" width="306" height="229.5">
+
+                        <div class="col-md-12" style="padding-top: 20px; padding-bottom: 20px;">
+                            <br>
+                            <h2 id="itemName"></h2>
+                            <p id="orderStatus"></p>
+                            <p id="storeName"></p>
+                            <p id="sellerEmail"></p>
+                            <p id="sellerContactNo"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5 border-right">
+                    <div class="p-3 py-5">
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <div> 
+                                    <h4>Details Provided by You</h4><br>
+                                    <p><b>Buyer Email : </b><span id="buyerEmail"></span></p>
+                                    <p><b>Buyer Contact No : </b><span id="buyerContactNo"></span></p>
+                                    <p><b>Delivery Address : </b><span id="address"></span></p>
+                                    <p><b>Delivery District : </b><span id="district"></span></p>
+                                    <hr>
+                                </div>
+
+                                <div style="padding-top: 15px;"> 
+                                    <h4>Order Details</h4><br>
+                                    <p><b>Ordered Quantity : </b><span id="quantity"></span></p>
+                                    <p><b>Order Date : </b><span id="orderDate"></span></p>
+                                    <p><b>Estimated Arrival (Days) : </b><span id="estimatedDays"></span></p>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-3 py-5">
+                        <div> 
+                            <h4>Payment Details</h4><br>
+                            <p><b>Sub Total : </b><span id="subTotal"></span></p>
+                            <p><b>Delivery Charge : </b><span id="deliveryCharge"></span></p>
+                            <p><b>Total Payment : </b><span id="totalPay"></span></p>
+                            <p><b>Payment Method : </b><span id="paymentMethod"></span></p>
+                            <hr>
+                        </div>
+
+                        <div style="padding-top: 15px;"> 
+                            <p><b>Delivery Status by Seller: </b><span id="deliveryStatus"></span></p>
+
+                            <div class="mt-5 text-right">
+                                <button class="btn btn-primary profile-button" id="cancelBtn" type="button" style="margin-left: 30px;" onclick="cancelOrder()">Cancel Order</button>
+                                <button class="btn btn-primary profile-button" id="confirmDeliveryBtn" type="button" style="margin-left: 30px;" onclick="confirmDelivery()">Confirm Delivery</button>
+                            </div>
+                            
+                            <hr>
+                        </div>
+
+                        <div style="padding-top: 15px;"> 
+                            <h4>Add Product Review</h4><br>
+                            <div>
+                                <div>
+                                    <span class="fa fa-star" id="star1" onclick="clickStar1()"></span>
+                                    <span class="fa fa-star" id="star2" onclick="clickStar2()"></span>
+                                    <span class="fa fa-star" id="star3" onclick="clickStar3()"></span>
+                                    <span class="fa fa-star" id="star4" onclick="clickStar4()"></span>
+                                    <span class="fa fa-star" id="star5" onclick="clickStar5()"></span>
+                                </div>
+                                <br>
+
+                                <div>
+                                    <textarea id="reviewText" rows="3" cols="40"></textarea>
+                                </div>
+
+                                <div class="mt-5 text-right">
+                                    <button class="btn btn-primary profile-button" id="reviewBtn" type="button" style="margin-left: 30px;" onclick="addReview()">Add Review</button>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="toast" style="position: absolute;"> </div>
+
+        <script src="../../framework/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../../alert-box/alert-script.js"></script>
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+        <script>
+            // Set initial details
+            var orderId = localStorage.getItem("orderId");
+            var buyerId = 0;
+            var sellerId = 0;
+            var itemId = 0;
+            var orderedQuantity = 0;
+            var deliveryStatus = "";
+            var starCount = 0;
+            var givenStars = 0;
+            var givenReview = "";
+
+
+            // Set page details
+            const setPageDetails = async() => {
+                let response1 = await fetch(`http://localhost:8080/findAllOrderDetails`);
+			    let orders = await response1.json();
+
+                for(let i=0; i < orders.length; i++){
+                    if(orders[i].id == orderId){
+                        // Setting values for initial details
+                        buyerId = orders[i].buyerId;
+                        sellerId = orders[i].sellerId;
+                        itemId = orders[i].itemId;
+                        orderedQuantity = orders[i].orderQuantity;
+                        deliveryStatus = orders[i].deliveryStatus;
+                        givenStars = orders[i].stars;
+                        givenReview = orders[i].buyerReview;
+
+
+                        // Setting order details
+                        document.getElementById("itemImg").src = orders[i].itemImg;
+                        document.getElementById("itemName").innerHTML = orders[i].itemName;
+                        
+                        if(orders[i].deliveryStatus == "Packaging" || orders[i].deliveryStatus == "In Delivery" || orders[i].deliveryStatus == "Delivered"){
+                            document.getElementById("orderStatus").innerHTML = '<span style="color: green;">Order Active</span>';
+                        }else if(orders[i].deliveryStatus == "Completed"){
+                            document.getElementById("orderStatus").innerHTML = '<span style="color: red;">Order Completed</span>';
+                        }else if(orders[i].deliveryStatus == "Cancelled"){
+                            document.getElementById("orderStatus").innerHTML = "<span style='color: red;'>Buyer cancelled the order.</span>";
+                        }
+
+
+                        // Setting seller details
+                        let response0 = await fetch(`http://localhost:8080/findbyId/${sellerId}`);
+                        let sellerDetails = await response0.json();
+
+                        document.getElementById("storeName").innerHTML = `<b>Store Name : </b>${sellerDetails.storeName}`;
+                        document.getElementById("sellerEmail").innerHTML = `<b>Seller Email : </b>${sellerDetails.email}`;
+                        document.getElementById("sellerContactNo").innerHTML = `<b>Seller Contact No : </b>${sellerDetails.contactNo}`;
+
+
+                        // Buyer details
+                        document.getElementById("buyerEmail").innerHTML = orders[i].buyerEmail;
+                        document.getElementById("buyerContactNo").innerHTML = orders[i].buyerContactNo;
+                        document.getElementById("address").innerHTML = orders[i].buyerAddress;
+                        document.getElementById("district").innerHTML = orders[i].buyerDistrict;
+
+                        
+                        // Order details
+                        document.getElementById("quantity").innerHTML = orders[i].orderQuantity;
+                        document.getElementById("orderDate").innerHTML = orders[i].orderDate;
+                        document.getElementById("estimatedDays").innerHTML = `Max ${orders[i].estimatedArrival} days from order date`;
+
+
+                        // Payment details
+                        document.getElementById("subTotal").innerHTML = `LKR ${(orders[i].subTotal).toLocaleString('en-US')}`;
+                        document.getElementById("deliveryCharge").innerHTML = `LKR ${(orders[i].deliveryCharge).toLocaleString('en-US')}`;
+                        document.getElementById("totalPay").innerHTML = `LKR ${(orders[i].totalPay).toLocaleString('en-US')}`;
+                        document.getElementById("paymentMethod").innerHTML = orders[i].paymentMethod;
+
+                        if(orders[i].deliveryStatus == "Cancelled"){
+                            document.getElementById("deliveryStatus").innerHTML = "Packaging";    
+                        }else if(orders[i].deliveryStatus == "Completed"){
+                            document.getElementById("deliveryStatus").innerHTML = "Delivered";
+                        }else{
+                            document.getElementById("deliveryStatus").innerHTML = orders[i].deliveryStatus;
+                        }
+
+
+                        break;
+                    }
+                }
+ 
+            }
+
+            setPageDetails();
+
+
+            // Cancel order
+            const cancelOrder = async() => {
+                if(deliveryStatus == "Packaging"){
+
+                }else{
+                    errorToast("You can only cancel a order when it is in Packaging state!");
+                }
+            }
+
+
+            // Confirm delivery
+            const confirmDelivery = async() => {
+                if(deliveryStatus == "Packaging" || deliveryStatus == "In Delivery"){
+                    errorToast("Please wait until seller confirms delivery!");
+                }else if(deliveryStatus == "Cancelled"){
+                    errorToast("You have cancelled the order!");
+                }else if(deliveryStatus == "Completed"){
+                    errorToast("You have already confirmed delivery!");
+                }else{
+                    // Update order details
+                    let response4 = await fetch(`http://localhost:8080/findAllOrderDetails`);
+                    let orders1 = await response4.json();
+                    
+                    for(let i=0; i < orders1.length; i++){
+                        if(orders1[i].id == orderId){
+                            var object2 = {};
+
+                            object2["id"] = orders1[i].id;
+                            object2["buyerId"] = orders1[i].buyerId;
+                            object2["sellerId"] = orders1[i].sellerId;
+                            object2["itemId"] = orders1[i].itemId;
+                            object2["itemImg"] = orders1[i].itemImg;
+                            object2["itemName"] = orders1[i].itemName;
+                            object2["clr"] = orders1[i].clr;
+                            object2["orderQuantity"] = orders1[i].orderQuantity;
+                            object2["buyerEmail"] = orders1[i].buyerEmail;
+                            object2["buyerContactNo"] = orders1[i].buyerContactNo;
+                            object2["buyerAddress"] = orders1[i].buyerAddress;
+                            object2["buyerDistrict"] = orders1[i].buyerDistrict;
+                            object2["subTotal"] = orders1[i].subTotal;
+                            object2["deliveryCharge"] = orders1[i].deliveryCharge;
+                            object2["orderDate"] = orders1[i].orderDate;
+                            object2["estimatedArrival"] = orders1[i].estimatedArrival;
+                            object2["totalPay"] = orders1[i].totalPay;
+                            object2["paymentMethod"] = orders1[i].paymentMethod;
+                            object2["deliveryStatus"] = "Completed";
+                            object2["buyerReview"] = orders1[i].buyerReview;
+                            object2["stars"] = orders1[i].stars;
+
+                            var jsonText2 = JSON.stringify(object2);
+                            document.getElementById("orderStatus").innerHTML = '<span style="color: red;">Order Completed</span>';
+                    
+                            await fetch("http://localhost:8080/addOrder", {
+                                method: "POST",
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: jsonText2
+                            })
+                            .then(response => response.text())
+                            .then(infoToast("Delivery Confirmed!"))
+                            .catch(error => console.log('Authorization failed: ' + error.message));
+                            
+                            break;
+                        }
+                    }
+                }
+            }
+
+
+            // Star ratings
+
+            // 1) One star rating
+            const clickStar1 = async() => {
+                document.getElementById("star1").style.color = "orange";
+                document.getElementById("star2").style.color = null;
+                document.getElementById("star3").style.color = null;
+                document.getElementById("star4").style.color = null;
+                document.getElementById("star5").style.color = null;
+
+                starCount = 1;
+            }
+
+            // 1) Two star rating
+            const clickStar2 = async() => {
+                document.getElementById("star1").style.color = "orange";
+                document.getElementById("star2").style.color = "orange";
+                document.getElementById("star3").style.color = null;
+                document.getElementById("star4").style.color = null;
+                document.getElementById("star5").style.color = null;
+
+                starCount = 2;
+            }
+
+            // 1) Three star rating
+            const clickStar3 = async() => {
+                document.getElementById("star1").style.color = "orange";
+                document.getElementById("star2").style.color = "orange";
+                document.getElementById("star3").style.color = "orange";
+                document.getElementById("star4").style.color = null;
+                document.getElementById("star5").style.color = null;
+
+                starCount = 3;
+            }
+
+            // 1) Four star rating
+            const clickStar4 = async() => {
+                document.getElementById("star1").style.color = "orange";
+                document.getElementById("star2").style.color = "orange";
+                document.getElementById("star3").style.color = "orange";
+                document.getElementById("star4").style.color = "orange";
+                document.getElementById("star5").style.color = null;
+
+                starCount = 4;
+            }
+
+            // 1) Five star rating
+            const clickStar5 = async() => {
+                document.getElementById("star1").style.color = "orange";
+                document.getElementById("star2").style.color = "orange";
+                document.getElementById("star3").style.color = "orange";
+                document.getElementById("star4").style.color = "orange";
+                document.getElementById("star5").style.color = "orange";
+
+                starCount = 5;
+            }
+
+
+            // Add review
+            const addReview = async() => {
+                if(givenStars != -1 && givenReview != "N/A"){
+                    errorToast("You have already added a review!");
+                }else{
+                    // Update order details
+                    let response4 = await fetch(`http://localhost:8080/findAllOrderDetails`);
+                    let orders1 = await response4.json();
+                    
+                    for(let i=0; i < orders1.length; i++){
+                        if(orders1[i].id == orderId){
+                            var object2 = {};
+
+                            object2["id"] = orders1[i].id;
+                            object2["buyerId"] = orders1[i].buyerId;
+                            object2["sellerId"] = orders1[i].sellerId;
+                            object2["itemId"] = orders1[i].itemId;
+                            object2["itemImg"] = orders1[i].itemImg;
+                            object2["itemName"] = orders1[i].itemName;
+                            object2["clr"] = orders1[i].clr;
+                            object2["orderQuantity"] = orders1[i].orderQuantity;
+                            object2["buyerEmail"] = orders1[i].buyerEmail;
+                            object2["buyerContactNo"] = orders1[i].buyerContactNo;
+                            object2["buyerAddress"] = orders1[i].buyerAddress;
+                            object2["buyerDistrict"] = orders1[i].buyerDistrict;
+                            object2["subTotal"] = orders1[i].subTotal;
+                            object2["deliveryCharge"] = orders1[i].deliveryCharge;
+                            object2["orderDate"] = orders1[i].orderDate;
+                            object2["estimatedArrival"] = orders1[i].estimatedArrival;
+                            object2["totalPay"] = orders1[i].totalPay;
+                            object2["paymentMethod"] = orders1[i].paymentMethod;
+                            object2["deliveryStatus"] = orders1[i].deliveryStatus;
+                            object2["buyerReview"] = document.getElementById("reviewText").value;
+                            object2["stars"] = starCount;
+
+                            var jsonText2 = JSON.stringify(object2);
+                    
+                            await fetch("http://localhost:8080/addOrder", {
+                                method: "POST",
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: jsonText2
+                            })
+                            .then(response => response.text())
+                            .then(infoToast("Review Added!"))
+                            .catch(error => console.log('Authorization failed: ' + error.message));
+                            
+                            break;
+                        }
+                    }
+                }
+            }
+
+        </script>
+    </body>
+</html>

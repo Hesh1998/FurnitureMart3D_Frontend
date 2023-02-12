@@ -156,7 +156,7 @@
                             document.getElementById("deliveryStatus").value = orders[i].deliveryStatus;
                         }
 
-                        if(orders[i].deliveryStatus == "Delivered"){
+                        if(orders[i].deliveryStatus == "Delivered" || orders[i].deliveryStatus == "Cancelled" || orders[i].deliveryStatus == "Completed"){
                             document.getElementById("deliveryBtn").disabled = true;
                         }
 
