@@ -144,20 +144,25 @@
         <script src="https://smtpjs.com/v3/smtp.js"></script>
 
         <script>
-            // Buyer id
+            // Buyer id and other details
             var buyerId = localStorage.getItem("id");
-
 
             // Details related to the product
             var sellerId = localStorage.getItem("sellerId");
             var productId = localStorage.getItem("productId");
             var selectedClr = 0;
+            var selectedClrCode = "";
             var clr1 = "";
             var clr2 = "";
             var clr3 = "";
+            var clr1Code = "";
+            var clr2Code = "";
+            var clr3Code = "";
             var stockClr1 = 0;
             var stockClr2 = 0;
             var stockClr3 = 0;
+            var subTotalForOne = 0;
+            var deliveryForOne = 0;
             var itemImg = document.getElementById("itemImg");
             var itemName = document.getElementById("itemName");
             var itemPrice = document.getElementById("itemPrice");
@@ -201,17 +206,20 @@
                         coloursInnerHTML += `<span style="height: 30px; width: 30px; background-color: ${items[i].clr1}; border-radius: 50%; display: inline-block; border: 1px solid black;" onclick="setImage1()" id="clr1Img"></span>`;
                         clr1 = items[i].clr1Img;
                         stockClr1 = items[i].stockClr1;
+                        clr1Code = items[i].clr1;
 
                         if(items[i].clr2 != ""){
                             coloursInnerHTML += `<span style="height: 30px; width: 30px; background-color: ${items[i].clr2}; border-radius: 50%; display: inline-block; border: 1px solid black; margin-left: 10px;" onclick="setImage2()" id="clr2Img"></span>`;
                             clr2 = items[i].clr2Img;
                             stockClr2 = items[i].stockClr2;
+                            clr2Code = items[i].clr2;
                         }
 
                         if(items[i].clr3 != ""){
                             coloursInnerHTML += `<span style="height: 30px; width: 30px; background-color: ${items[i].clr3}; border-radius: 50%; display: inline-block; border: 1px solid black; margin-left: 10px;" onclick="setImage3()" id="clr3Img"></span>`;
                             clr3 = items[i].clr3Img;
                             stockClr3 = items[i].stockClr3;
+                            clr3Code = items[i].clr3;
                         }
 
                         colours.innerHTML = coloursInnerHTML;
@@ -236,6 +244,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryColombo).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryColombo;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalColombo;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -245,6 +254,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryColombo).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryColombo;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Colombo";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -256,6 +266,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryGampaha).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryGampaha;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalGampaha;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -265,6 +276,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryGampaha).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryGampaha;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Gampaha";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -276,6 +288,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKalutara).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryKalutara;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalKalutara;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -285,6 +298,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKalutara).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryKalutara;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Kalutara";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -296,6 +310,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKandy).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryKandy;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalKandy;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -305,6 +320,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKandy).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryKandy;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Kandy";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -316,6 +332,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMatale).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryMatale;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalMatale;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -325,6 +342,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMatale).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryMatale;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Matale";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -336,6 +354,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryNuwaraEliya).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryNuwaraEliya;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalNuwaraEliya;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -345,6 +364,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryNuwaraEliya).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryNuwaraEliya;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Nuwara Eliya";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -356,6 +376,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryGalle).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryGalle;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalGalle;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -365,6 +386,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryGalle).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryGalle;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Galle";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -376,6 +398,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMatara).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryMatara;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalMatara;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -385,6 +408,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMatara).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryMatara;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Matara";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -396,6 +420,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryHambantota).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryHambantota;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalHambantota;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -405,6 +430,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryHambantota).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryHambantota;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Hambantota";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -416,6 +442,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryJaffna).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryJaffna;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalJaffna;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -425,6 +452,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryJaffna).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryJaffna;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Jaffna";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -436,6 +464,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKilinochchi).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryKilinochchi;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalKilinochchi;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -445,6 +474,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKilinochchi).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryKilinochchi;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Kilinochchi";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -456,6 +486,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMannar).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryMannar;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalMannar;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -465,6 +496,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMannar).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryMannar;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Mannar";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -476,6 +508,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryVavuniya).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryVavuniya;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalVavuniya;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -485,6 +518,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryVavuniya).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryVavuniya;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Vavuniya";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -496,6 +530,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMullaitivu).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryMullaitivu;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalMullaitivu;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -505,6 +540,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMullaitivu).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryMullaitivu;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Mullaitivu";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -516,6 +552,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryBatticallo).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryBatticallo;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalBatticallo;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -525,6 +562,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryBatticallo).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryBatticallo;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Batticallo";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -536,6 +574,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryAmpara).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryAmpara;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalAmpara;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -545,6 +584,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryAmpara).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryAmpara;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Ampara";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -556,6 +596,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryTrincomalee).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryTrincomalee;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalTrincomalee;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -565,6 +606,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryTrincomalee).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryTrincomalee;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Trincomalee";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -576,6 +618,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKurunegala).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryKurunegala;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalKurunegala;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -585,6 +628,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKurunegala).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryKurunegala;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Kurunegala";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -596,6 +640,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryPuttalam).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryPuttalam;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalPuttalam;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -605,6 +650,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryPuttalam).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryPuttalam;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Puttalam";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -616,6 +662,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryAnuradhapura).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryAnuradhapura;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalAnuradhapura;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -625,6 +672,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryAnuradhapura).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryAnuradhapura;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Anuradhapura";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -636,6 +684,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryPolonnaruwa).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryPolonnaruwa;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalPolonnaruwa;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -645,6 +694,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryPolonnaruwa).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryPolonnaruwa;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Polonnaruwa";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -656,6 +706,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryBadulla).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryBadulla;
 
                             document.getElementById("estimatedArrival").value = items[i].arrivalBadulla;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -665,6 +716,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryBadulla).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryBadulla;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Badulla";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -676,6 +728,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMoneragala).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryMoneragala;
 
                             document.getElementById("estimatedArrival").value = items[i].arrivalMoneragala;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -685,6 +738,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMoneragala).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryMoneragala;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Moneragala";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -696,6 +750,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryRatnapura).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryRatnapura;
 
                             document.getElementById("estimatedArrival").value = items[i].arrivalRatnapura;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -705,6 +760,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryRatnapura).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryRatnapura;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Ratnapura";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -716,6 +772,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKegalle).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryKegalle;
 
                             document.getElementById("estimatedArrival").value = items[i].arrivalKegalle;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -725,6 +782,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKegalle).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryKegalle;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Kegalle";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -732,6 +790,8 @@
 
 
                         document.getElementById("subtotal").value = "LKR " + (items[i].price).toLocaleString('en-US');
+                        subTotalForOne = items[i].price;
+
                         document.getElementById("cash").checked = true;
                         document.getElementById("card").checked = false;
                     }
@@ -750,6 +810,7 @@
                 if(stockClr1 > 0){
                     itemImg.src = clr1;
                     selectedClr = 1;
+                    selectedClrCode = clr1Code;
 
                     document.getElementById("clr1Img").style.border = "3px solid black";
 
@@ -761,7 +822,8 @@
                         document.getElementById("clr3Img").style.border = "1px solid black";
                     }
 
-                    quantityDiv.innerHTML = `<label class="labels">Set Quantity *</label> <input id="quantity" type="number" onKeyDown="return false" class="form-control" placeholder="" value="1" style="text-align: center;" min="1" max="${stockClr1}">`;
+                    quantityDiv.innerHTML = `<label class="labels">Set Quantity *</label> <input id="quantity" type="number" onKeyDown="return false" onchange="quantitiyChange()" class="form-control" placeholder="" value="1" style="text-align: center;" min="1" max="${stockClr1}">`;
+                    quantitiyChange();
                 }else{
                     errorToast("This colour is out-of-stock!");
                 }
@@ -772,6 +834,7 @@
                 if(stockClr2 > 0){
                     itemImg.src = clr2;
                     selectedClr = 2;
+                    selectedClrCode = clr2Code;
 
                     document.getElementById("clr1Img").style.border = "1px solid black";
                     document.getElementById("clr2Img").style.border = "3px solid black";
@@ -780,7 +843,8 @@
                         document.getElementById("clr3Img").style.border = "1px solid black";
                     }
 
-                    quantityDiv.innerHTML = `<label class="labels">Set Quantity *</label> <input id="quantity" type="number" onKeyDown="return false" class="form-control" placeholder="" value="1" style="text-align: center;" min="1" max="${stockClr2}">`;
+                    quantityDiv.innerHTML = `<label class="labels">Set Quantity *</label> <input id="quantity" type="number" onKeyDown="return false" onchange="quantitiyChange()" class="form-control" placeholder="" value="1" style="text-align: center;" min="1" max="${stockClr2}">`;
+                    quantitiyChange();
                 }else{
                     errorToast("This colour is out-of-stock!");
                 }
@@ -791,12 +855,14 @@
                 if(stockClr3 > 0){
                     itemImg.src = clr3;
                     selectedClr = 3;
+                    selectedClrCode = clr3Code;
 
                     document.getElementById("clr1Img").style.border = "1px solid black";
                     document.getElementById("clr2Img").style.border = "1px solid black";
                     document.getElementById("clr3Img").style.border = "3px solid black";
 
-                    quantityDiv.innerHTML = `<label class="labels">Set Quantity *</label> <input id="quantity" type="number" onKeyDown="return false" class="form-control" placeholder="" value="1" style="text-align: center;" min="1" max="${stockClr3}">`;
+                    quantityDiv.innerHTML = `<label class="labels">Set Quantity *</label> <input id="quantity" type="number" onKeyDown="return false" onchange="quantitiyChange()" class="form-control" placeholder="" value="1" style="text-align: center;" min="1" max="${stockClr3}">`;
+                    quantitiyChange();
                 }else{
                     errorToast("This colour is out-of-stock!");
                 }
@@ -820,6 +886,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryColombo).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryColombo;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalColombo;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -829,6 +896,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryColombo).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryColombo;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Colombo";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -840,6 +908,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryGampaha).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryGampaha;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalGampaha;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -849,6 +918,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryGampaha).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryGampaha;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Gampaha";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -860,6 +930,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKalutara).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryKalutara;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalKalutara;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -869,6 +940,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKalutara).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryKalutara;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Kalutara";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -880,6 +952,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKandy).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryKandy;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalKandy;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -889,6 +962,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKandy).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryKandy;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Kandy";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -900,6 +974,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMatale).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryMatale;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalMatale;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -909,6 +984,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMatale).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryMatale;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Matale";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -920,6 +996,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryNuwaraEliya).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryNuwaraEliya;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalNuwaraEliya;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -929,6 +1006,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryNuwaraEliya).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryNuwaraEliya;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Nuwara Eliya";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -940,6 +1018,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryGalle).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryGalle;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalGalle;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -949,6 +1028,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryGalle).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryGalle;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Galle";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -960,6 +1040,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMatara).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryMatara;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalMatara;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -969,6 +1050,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMatara).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryMatara;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Matara";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -980,6 +1062,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryHambantota).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryHambantota;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalHambantota;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -989,6 +1072,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryHambantota).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryHambantota;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Hambantota";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1000,6 +1084,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryJaffna).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryJaffna;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalJaffna;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1009,6 +1094,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryJaffna).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryJaffna;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Jaffna";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1020,6 +1106,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKilinochchi).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryKilinochchi;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalKilinochchi;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1029,6 +1116,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKilinochchi).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryKilinochchi;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Kilinochchi";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1040,6 +1128,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMannar).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryMannar;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalMannar;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1049,6 +1138,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMannar).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryMannar;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Mannar";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1060,6 +1150,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryVavuniya).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryVavuniya;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalVavuniya;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1069,6 +1160,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryVavuniya).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryVavuniya;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Vavuniya";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1080,6 +1172,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMullaitivu).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryMullaitivu;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalMullaitivu;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1089,6 +1182,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMullaitivu).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryMullaitivu;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Mullaitivu";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1100,6 +1194,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryBatticallo).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryBatticallo;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalBatticallo;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1109,6 +1204,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryBatticallo).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryBatticallo;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Batticallo";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1120,6 +1216,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryAmpara).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryAmpara;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalAmpara;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1129,6 +1226,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryAmpara).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryAmpara;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Ampara";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1140,6 +1238,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryTrincomalee).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryTrincomalee;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalTrincomalee;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1149,6 +1248,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryTrincomalee).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryTrincomalee;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Trincomalee";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1160,6 +1260,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKurunegala).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryKurunegala;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalKurunegala;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1169,6 +1270,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKurunegala).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryKurunegala;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Kurunegala";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1180,6 +1282,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryPuttalam).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryPuttalam;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalPuttalam;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1189,6 +1292,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryPuttalam).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryPuttalam;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Puttalam";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1200,6 +1304,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryAnuradhapura).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryAnuradhapura;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalAnuradhapura;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1209,6 +1314,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryAnuradhapura).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryAnuradhapura;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Anuradhapura";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1220,6 +1326,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryPolonnaruwa).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryPolonnaruwa;
                             
                             document.getElementById("estimatedArrival").value = items[i].arrivalPolonnaruwa;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1229,6 +1336,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryPolonnaruwa).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryPolonnaruwa;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Polonnaruwa";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1240,6 +1348,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryBadulla).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryBadulla;
 
                             document.getElementById("estimatedArrival").value = items[i].arrivalBadulla;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1249,6 +1358,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryBadulla).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryBadulla;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Badulla";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1260,6 +1370,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMoneragala).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryMoneragala;
 
                             document.getElementById("estimatedArrival").value = items[i].arrivalMoneragala;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1269,6 +1380,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryMoneragala).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryMoneragala;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Moneragala";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1280,6 +1392,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryRatnapura).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryRatnapura;
 
                             document.getElementById("estimatedArrival").value = items[i].arrivalRatnapura;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1289,6 +1402,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryRatnapura).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryRatnapura;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Ratnapura";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1300,6 +1414,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKegalle).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "black";
                             document.getElementById("delivery2").style.color = "black";
+                            deliveryForOne = items[i].deliveryKegalle;
 
                             document.getElementById("estimatedArrival").value = items[i].arrivalKegalle;
                             document.getElementById("estimatedArrival").style.color = "black";
@@ -1309,6 +1424,7 @@
                             document.getElementById("totalPay").value = "LKR " + (items[i].price + items[i].deliveryKegalle).toLocaleString('en-US');
                             document.getElementById("deliveryCharge").style.color = "red";
                             document.getElementById("delivery2").style.color = "red";
+                            deliveryForOne = items[i].deliveryKegalle;
 
                             document.getElementById("estimatedArrival").value = "Delivery not available for Kegalle";
                             document.getElementById("estimatedArrival").style.color = "red";
@@ -1330,6 +1446,15 @@
                 document.getElementById("card").checked = true;
             }
 
+
+            // Change subtotal and total payment when quantity changes
+            // document.getElementById("quantity").addEventListener("change", quantitiyChange);
+            const quantitiyChange = async() => {
+                var stockCountNew = document.getElementById("quantity").value;
+                
+                document.getElementById("subtotal").value = "LKR " + (subTotalForOne * stockCountNew).toLocaleString('en-US');
+                document.getElementById("totalPay").value = "LKR " + (subTotalForOne * stockCountNew + deliveryForOne).toLocaleString('en-US');
+            }
 
             // Handle checkout
             const checkout = async() => {
@@ -1619,7 +1744,6 @@
                     
                     // Body of the invoice email
                     var emailBody = `<div style="font-family: Open Sans, sans-serif; color: #444444;">
-                                        <br>
                                         <center>
                                             <hr style="background-color: #444444;">
                                             <h2 style="color: #4CA48C">FurnitureMart 3D - Invoice</h2>
@@ -1633,34 +1757,25 @@
                                             <p><b>Email : </b>${document.getElementById("email").value}</p>
                                             <p><b>Contact No : </b>${document.getElementById("phone").value}</p>
                                             <p><b>Delivery Address : </b>${document.getElementById("address").value}</p>
+                                            <hr>
+                                        </div>
+
+                                        <div> 
+                                            <h3 style="color: #4CA48C">Product Details</h3>
+                                            
+                                            <p style="color: #444444; text-align: left;"><b>Product Name : </b>${prdName}</p>
+                                            <p style="color: #444444; text-align: left;"><b>Colour Selection : </b> <span style="height: 15px; width: 15px; background-color: ${selectedClrCode}; border-radius: 50%; display: inline-block; border: 1px solid black;"></span></p>
+                                            <p style="color: #444444; text-align: left;"><b>Order Quantity : </b>${document.getElementById("quantity").value}</p>
+                                            <p style="color: #444444; text-align: left;"><b>Estimated Arrival (days) : </b>${document.getElementById("estimatedArrival").value}</p>
+                                            <p style="color: #444444; text-align: left;"><b>Sub Total : </b>${document.getElementById("subtotal").value}</p>
+                                            <p style="color: #444444; text-align: left;"><b>Delivery Charge : </b>${document.getElementById("delivery2").value}</p>
+                                            <p style="color: #444444; text-align: left;"><b>Total Payment : </b>${document.getElementById("totalPay").value}</p>
+                                            <p style="color: #444444; text-align: left;"><b>Payment Method : </b>Cash on Delivery</p>
+                                            <p style="color: #444444; text-align: left;"><b>Delivery Status : </b>Packaging</p>
+                                            <hr>
                                         </div>
                                         <br>
 
-                                        <table style="border-collapse: collapse; width: 100%;">
-                                            <tr style="background-color: #4CA48C;">
-                                                <th style="color: white; padding-top: 15px; padding-bottom: 15px; text-align: center; width: 40%;">Product</th>
-                                                <th style="color: white; padding-top: 15px; padding-bottom: 15px; text-align: center; width: 60%;">Description</th>
-                                            </tr>
-
-                                            <tr>
-                                                <td style="padding-top: 15px; padding-left: 8px; padding-bottom: 15px; border: 1px solid #dddddd; vertical-align: center;">
-                                                    <center>
-                                                        <img src="${imgVal}" width="300px" height="200px"><br>
-                                                    </center>
-                                                </td>
-
-                                                <td style="padding-left: 25px; padding-top: 15px; padding-bottom: 15px; border: 1px solid #dddddd; vertical-align: top;">
-                                                    <p style="color: #444444; text-align: left;"><b>Product Name : </b>${prdName}</p>
-                                                    <p style="color: #444444; text-align: left;"><b>Order Quantity : </b>${document.getElementById("quantity").value}</p>
-                                                    <p style="color: #444444; text-align: left;"><b>Estimated Arrival (days) : </b>${document.getElementById("estimatedArrival").value}</p>
-                                                    <p style="color: #444444; text-align: left;"><b>Sub Total : </b>${document.getElementById("subtotal").value}</p>
-                                                    <p style="color: #444444; text-align: left;"><b>Delivery Charge : </b>${document.getElementById("delivery2").value}</p>
-                                                    <p style="color: #444444; text-align: left;"><b>Total Payment : </b>${document.getElementById("totalPay").value}</p>
-                                                    <p style="color: #444444; text-align: left;"><b>Payment Method : </b>Cash on Delivery</p>
-                                                    <p style="color: #444444; text-align: left;"><b>Delivery Status : </b>Packaging</p>
-                                                </td> 
-                                            </tr>
-                                        </table>
                                     </div>`;
                     
                     // Email of the Receiver (Buyer)

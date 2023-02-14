@@ -102,7 +102,9 @@
 		
 		// Purchase the selected product
 		const checkout = async(sellerId, productId) => {
-			errorToast("Will be developed later!");
+			localStorage.setItem("sellerId", sellerId);
+			localStorage.setItem("productId", productId);
+			open("../../../../purchase.html", "_parent");
 		}
 
 
