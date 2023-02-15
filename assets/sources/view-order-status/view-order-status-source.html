@@ -37,6 +37,7 @@
                             <div class="col-md-12">
                                 <div> 
                                     <h4>Details Provided by You</h4><br>
+                                    <p><b>Order Pickup Person : </b><span id="pickupPerson"></span></p>
                                     <p><b>Buyer Email : </b><span id="buyerEmail"></span></p>
                                     <p><b>Buyer Contact No : </b><span id="buyerContactNo"></span></p>
                                     <p><b>Delivery Address : </b><span id="address"></span></p>
@@ -166,6 +167,7 @@
 
 
                         // Buyer details
+                        document.getElementById("pickupPerson").innerHTML = orders[i].buyerName;
                         document.getElementById("buyerEmail").innerHTML = orders[i].buyerEmail;
                         document.getElementById("buyerContactNo").innerHTML = orders[i].buyerContactNo;
                         document.getElementById("address").innerHTML = orders[i].buyerAddress;
@@ -238,6 +240,7 @@
                             object2["clr"] = orders1[i].clr;
                             object2["orderQuantity"] = orders1[i].orderQuantity;
                             object2["buyerEmail"] = orders1[i].buyerEmail;
+                            object2["buyerName"] = orders1[i].buyerName;
                             object2["buyerContactNo"] = orders1[i].buyerContactNo;
                             object2["buyerAddress"] = orders1[i].buyerAddress;
                             object2["buyerDistrict"] = orders1[i].buyerDistrict;
@@ -353,6 +356,7 @@
                             object2["clr"] = orders1[i].clr;
                             object2["orderQuantity"] = orders1[i].orderQuantity;
                             object2["buyerEmail"] = orders1[i].buyerEmail;
+                            object2["buyerName"] = orders1[i].buyerName;
                             object2["buyerContactNo"] = orders1[i].buyerContactNo;
                             object2["buyerAddress"] = orders1[i].buyerAddress;
                             object2["buyerDistrict"] = orders1[i].buyerDistrict;

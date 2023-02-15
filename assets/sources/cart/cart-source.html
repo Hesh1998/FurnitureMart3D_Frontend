@@ -83,7 +83,7 @@
                             <td class="cart_product"> <img src="${products[j].clr1Img}" alt="" width="150px" height="100px"> </td> 
                             <td class="cart_description"> <h4>${products[j].itemName}</h4> <p>LKR ${(products[j].price).toLocaleString('en-US')}</p> </td> 
                             <td class="cart_price"> <p style="color: ${colour};">${InStock}</p> </td> 
-                            <td class="cart_total"> <button class="btn btn-primary profile-button" type="button" style="font-size: medium;" onclick="checkout(${products[j].userId}, ${products[j].itemId})">Checkout</button> </td> 
+                            <td class="cart_total"> <button class="btn btn-primary profile-button" type="button" style="font-size: medium;" onclick="checkout(${products[j].userId}, ${products[j].itemId}, ${products[j].stockClr1 + products[j].stockClr2 + products[j].stockClr3})">Checkout</button> </td> 
                             <td class="cart_total"> <a href="" onclick="viewDetails(${products[j].userId}, ${products[j].itemId})"> <p class="cart_total_price">View Details</p></a> <br> <a onclick="deleteItemConfirm(${cartItems[i].id}, ${products[j].userId}, ${products[j].itemId})"><p class="cart_total_price">Remove from Cart</p></a> </td> 
                         	</tr>`;
 
@@ -101,10 +101,14 @@
 
 		
 		// Purchase the selected product
-		const checkout = async(sellerId, productId) => {
-			localStorage.setItem("sellerId", sellerId);
-			localStorage.setItem("productId", productId);
-			open("../../../../purchase.html", "_parent");
+		const checkout = async(sellerId, productId, stockCountNew) => {
+			if(stockCountNew > 0){
+				localStorage.setItem("sellerId", sellerId);
+				localStorage.setItem("productId", productId);
+				open("../../../../purchase.html", "_parent");
+			}else{
+				errorToast("Item out of stock!");
+			}
 		}
 
 

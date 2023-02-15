@@ -9,7 +9,6 @@
         <link href="../buyer-dashboard/bootstrap.min.css" rel="stylesheet">
         <link href="../buyer-dashboard/buyer-dashboard-style.css" rel="stylesheet">
         <link href="alert-style.css" rel="stylesheet">
-        
     </head>
 
     <body>
@@ -46,13 +45,18 @@
                             </div>
 
                             <div class="col-md-12" style="padding-top: 15px;">
+                                <label class="labels">Name * </label>
+                                <input id="pickupName" type="text" class="form-control" placeholder="Enter name of package pickup person" value="">
+                            </div>
+
+                            <div class="col-md-12" style="padding-top: 15px;">
                                 <label class="labels">Phone Number *</label>
-                                <input id="phone" type="text" class="form-control" placeholder="" value="">
+                                <input id="phone" type="text" class="form-control" placeholder="Enter phone number" value="">
                             </div>
 
                             <div class="col-md-12" style="padding-top: 15px;">
                                 <label class="labels">Delivery Address *</label>
-                                <input id="address" type="text" class="form-control" placeholder="" value="">
+                                <input id="address" type="text" class="form-control" placeholder="Enter delivery address" value="">
                             </div>
 
                             <div class="col-md-12" style="padding-top: 15px;">
@@ -1456,14 +1460,17 @@
                 document.getElementById("totalPay").value = "LKR " + (subTotalForOne * stockCountNew + deliveryForOne).toLocaleString('en-US');
             }
 
+
             // Handle checkout
             const checkout = async() => {
                 var phone = document.getElementById("phone").value;
                 var address = document.getElementById("address").value;
-
+                var pickup = document.getElementById("pickupName").value;
 
                 // Validate and proceed
-                if(isNaN(phone) || phone.length != 10){
+                if(pickup == ""){
+                    errorToast("Please enter a name for package pickup person!");
+                }else if(isNaN(phone) || phone.length != 10){
                     errorToast("Please enter a valid phone number!");
                 }else if(address == ""){
                     errorToast("Please enter a valid address!");
@@ -1700,6 +1707,7 @@
 
                     object2["orderQuantity"] = document.getElementById("quantity").value;
                     object2["buyerEmail"] = document.getElementById("email").value;
+                    object2["buyerName"] = document.getElementById("pickupName").value;
                     object2["buyerContactNo"] = document.getElementById("phone").value;
                     object2["buyerAddress"] = document.getElementById("address").value;
                     object2["buyerDistrict"] = document.getElementById("district").value;
@@ -1754,6 +1762,7 @@
                                         <div> 
                                             <p><b>Invoice No : </b>${noOfOrders + 1}</p>
                                             <p><b>Issue Date : </b>${date.toLocaleDateString('en-CA')}</p>
+                                            <p><b>Name of Package Pickup Person : </b>${document.getElementById("pickupName").value}</p>
                                             <p><b>Email : </b>${document.getElementById("email").value}</p>
                                             <p><b>Contact No : </b>${document.getElementById("phone").value}</p>
                                             <p><b>Delivery Address : </b>${document.getElementById("address").value}</p>

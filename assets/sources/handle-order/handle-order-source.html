@@ -34,6 +34,7 @@
                             <div class="col-md-12">
                                 <div> 
                                     <h4>Buyer Details</h4><br>
+                                    <p><b>Order Pickup Person : </b><span id="pickupPerson"></span></p>
                                     <p><b>Buyer Email : </b><span id="buyerEmail"></span></p>
                                     <p><b>Buyer Contact No : </b><span id="buyerContactNo"></span></p>
                                     <p><b>Delivery Address : </b><span id="address"></span></p>
@@ -44,7 +45,7 @@
                                 <div style="padding-top: 15px;"> 
                                     <h4>Order Details</h4><br>
                                     <p><b>Ordered Quantity : </b><span id="quantity"></span></p>
-                                    <p><b>Selected Colour : </b><span id="colour"></span></p>
+                                    <p><b>Selected Colour : </b><span id="colour"></span> <span id="colourCircle"></span> </p>
                                     <p><b>Order Date : </b><span id="orderDate"></span></p>
                                     <p><b>Estimated Arrival (Days) : </b><span id="estimatedDays"></span></p>
                                     <hr>
@@ -133,6 +134,7 @@
                             document.getElementById("orderStatus").innerHTML = "<span style='color: red;'>Buyer cancelled the order! Please don't deliver.</span>";
                         }
                         
+                        document.getElementById("pickupPerson").innerHTML = orders[i].buyerName;
                         document.getElementById("buyerEmail").innerHTML = orders[i].buyerEmail;
                         document.getElementById("buyerContactNo").innerHTML = orders[i].buyerContactNo;
                         document.getElementById("address").innerHTML = orders[i].buyerAddress;
@@ -140,6 +142,7 @@
 
                         document.getElementById("quantity").innerHTML = orders[i].orderQuantity;
                         document.getElementById("colour").innerHTML = orders[i].clr;
+                        document.getElementById("colourCircle").innerHTML = `<span style="height: 15px; width: 15px; background-color: ${orders[i].clr}; border-radius: 50%; display: inline-block; border: 1px solid black;"></span>`;
                         document.getElementById("orderDate").innerHTML = orders[i].orderDate;
                         document.getElementById("estimatedDays").innerHTML = `Max ${orders[i].estimatedArrival} days from order date`;
 
@@ -377,6 +380,7 @@
                         object2["clr"] = orders[i].clr;
                         object2["orderQuantity"] = orders[i].orderQuantity;
                         object2["buyerEmail"] = orders[i].buyerEmail;
+                        object2["buyerName"] = orders[i].buyerName;
                         object2["buyerContactNo"] = orders[i].buyerContactNo;
                         object2["buyerAddress"] = orders[i].buyerAddress;
                         object2["buyerDistrict"] = orders[i].buyerDistrict;
