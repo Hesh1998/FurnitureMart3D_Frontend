@@ -22,6 +22,8 @@
                             <br>
                             <h2 id="itemName"></h2>
                             <h5 style="color: #4CA48C;" id="itemPrice"></h5>
+                            <br>
+                            <p style="font-size: 14px;">Delivery Available For : <span id="availableDistricts"></span></p>
                         </div>
                     </div>
                 </div>
@@ -202,6 +204,114 @@
                     if(items[i].itemId == productId){
                         itemName.innerHTML = items[i].itemName;
                         itemPrice.innerHTML = `LKR ${(items[i].price).toLocaleString('en-US')}`;
+
+
+                        // Set delivery available districts
+                        var availableDistricts = "";
+                        if(items[i].deliveryColombo != 0){
+                            availableDistricts += "Colombo, ";
+                        }
+
+                        if(items[i].deliveryGampaha != 0){
+                            availableDistricts += "Gampaha, ";
+                        }
+
+                        if(items[i].deliveryKalutara != 0){
+                            availableDistricts += "Kalutara, ";
+                        }
+
+                        if(items[i].deliveryKandy != 0){
+                            availableDistricts += "Kandy, ";
+                        }
+
+                        if(items[i].deliveryMatale != 0){
+                            availableDistricts += "Matale, ";
+                        }
+
+                        if(items[i].deliveryNuwaraEliya != 0){
+                            availableDistricts += "Nuwara Eliya, ";
+                        }
+
+                        if(items[i].deliveryGalle != 0){
+                            availableDistricts += "Galle, ";
+                        }
+
+                        if(items[i].deliveryMatara != 0){
+                            availableDistricts += "Matara, ";
+                        }
+
+                        if(items[i].deliveryHambantota != 0){
+                            availableDistricts += "Hambantota, ";
+                        }
+
+                        if(items[i].deliveryJaffna != 0){
+                            availableDistricts += "Jaffna, ";
+                        }
+
+                        if(items[i].deliveryKilinochchi != 0){
+                            availableDistricts += "Kilinochchi, ";
+                        }
+
+                        if(items[i].deliveryMannar != 0){
+                            availableDistricts += "Mannar, ";
+                        }
+
+                        if(items[i].deliveryVavuniya != 0){
+                            availableDistricts += "Vavuniya, ";
+                        }
+
+                        if(items[i].deliveryMullaitivu != 0){
+                            availableDistricts += "Mullaitivu, ";
+                        }
+
+                        if(items[i].deliveryBatticallo != 0){
+                            availableDistricts += "Batticallo, ";
+                        }
+
+                        if(items[i].deliveryAmpara != 0){
+                            availableDistricts += "Ampara, ";
+                        }
+
+                        if(items[i].deliveryTrincomalee != 0){
+                            availableDistricts += "Trincomalee, ";
+                        }
+
+                        if(items[i].deliveryKurunegala != 0){
+                            availableDistricts += "Kurunegala, ";
+                        }
+
+                        if(items[i].deliveryPuttalam != 0){
+                            availableDistricts += "Puttalam, ";
+                        }
+
+                        if(items[i].deliveryAnuradhapura != 0){
+                            availableDistricts += "Anuradhapura, ";
+                        }
+
+                        if(items[i].deliveryPolonnaruwa != 0){
+                            availableDistricts += "Polonnaruwa, ";
+                        }
+
+                        if(items[i].deliveryBadulla != 0){
+                            availableDistricts += "Badulla, ";
+                        }
+
+                        if(items[i].deliveryMoneragala != 0){
+                            availableDistricts += "Moneragala, ";
+                        }
+
+                        if(items[i].deliveryRatnapura != 0){
+                            availableDistricts += "Ratnapura, ";
+                        }
+
+                        if(items[i].deliveryKegalle != 0){
+                            availableDistricts += "Kegalle, ";
+                        }
+
+                        var availableDistrictsFinal = availableDistricts.slice(0, -2);
+                        availableDistrictsFinal += ".";
+
+                        document.getElementById("availableDistricts").innerHTML = availableDistrictsFinal;
 
 
                         // Set available colours for the product
@@ -1436,6 +1546,8 @@
 
                     }
                 }
+
+                quantitiyChange();
             }
 
             

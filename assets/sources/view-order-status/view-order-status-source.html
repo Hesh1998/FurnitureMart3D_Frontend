@@ -125,6 +125,7 @@
             var starCount = 0;
             var givenStars = 0;
             var givenReview = "";
+            var orderClr = "";
 
 
             // Set page details
@@ -142,6 +143,7 @@
                         deliveryStatus = orders[i].deliveryStatus;
                         givenStars = orders[i].stars;
                         givenReview = orders[i].buyerReview;
+                        orderClr = orders[i].clr;
 
 
                         // Setting order details
@@ -153,7 +155,7 @@
                         }else if(orders[i].deliveryStatus == "Completed"){
                             document.getElementById("orderStatus").innerHTML = '<span style="color: red;">Order Completed</span>';
                         }else if(orders[i].deliveryStatus == "Cancelled"){
-                            document.getElementById("orderStatus").innerHTML = "<span style='color: red;'>Buyer cancelled the order.</span>";
+                            document.getElementById("orderStatus").innerHTML = "<span style='color: red;'>Buyer cancelled the order</span>";
                         }
 
 
@@ -207,6 +209,234 @@
             // Cancel order
             const cancelOrder = async() => {
                 if(deliveryStatus == "Packaging"){
+                    // 1) Update product details
+                    let response3 = await fetch(`http://localhost:8080/findUserProducts/${sellerId}`);
+                    let items = await response3.json();
+
+                    for (let i = 0; i < items.length; i++) {
+                        if(items[i].itemId == itemId){
+                            var object = {};
+
+                            object["userId"] = items[i].userId;
+                            object["itemId"] = items[i].itemId;
+                            object["itemName"] = items[i].itemName;
+
+                            object["living"] = items[i].living;
+                            object["dining"] = items[i].dining;
+                            object["bedroom"] = items[i].bedroom;
+                            object["office"] = items[i].office;
+                            object["outdoor"] = items[i].outdoor;
+                            object["other"] = items[i].other;
+
+                            object["chair"] = items[i].chair;
+                            object["table"] = items[i].table;
+                            object["sofa"] = items[i].sofa;
+                            object["cupboard"] = items[i].cupboard;
+                            object["bed"] = items[i].bed;
+                            object["bench"] = items[i].bench;
+                            object["bookcase"] = items[i].bookcase;
+                            object["desk"] = items[i].desk;
+                            object["otherT"] = items[i].otherT;
+
+                            object["classy"] = items[i].classy;
+                            object["antique"] = items[i].antique;
+                            object["traditional"] = items[i].traditional;
+                            object["modern"] = items[i].modern;
+                            object["contemporary"] = items[i].contemporary;
+                            object["transitional"] = items[i].transitional;
+                            object["coastal"] = items[i].coastal;
+                            object["minimalist"] = items[i].minimalist;
+
+                            object["condition"] = items[i].condition;
+                            object["description"] = items[i].description;
+                            object["dimensions"] = items[i].dimensions;
+                            object["stockQuantity"] = items[i].stockQuantity;
+
+                            // Deduct ordered quantity from inOrder (reverse purchase process)
+                            object["inOrder"] = items[i].inOrder - orderedQuantity;
+
+                            object["totalSold"] = items[i].totalSold;
+                            object["price"] = items[i].price;
+
+                            object["deliveryColombo"] = items[i].deliveryColombo;
+                            object["arrivalColombo"] = items[i].arrivalColombo;
+
+                            object["deliveryGampaha"] = items[i].deliveryGampaha;
+                            object["arrivalGampaha"] = items[i].arrivalGampaha;
+
+                            object["deliveryKalutara"] = items[i].deliveryKalutara;
+                            object["arrivalKalutara"] = items[i].arrivalKalutara;
+
+                            object["deliveryKandy"] = items[i].deliveryKandy;
+                            object["arrivalKandy"] = items[i].arrivalKandy;
+
+                            object["deliveryMatale"] = items[i].deliveryMatale;
+                            object["arrivalMatale"] = items[i].arrivalMatale;
+
+                            object["deliveryNuwaraEliya"] = items[i].deliveryNuwaraEliya;
+                            object["arrivalNuwaraEliya"] = items[i].arrivalNuwaraEliya;
+
+                            object["deliveryGalle"] = items[i].deliveryGalle;
+                            object["arrivalGalle"] = items[i].arrivalGalle;
+
+                            object["deliveryMatara"] = items[i].deliveryMatara;
+                            object["arrivalMatara"] = items[i].arrivalMatara;
+
+                            object["deliveryHambantota"] = items[i].deliveryHambantota;
+                            object["arrivalHambantota"] = items[i].arrivalHambantota;
+
+                            object["deliveryJaffna"] = items[i].deliveryJaffna;
+                            object["arrivalJaffna"] = items[i].arrivalJaffna;
+
+                            object["deliveryKilinochchi"] = items[i].deliveryKilinochchi;
+                            object["arrivalKilinochchi"] = items[i].arrivalKilinochchi;
+                            
+                            object["deliveryMannar"] = items[i].deliveryMannar;
+                            object["arrivalMannar"] = items[i].arrivalMannar;
+
+                            object["deliveryVavuniya"] = items[i].deliveryVavuniya;
+                            object["arrivalVavuniya"] = items[i].arrivalVavuniya;
+
+                            object["deliveryMullaitivu"] = items[i].deliveryMullaitivu;
+                            object["arrivalMullaitivu"] = items[i].arrivalMullaitivu;
+
+                            object["deliveryBatticallo"] = items[i].deliveryBatticallo;
+                            object["arrivalBatticallo"] = items[i].arrivalBatticallo;
+
+                            object["deliveryAmpara"] = items[i].deliveryAmpara;
+                            object["arrivalAmpara"] = items[i].arrivalAmpara;
+
+                            object["deliveryTrincomalee"] = items[i].deliveryTrincomalee;
+                            object["arrivalTrincomalee"] = items[i].arrivalTrincomalee;
+
+                            object["deliveryKurunegala"] = items[i].deliveryKurunegala;
+                            object["arrivalKurunegala"] = items[i].arrivalKurunegala;
+
+                            object["deliveryPuttalam"] = items[i].deliveryPuttalam;
+                            object["arrivalPuttalam"] = items[i].arrivalPuttalam;
+
+                            object["deliveryAnuradhapura"] = items[i].deliveryAnuradhapura;
+                            object["arrivalAnuradhapura"] = items[i].arrivalAnuradhapura;
+
+                            object["deliveryPolonnaruwa"] = items[i].deliveryPolonnaruwa;
+                            object["arrivalPolonnaruwa"] = items[i].arrivalPolonnaruwa;
+
+                            object["deliveryBadulla"] = items[i].deliveryBadulla;
+                            object["arrivalBadulla"] = items[i].arrivalBadulla;
+
+                            object["deliveryMoneragala"] = items[i].deliveryMoneragala;
+                            object["arrivalMoneragala"] = items[i].arrivalMoneragala;
+
+                            object["deliveryRatnapura"] = items[i].deliveryRatnapura;
+                            object["arrivalRatnapura"] = items[i].arrivalRatnapura;
+
+                            object["deliveryKegalle"] = items[i].deliveryKegalle;
+                            object["arrivalKegalle"] = items[i].arrivalKegalle;
+
+                            object["material"] = items[i].material;
+                            object["materialDescription"] = items[i].materialDescription;
+                            object["subMaterials"] = items[i].subMaterials;
+                            object["subMaterialsDescription"] = items[i].subMaterialsDescription;
+                            object["clr1"] = items[i].clr1;
+
+                            // Item purchased from colour 1
+                            if(orderClr == items[i].clr1){
+                                object["stockClr1"] = items[i].stockClr1 + orderedQuantity;
+                            }else{
+                                object["stockClr1"] = items[i].stockClr1;
+                            }
+
+                            object["clr1Img"] = items[i].clr1Img;
+                            object["clr2"] = items[i].clr2;
+
+                            // Item purchased from colour 2
+                            if(orderClr == items[i].clr2){
+                                object["stockClr2"] = items[i].stockClr2 + orderedQuantity;
+                            }else{
+                                object["stockClr2"] = items[i].stockClr2;
+                            }
+
+                            object["clr2Img"] = items[i].clr2Img;
+                            object["clr3"] = items[i].clr3;
+
+                            // Item purchased from colour 3
+                            if(orderClr == items[i].clr3){
+                                object["stockClr3"] = items[i].stockClr3 + orderedQuantity;
+                            }else{
+                                object["stockClr3"] = items[i].stockClr3;
+                            }
+
+                            object["clr3Img"] = items[i].clr3Img;
+                            object["add1Img"] = items[i].add1Img;
+                            object["add2Img"] = items[i].add2Img;
+                            object["vid1"] = items[i].vid1;
+
+                            var jsonText = JSON.stringify(object);
+			
+                            await fetch("http://localhost:8080/updateProduct", {
+                                method: "POST",
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: jsonText
+                            })
+                            .then(response => response.text())
+                            .then()
+                            .catch(error => console.log('Authorization failed: ' + error.message));
+                        }
+                    }
+
+
+                    // 2) Update order details
+                    let response4 = await fetch(`http://localhost:8080/findAllOrderDetails`);
+                    let orders1 = await response4.json();
+                    
+                    for(let i=0; i < orders1.length; i++){
+                        if(orders1[i].id == orderId){
+                            var object2 = {};
+
+                            object2["id"] = orders1[i].id;
+                            object2["buyerId"] = orders1[i].buyerId;
+                            object2["sellerId"] = orders1[i].sellerId;
+                            object2["itemId"] = orders1[i].itemId;
+                            object2["itemImg"] = orders1[i].itemImg;
+                            object2["itemName"] = orders1[i].itemName;
+                            object2["clr"] = orders1[i].clr;
+                            object2["orderQuantity"] = orders1[i].orderQuantity;
+                            object2["buyerEmail"] = orders1[i].buyerEmail;
+                            object2["buyerName"] = orders1[i].buyerName;
+                            object2["buyerContactNo"] = orders1[i].buyerContactNo;
+                            object2["buyerAddress"] = orders1[i].buyerAddress;
+                            object2["buyerDistrict"] = orders1[i].buyerDistrict;
+                            object2["subTotal"] = orders1[i].subTotal;
+                            object2["deliveryCharge"] = orders1[i].deliveryCharge;
+                            object2["orderDate"] = orders1[i].orderDate;
+                            object2["estimatedArrival"] = orders1[i].estimatedArrival;
+                            object2["totalPay"] = orders1[i].totalPay;
+                            object2["paymentMethod"] = orders1[i].paymentMethod;
+                            object2["deliveryStatus"] = "Cancelled";
+                            object2["buyerReview"] = orders1[i].buyerReview;
+                            object2["stars"] = orders1[i].stars;
+
+                            var jsonText2 = JSON.stringify(object2);
+                            document.getElementById("orderStatus").innerHTML = '<span style="color: red;">Buyer cancelled the order</span>';
+                    
+                            await fetch("http://localhost:8080/addOrder", {
+                                method: "POST",
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: jsonText2
+                            })
+                            .then(response => response.text())
+                            .then(infoToast("Order Cancelled!"))
+                            .catch(error => console.log('Authorization failed: ' + error.message));
+                            
+                            break;
+                        }
+                    }
 
                 }else{
                     errorToast("You can only cancel a order when it is in Packaging state!");
