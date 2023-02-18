@@ -102,7 +102,7 @@
       </div>
       
 
-      <div class="row portfolio-container">
+      <div class="row portfolio-container" id="products_list_view">
 
         <div class="col-lg-4 col-md-6 portfolio-item">
           <div class="portfolio-wrap">
@@ -163,11 +163,11 @@
             </div>
           </div>
         </div>
-
         
       </div>
+
       <div class="mt-5 text-center" style="display: flex; justify-content: center;">
-        <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding: 10px;" onclick="">More Trending Products</button>
+        <button class="btn btn-primary profile-button" type="button" style="font-size: large; padding: 10px;" onclick="openExplore()">More Trending Products</button>
       </div>
     </div>
 
@@ -301,6 +301,104 @@
       }
     }
     
+
+    // Set trending items list
+
+    // Arrays to store product details
+		var arrSellerIds = [];
+		var arrItemIds = [];
+		var arrTotalSoldCounts = [];
+		arrSellerIds.length = 0;
+		arrItemIds.length = 0;
+		arrTotalSoldCounts.length = 0;
+
+
+    // Display products stored in (arrSellerIds + arrItemIds) arrays
+		const setProducts = async() => {
+			let response = await fetch("http://localhost:8080/getAllProducts");
+			let products = await response.json();
+
+
+      var topLen = 0;
+      if(arrSellerIds.length >= 6){
+        topLen = 6;
+      }else{
+        topLen = arrSellerIds.length;
+      }
+
+      
+      var productList = "";
+
+			for(let j = 0; j < topLen; j++){
+				for(let i = 0; i < products.length; i++){
+					if(arrSellerIds[j] == products[i].userId && arrItemIds[j] == products[i].itemId){
+						productList += `<div class="col-lg-4 col-md-6 portfolio-item" onclick="openItemView(${products[i].userId}, ${products[i].itemId})"> <div class="portfolio-wrap"> <img src="${products[i].clr1Img}" class="img-fluid" alt=""> <div class="portfolio-info"> <h4>${products[i].itemName}</h4> <p>LKR ${(products[i].price).toLocaleString('en-US')}</p> </div> </div> </div>`;
+						break;
+					}
+				}
+			}
+			
+
+			document.getElementById("products_list_view").innerHTML = productList;
+		}
+
+
+    // All products added to the product details arrays in trending order
+		const setAllProducts = async() => {
+			let response3 = await fetch("http://localhost:8080/getAllProducts");
+			let products3 = await response3.json();
+
+			arrSellerIds.length = products3.length;
+			arrItemIds.length = products3.length;
+			arrTotalSoldCounts.length = products3.length;
+
+
+			for(let i = 0; i < products3.length; i++){
+				arrSellerIds[i] = products3[i].userId;
+				arrItemIds[i] = products3[i].itemId;
+				arrTotalSoldCounts[i] = products3[i].totalSold;
+			}
+
+			
+			// Sort based on total sales
+			for(let i = 0; i < products3.length; i++){
+				for(let j = 0; j < (products3.length - i -1); j++){
+					if(arrTotalSoldCounts[j] < arrTotalSoldCounts[j+1]){
+						var temp1 = arrTotalSoldCounts[j];
+						arrTotalSoldCounts[j] = arrTotalSoldCounts[j+1];
+						arrTotalSoldCounts[j+1] = temp1;
+						
+						var temp2 = arrSellerIds[j];
+						arrSellerIds[j] = arrSellerIds[j+1];
+						arrSellerIds[j+1] = temp2;
+
+						var temp3 = arrItemIds[j];
+						arrItemIds[j] = arrItemIds[j+1];
+						arrItemIds[j+1] = temp3;
+					}
+				}
+			}
+
+
+			// Display products in the page
+			setProducts();
+		}
+
+		setAllProducts();
+
+
+    // View selected item details
+		const openItemView = async(userId, itemId) =>{
+			localStorage.setItem("sellerId", userId);
+			localStorage.setItem("productId", itemId);
+			open("../../../item-demo.html", "_parent");
+		}
+
+
+    // Open all trending products
+    const openExplore = async() =>{
+      open("explore.html", "_parent");
+    }
 
   </script>
 </body>
