@@ -236,31 +236,91 @@
     <script src="../js/script.js"></script>
 		
 	<script>
+		// Arrays to store searched product details
+		var arrSellerIds = [];
+		var arrItemIds = [];
+		var arrTotalSoldCounts = [];
+		arrSellerIds.length = 0;
+		arrItemIds.length = 0;
+		arrTotalSoldCounts.length = 0;
+
+
+		// Display products stored in (arrSellerIds + arrItemIds) arrays
+		const setProducts = async() => {
+			let response = await fetch("http://localhost:8080/getAllProducts");
+			let products = await response.json();
+
+			var productList = "";
+
+
+			for(let j = 0; j < arrSellerIds.length; j++){
+				for(let i = 0; i < products.length; i++){
+					if(arrSellerIds[j] == products[i].userId && arrItemIds[j] == products[i].itemId){
+						productList += `<div class="col-sm-4"> <div class="product-image-wrapper"> <div class="single-products"> <div class="productinfo text-center"> <img src="${products[i].clr1Img}" alt="" /> <h2>LKR ${(products[i].price).toLocaleString('en-US')}</h2> <p>${products[i].itemName}</p> <a href="" class="btn btn-default add-to-cart" onclick="openItemView(${products[i].userId}, ${products[i].itemId})">View Details</a></div></div><div class="choose"><ul class="nav nav-pills nav-justified"><li><a href="#" onclick="addToCart(${products[i].userId}, ${products[i].itemId})">Add to Cart</a></li><li><a href="#" onclick="addToWishlist(${products[i].userId}, ${products[i].itemId})">Add to Wishlist</a></li></ul></div></div></div>`;
+						break;
+					}
+				}
+			}
+			
+
+			document.getElementById("products_list_view").innerHTML = productList;
+		}
+
+
+		// All products added to the product details arrays in trending order - When page is loaded
+		const setAllProducts = async() => {
+			let response3 = await fetch("http://localhost:8080/getAllProducts");
+			let products3 = await response3.json();
+
+			arrSellerIds.length = products3.length;
+			arrItemIds.length = products3.length;
+			arrTotalSoldCounts.length = products3.length;
+
+
+			for(let i = 0; i < products3.length; i++){
+				arrSellerIds[i] = products3[i].userId;
+				arrItemIds[i] = products3[i].itemId;
+				arrTotalSoldCounts[i] = products3[i].totalSold;
+			}
+
+			
+			// Sort based on total sales
+			for(let i = 0; i < products3.length; i++){
+				for(let j = 0; j < (products3.length - i -1); j++){
+					if(arrTotalSoldCounts[j] < arrTotalSoldCounts[j+1]){
+						var temp1 = arrTotalSoldCounts[j];
+						arrTotalSoldCounts[j] = arrTotalSoldCounts[j+1];
+						arrTotalSoldCounts[j+1] = temp1;
+						
+						var temp2 = arrSellerIds[j];
+						arrSellerIds[j] = arrSellerIds[j+1];
+						arrSellerIds[j+1] = temp2;
+
+						var temp3 = arrItemIds[j];
+						arrItemIds[j] = arrItemIds[j+1];
+						arrItemIds[j+1] = temp3;
+					}
+				}
+			}
+
+
+			// Display products in the page
+			setProducts();
+		}
+
+		setAllProducts();
+
+
+		// Buyer id
+		var buyerId = localStorage.getItem("id");
+
+
 		// View selected item details
 		const openItemView = async(userId, itemId) =>{
 			localStorage.setItem("sellerId", userId);
 			localStorage.setItem("productId", itemId);
 			open("../../../item-demo.html", "_parent");
 		}
-
-
-		// Set all the products to view
-		const setProducts = async() => {
-			let response = await fetch("http://localhost:8080/getAllProducts");
-			let products = await response.json();
-
-			var productList = "";
-			for(let i = 0; i<products.length; i++){
-				productList += `<div class="col-sm-4"> <div class="product-image-wrapper"> <div class="single-products"> <div class="productinfo text-center"> <img src="${products[i].clr1Img}" alt="" /> <h2>LKR ${(products[i].price).toLocaleString('en-US')}</h2> <p>${products[i].itemName}</p> <a href="" class="btn btn-default add-to-cart" onclick="openItemView(${products[i].userId}, ${products[i].itemId})">View Details</a></div></div><div class="choose"><ul class="nav nav-pills nav-justified"><li><a href="#" onclick="addToCart(${products[i].userId}, ${products[i].itemId})">Add to Cart</a></li><li><a href="#" onclick="addToWishlist(${products[i].userId}, ${products[i].itemId})">Add to Wishlist</a></li></ul></div></div></div>`;
-			}
-			document.getElementById("products_list_view").innerHTML = productList;
-		}
-
-		setProducts();
-
-
-		// Buyer id
-		var buyerId = localStorage.getItem("id");
 
 
 		// Add selected item to cart
