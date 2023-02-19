@@ -21,7 +21,7 @@
 						<div class="brands-name">
 							<h3 style="padding-bottom: 5px;">Search Products</h3>
 							<div class="search_box">
-								<input type="text" placeholder="Search">
+								<input id="searchText" type="text" placeholder="Search" style="font-weight: 500; color: #696763;">
 							</div>
 						</div>
 					</div>
@@ -214,17 +214,6 @@
 				</div>
 			</div>
 
-			<div class="row" align="right" style="padding-right: 20px;">
-				<ul class="pagination alg-right-pad">
-					<li><a href="#">&laquo;</a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#">&raquo;</a></li>
-				</ul>
-			</div>
 		</div>
 	</div>
 
@@ -235,6 +224,7 @@
 	<script src="../../alert-box/alert-script.js"></script>
     <script src="../js/script.js"></script>
 		
+
 	<script>
 		// Arrays to store searched product details
 		var arrSellerIds = [];
@@ -271,6 +261,13 @@
 		const setAllProducts = async() => {
 			let response3 = await fetch("http://localhost:8080/getAllProducts");
 			let products3 = await response3.json();
+
+			arrSellerIds = [];
+			arrItemIds = [];
+			arrTotalSoldCounts = [];
+			arrSellerIds.length = 0;
+			arrItemIds.length = 0;
+			arrTotalSoldCounts.length = 0;
 
 			arrSellerIds.length = products3.length;
 			arrItemIds.length = products3.length;
@@ -309,6 +306,77 @@
 		}
 
 		setAllProducts();
+
+
+		// Searched products added to the product details arrays in trending order
+		const setSearchedProducts = async() => {
+			arrSellerIds = [];
+			arrItemIds = [];
+			arrTotalSoldCounts = [];
+			arrSellerIds.length = 0;
+			arrItemIds.length = 0;
+			arrTotalSoldCounts.length = 0;	
+
+
+			if(searchText = ""){
+				setAllProducts();
+			}else{
+				let response4 = await fetch("http://localhost:8080/getAllProducts");
+				let products4 = await response4.json();
+
+				var k = 0;
+
+				for(let i = 0; i < products4.length; i++){
+					if(((products4[i].itemName).toLowerCase()).includes((document.getElementById("searchText").value).toLowerCase()) || ((products4[i].description).toLowerCase()).includes((document.getElementById("searchText").value).toLowerCase())){
+						arrSellerIds.length = arrSellerIds.length + 1;
+						arrItemIds.length = arrItemIds.length + 1;
+						arrTotalSoldCounts.length = arrTotalSoldCounts.length + 1;	
+
+						arrSellerIds[k] = products4[i].userId;
+						arrItemIds[k] = products4[i].itemId;
+						arrTotalSoldCounts[k] = products4[i].totalSold;
+
+						k++;
+					}
+				}
+
+
+				// Sort based on total sales
+				for(let i = 0; i < arrSellerIds.length; i++){
+					for(let j = 0; j < (arrSellerIds.length - i -1); j++){
+						if(arrTotalSoldCounts[j] < arrTotalSoldCounts[j+1]){
+							var temp1 = arrTotalSoldCounts[j];
+							arrTotalSoldCounts[j] = arrTotalSoldCounts[j+1];
+							arrTotalSoldCounts[j+1] = temp1;
+							
+							var temp2 = arrSellerIds[j];
+							arrSellerIds[j] = arrSellerIds[j+1];
+							arrSellerIds[j+1] = temp2;
+
+							var temp3 = arrItemIds[j];
+							arrItemIds[j] = arrItemIds[j+1];
+							arrItemIds[j+1] = temp3;
+						}
+					}
+				}
+
+
+				// Display products in the page
+				setProducts();
+			}
+
+		}
+
+
+		// Enter button pressed when searching
+		var inputText = document.getElementById("searchText");
+		inputText.addEventListener("keypress", function(event) {
+			if (event.key === "Enter") {
+				event.preventDefault();
+				setSearchedProducts();
+			}
+		});
+
 
 
 		// Buyer id
