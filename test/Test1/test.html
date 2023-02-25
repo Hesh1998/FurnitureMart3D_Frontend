@@ -5,12 +5,112 @@
         <link href="main-style.css" rel="stylesheet" />
 
     </head>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1 style="text-align: center;">Analysis - Each Product</h1>
+                    <br>
+                    <div style="text-align: center;">
+                        <span style="font-size: 15px;">
+                            <span><b>Duration : </b></span> 
+                            <input type="date" id="fromPie" onKeyDown="return false" onchange="setCharts()">
+                            <span><b> to </b></span> 
+                            <input type="date" id="toPie" onKeyDown="return false">
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <center>
+                        <div class="panel panel-primary" style=" border-color: #333333; margin-top: 20px; width: 45%; display: inline-block;">
+                            <div class="panel-heading" style="background-color: #4CA48C;">
+                                <h2>Total Units Sold - Each Product</h2>
+                            </div>
+                            <div class="panel-body">
+                                <div id="totalUnitsSoldPie"></div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-primary" style=" border-color: #333333; margin-top: 20px; margin-left: 20px; width: 45%; display: inline-block;">
+                            <div class="panel-heading" style="background-color: #4CA48C;">
+                                <h2>Total Sales (LKR) - Each Product</h2>
+                            </div>
+                            <div class="panel-body">
+                                <div id="totalSalesPie"></div>
+                            </div>
+                        </div>
+                    </center>
+                </div> 
+
+                <div class="card-footer">
+                    <div class="mt-5 text-right">
+                        <button class="btn btn-primary profile-button" type="button" style="font-size: large;" onclick="downloadSalesReport()">Download Sales Report</button>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
 
     <body>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
         <script>
-            
+            // Load google charts
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Draw the chart and set the chart values
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Item', 'Units Sold'],
+                    ['Quality Table Set', 8],
+                    ['Double Bed Queen Size', 2],
+                    ['Item 3', 0]
+                ]);
+
+                // Optional; add a title and set the width and height of the chart
+                var options = {'width':470, 
+                                'height':400, 
+                                'fontSize': 13, 
+                                legend: {'position': 'right','alignment':'start'}
+                            };
+
+                // Display the chart inside the <div> element with id="piechart"
+                var chart = new google.visualization.PieChart(document.getElementById('totalUnitsSoldPie'));
+                chart.draw(data, options);
 
 
+                var data2 = google.visualization.arrayToDataTable([
+                    ['Item', 'Total Sales'],
+                    ['Quality Table Set', 150000],
+                    ['Double Bed Queen Size', 200000],
+                    ['Item 3', 120000]
+                ]);
+
+                // Display the chart inside the <div> element with id="piechart"
+                var chart2 = new google.visualization.PieChart(document.getElementById('totalSalesPie'));
+                chart2.draw(data2, options);
+            }
+
+
+            const dateToday = new Date();
+
+            const dateLastMonth = new Date();
+            dateLastMonth.setTime(dateLastMonth.getTime() - (30 * 24 * 60 * 60 * 1000));
+            var year = dateLastMonth.toLocaleString("default", { year: "numeric" });
+            var month = dateLastMonth.toLocaleString("default", { month: "2-digit" });
+            var day = dateLastMonth.toLocaleString("default", { day: "2-digit" });
+            var formattedDateLastMonth = year + "-" + month + "-" + day;
+
+            document.getElementById("fromPie").value = formattedDateLastMonth;
+
+            function setCharts(){
+                var dateNew = document.getElementById("fromPie").value;
+
+                var dateNewD = new Date(dateNew);
+
+                alert(dateNewD);
+            }
         </script>
 
 
