@@ -16,19 +16,123 @@
         <div id="analyticsLastMonth"> </div>
 
 
-        <div id="pieCharts"> </div>
+        <div id="pieCharts" style="margin-top: 120px;"> </div>
 
 
-        <div id="barChart"> </div>
+        <div id="barChart" style="margin-top: 120px;"> </div>
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
         <script>
             // Seller id
 		    var sellerId = localStorage.getItem("id");
+            var itemNamesFinal = [];
+            var itemTotalUnitsSoldFinal = [];
+            var itemTotalSalesFinal = [];
 
+
+            // Download pie chart report
+            const downloadPieReport = async() => {
+
+            }
+
+
+            // Set pie chart information
+            const setPieCharts = async() => {
+                var dateFrom = document.getElementById("fromPie").value;
+                var dateFromD = new Date(dateFrom);
+
+                var dateTo = document.getElementById("toPie").value;
+                var dateToD = new Date(dateTo);
+
+                let response4 = await fetch(`http://localhost:8080/findUserProducts/${sellerId}`);
+			    let items4 = await response4.json();
+
+                var itemIds = [];
+                itemIds.length = items4.length;
+
+                var itemNames = [];
+                itemNames.length = items4.length;   
+
+                var itemTotalUnitsSold = [];
+                itemTotalUnitsSold.length = items4.length; 
+
+                var itemTotalSales = [];
+                itemTotalSales.length = items4.length; 
+                
+                for (let i = 0; i < items4.length; i++) {
+                    itemIds[i] = items4[i].itemId;
+                    itemNames[i] = items4[i].itemName;
+                    itemTotalUnitsSold[i] = 0;
+                    itemTotalSales[i] = 0;
+                }
+
+
+                let response5 = await fetch(`http://localhost:8080/findAllOrderDetails`);
+			    let orders5 = await response5.json();
+
+                for(let i=0; i < orders5.length; i++){
+                    var dateOrder = new Date(orders5[i].orderDate);
+
+                    if(orders5[i].sellerId == sellerId && (orders5[i].deliveryStatus == "Delivered" || orders5[i].deliveryStatus == "Completed") && (dateOrder <= dateToD && dateOrder >= dateFromD)){
+                        for(let j = 0; j < itemIds.length; j++){
+                            if(orders5[i].itemId == itemIds[j]){
+                                itemTotalUnitsSold[j] += orders5[i].orderQuantity;
+                                itemTotalSales[j] += orders5[i].subTotal;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                
+                // Load google charts
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+
+                var arrUnitsSold = [];
+                arrUnitsSold.length = itemIds.length + 1;
+                arrUnitsSold[0] = ['Item', 'Total Units Sold'];
+
+                var arrSales = []
+                arrSales.length = itemIds.length + 1;
+                arrSales[0] = ['Item', 'Total Sales'];
+
+                for(let i= 0; i < itemIds.length; i++){
+                    arrUnitsSold[i+1] = [itemNames[i], itemTotalUnitsSold[i]];
+                    arrSales[i+1] = [itemNames[i], itemTotalSales[i]];
+                }
+
+
+                // Draw pie charts
+                function drawChart() {
+                    var dataUnitsSold = google.visualization.arrayToDataTable(arrUnitsSold);
+                    var dataSales = google.visualization.arrayToDataTable(arrSales);
+
+                    var options = {'width':470, 'height':400, 'fontSize': 13, legend: {'position': 'right','alignment':'start'}};
+
+                    var chartUnitsSold = new google.visualization.PieChart(document.getElementById('totalUnitsSoldPie'));
+                    var chartSales = new google.visualization.PieChart(document.getElementById('totalSalesPie'));
+                    
+                    chartUnitsSold.draw(dataUnitsSold, options);
+                    chartSales.draw(dataSales, options);
+                }
+
+
+                // Assign values to global arrays - to print report
+                itemNamesFinal = [];
+                itemNamesFinal = itemNames;
+
+                itemTotalUnitsSoldFinal = [];
+                itemTotalUnitsSoldFinal = itemTotalUnitsSold;
+
+                itemTotalSalesFinal = [];
+                itemTotalSalesFinal = itemTotalSales;
+            }
             
+
             // Download complete sales report
             const downloadSalesReport = async() => {
                 var duration = document.getElementById("analyticsReportChoice").value;
@@ -221,7 +325,72 @@
                                                                                     </div>
                                                                                 </div>`;
                 }else{
+                    // Set last month analytics
                     setAnalyticsFromLastMonth();
+
+                    // Set pie charts
+                    document.getElementById("pieCharts").innerHTML = `<div class="container">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h1 style="text-align: center;">Analysis - Each Product</h1>
+                                                                                    <br>
+                                                                                    <div style="text-align: center;">
+                                                                                        <span style="font-size: 15px;">
+                                                                                            <span><b>Duration : </b></span> 
+                                                                                            <input type="date" id="fromPie" onKeyDown="return false" onchange="setPieCharts()">
+                                                                                            <span><b> to </b></span> 
+                                                                                            <input type="date" id="toPie" onKeyDown="return false" onchange="setPieCharts()">
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                
+                                                                                <div class="card-body">
+                                                                                    <center>
+                                                                                        <div class="panel panel-primary" style=" border-color: #333333; margin-top: 20px; width: 45%; display: inline-block;">
+                                                                                            <div class="panel-heading" style="background-color: #4CA48C;">
+                                                                                                <h2>Total Units Sold - Each Product</h2>
+                                                                                            </div>
+                                                                                            <div class="panel-body">
+                                                                                                <div id="totalUnitsSoldPie"></div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="panel panel-primary" style=" border-color: #333333; margin-top: 20px; margin-left: 20px; width: 45%; display: inline-block;">
+                                                                                            <div class="panel-heading" style="background-color: #4CA48C;">
+                                                                                                <h2>Total Sales (LKR) - Each Product</h2>
+                                                                                            </div>
+                                                                                            <div class="panel-body">
+                                                                                                <div id="totalSalesPie"></div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </center>
+                                                                                </div> 
+
+                                                                                <div class="card-footer">
+                                                                                    <div class="mt-5 text-right">
+                                                                                        <button class="btn btn-primary profile-button" type="button" style="font-size: large;" onclick="downloadPieReport()">Download Report</button>
+                                                                                    </div>
+                                                                                    <br>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>`;
+                    
+                    const dateTo = new Date();
+                    var yearTo = dateTo.toLocaleString("default", { year: "numeric" });
+                    var monthTo = dateTo.toLocaleString("default", { month: "2-digit" });
+                    var dayTo = dateTo.toLocaleString("default", { day: "2-digit" });
+                    var formattedDateTo = yearTo + "-" + monthTo + "-" + dayTo;
+                    document.getElementById("toPie").value = formattedDateTo;
+
+                    const dateFrom = new Date();
+                    dateFrom.setTime(dateFrom.getTime() - (30 * 24 * 60 * 60 * 1000));
+                    var yearFrom = dateFrom.toLocaleString("default", { year: "numeric" });
+                    var monthFrom = dateFrom.toLocaleString("default", { month: "2-digit" });
+                    var dayFrom = dateFrom.toLocaleString("default", { day: "2-digit" });
+                    var formattedDateFrom = yearFrom + "-" + monthFrom + "-" + dayFrom;
+                    document.getElementById("fromPie").value = formattedDateFrom;
+
+                    setPieCharts();
                 }
             }
 
