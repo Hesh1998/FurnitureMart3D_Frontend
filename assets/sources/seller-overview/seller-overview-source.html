@@ -35,7 +35,89 @@
 
             // Download pie chart report
             const downloadPieReport = async() => {
+                var itemTotalUnitsSoldVar = 0;
+                var itemTotalSalesVar = 0;
 
+                for(let i = 0; i < itemTotalUnitsSoldFinal.length; i++){
+                    itemTotalUnitsSoldVar += itemTotalUnitsSoldFinal[i];
+                }
+
+                for(let i = 0; i < itemTotalSalesFinal.length; i++){
+                    itemTotalSalesVar += itemTotalSalesFinal[i];
+                }
+
+                var dateFrom = document.getElementById("fromPie").value;
+                var dateFromD = new Date(dateFrom);
+                var dateFromFinal = dateFromD.toLocaleDateString('en-CA');
+
+                var dateTo = document.getElementById("toPie").value;
+                var dateToD = new Date(dateTo);
+                var dateToFinal = dateToD.toLocaleDateString('en-CA');
+
+                var totalUnitsSoldSalesReport1 = `<div style="font-family: Open Sans, sans-serif; color: #444444; margin-left: 20px; margin-right: 20px;">
+                                                    <center>
+                                                        <hr style="background-color: #444444;">
+                                                        <h2 style="color: #4CA48C">FurnitureMart 3D - Total Units Sold and Total Sales for each Product 
+                                                            <br>
+                                                            (${dateFromFinal} to ${dateToFinal})</h2>
+                                                        <hr style="background-color: #444444;">
+                                                        <br>
+                                                    </center> <br><br>
+                                                    <center>
+                                                    <h2>Total Units Sold - Each Product</h2>
+                                                    <div>`;
+
+                var totalUnitsSoldSalesReport3 = `</div> <h2>Total Sales (LKR) - Each Product</h2> <div>`;
+
+                var totalUnitsSoldSalesReport5 = `</div>
+                                            </center>
+
+                                            <br>
+                                            <center>
+                                                <h1 style="color: white;">Margin</h1>
+                                                <table style="border-collapse: collapse; width: 95%;">
+                                                    <tr>
+                                                        <th style="border: 1px solid #444444; text-align: left; padding: 8px; width: 25%;">Item</th>
+                                                        <th style="border: 1px solid #444444; text-align: left; padding: 8px; width: 15%;">Total Units Sold</th>
+                                                        <th style="border: 1px solid #444444; text-align: left; padding: 8px; width: 15%;">Total Units Sold (%)</th>
+                                                        <th style="border: 1px solid #444444; text-align: left; padding: 8px; width: 22.5%;">Total Sales</th>
+                                                        <th style="border: 1px solid #444444; text-align: left; padding: 8px; width: 22.5%;">Total Sales (%)</th>
+                                                    </tr>`;
+                
+                var totalUnitsSoldSalesReport6 = ``;
+
+                for(let i = 0; i < itemNamesFinal.length; i++){
+                    var unitsPercent = ((itemTotalUnitsSoldFinal[i] / itemTotalUnitsSoldVar) * 100).toFixed(1);
+                    var salesPercent = ((itemTotalSalesFinal[i] / itemTotalSalesVar) * 100).toFixed(1);
+                    
+                    totalUnitsSoldSalesReport6 += `<tr>
+                                                        <td style="border: 1px solid #444444; text-align: left; padding: 8px; vertical-align: top;">${itemNamesFinal[i]}</td>
+                                                        <td style="border: 1px solid #444444; text-align: left; padding: 8px; vertical-align: top;">${itemTotalUnitsSoldFinal[i]}</td>
+                                                        <td style="border: 1px solid #444444; text-align: left; padding: 8px; vertical-align: top;">${unitsPercent}%</td>
+                                                        <td style="border: 1px solid #444444; text-align: left; padding: 8px; vertical-align: top;">LKR ${(itemTotalSalesFinal[i]).toLocaleString('en-US')}</td>
+                                                        <td style="border: 1px solid #444444; text-align: left; padding: 8px; vertical-align: top;">${salesPercent}%</td>
+                                                    </tr>`;
+                }
+
+                totalUnitsSoldSalesReport6 += `</table> 
+                                                    </center> 
+                                                    
+                                                    <br><br><br>
+                                                    <center>
+                                                        <hr style="background-color: #444444;">
+                                                    </center>
+                                                </div>`;
+                
+                // Print report
+                const element = totalUnitsSoldSalesReport1 + document.getElementById("totalUnitsSoldPie").innerHTML + totalUnitsSoldSalesReport3 + document.getElementById("totalSalesPie").innerHTML + totalUnitsSoldSalesReport5 + totalUnitsSoldSalesReport6;
+
+                var opt = {
+                    filename: 'Total Units Sold and Total Sales per each Product.pdf',
+                    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+                    jsPDF: {unit: 'pt', format: 'letter', orientation: 'portrait'}
+                };
+
+                html2pdf().from(element).set(opt).save();
             }
 
 
