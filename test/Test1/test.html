@@ -1,101 +1,10 @@
 <html>
     <head>
-        <link href="bootstrap.css" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-        <link href="main-style.css" rel="stylesheet" />
+        
     </head>
         
 
     <body>
-        <div class="container">
-            <div class="card">
-                <div class="card-header">
-                    <h1 >Analysis - Each Product</h1>
-                    <br>
-                    <div style="text-align: center;">
-                        <span style="font-size: 15px;">
-                            <span><b>Duration : </b></span> 
-                            <input type="date" id="fromPie" onKeyDown="return false" onchange="setCharts()">
-                            <span><b> to </b></span> 
-                            <input type="date" id="toPie" onKeyDown="return false" onchange="setCharts()">
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-body">
-                    <center>
-                        <div class="panel panel-primary" style=" border-color: #333333; margin-top: 20px; width: 45%; display: inline-block;">
-                            <div class="panel-heading" style="background-color: #4CA48C;">
-                                <h2>Total Units Sold - Each Product</h2>
-                            </div>
-                            <div class="panel-body">
-                                <div id="totalUnitsSoldPie"></div>
-                            </div>
-                        </div>
-
-                        <div class="panel panel-primary" style=" border-color: #333333; margin-top: 20px; margin-left: 20px; width: 45%; display: inline-block;">
-                            <div class="panel-heading" style="background-color: #4CA48C;">
-                                <h2>Total Sales (LKR) - Each Product</h2>
-                            </div>
-                            <div class="panel-body">
-                                <div id="totalSalesPie"></div>
-                            </div>
-                        </div>
-                    </center>
-                </div> 
-
-                <div class="card-footer">
-                    <div class="mt-5 text-right">
-                        <button class="btn btn-primary profile-button" type="button" style="font-size: large;" onclick="downloadSalesReport()">Download Sales Report</button>
-                    </div>
-                    <br>
-                </div>
-            </div>
-        </div>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-        <script>
-            // Load google charts
-            google.charts.load('current', {'packages':['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
-
-            var arr = [];
-            arr.length = 4;
-            arr[0] = ['Item', 'Units Sold'];
-            arr[1] = ['Quality Table Set', 8];
-            arr[2] = ['Double Bed Queen Size', 3];
-            arr[3] = ['Item 3', 2];
-            // Draw the chart and set the chart values
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable(arr);
-
-                // Optional; add a title and set the width and height of the chart
-                var options = {'width':470, 
-                                'height':400, 
-                                'fontSize': 13, 
-                                legend: {'position': 'right','alignment':'start'}
-                            };
-
-                // Display the chart inside the <div> element with id="piechart"
-                var chart = new google.visualization.PieChart(document.getElementById('totalUnitsSoldPie'));
-                chart.draw(data, options);
-
-
-                var data2 = google.visualization.arrayToDataTable([
-                    ['Item', 'Total Sales'],
-                    ['Quality Table Set', 150000],
-                    ['Double Bed Queen Size', 200000],
-                    ['Item 3', 120000]
-                ]);
-
-                // Display the chart inside the <div> element with id="piechart"
-                var chart2 = new google.visualization.PieChart(document.getElementById('totalSalesPie'));
-                chart2.draw(data2, options);
-            }
-        </script>
-
 
     </body>
 </html>
