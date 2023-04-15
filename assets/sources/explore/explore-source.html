@@ -31,39 +31,39 @@
 							<ul class="nav nav-pills nav-stacked">
 								<h3 style="padding-bottom: 5px;">Item Type</h3>
 								<li>
-									<input type="checkbox" id="chair" value="chair">
+									<input type="checkbox" id="chair" value="chair" onclick="FilterProducts()">
 									<label for="chair"> Chair </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="table" value="table">
+									<input type="checkbox" id="table" value="table" onclick="FilterProducts()">
 									<label for="table"> Table  </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="sofa" value="sofa">
+									<input type="checkbox" id="sofa" value="sofa" onclick="FilterProducts()">
 									<label for="sofa"> Sofa </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="cupboard" value="cupboard">
+									<input type="checkbox" id="cupboard" value="cupboard" onclick="FilterProducts()">
 									<label for="cupboard"> Cupboard </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="bed" value="bed">
+									<input type="checkbox" id="bed" value="bed" onclick="FilterProducts()">
 									<label for="bed"> Bed </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="bench" value="bench">
+									<input type="checkbox" id="bench" value="bench" onclick="FilterProducts()">
 									<label for="bench"> Bench </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="bookcase" value="bookcase">
+									<input type="checkbox" id="bookcase" value="bookcase" onclick="FilterProducts()">
 									<label for="bookcase"> Bookcase </label><br>
 								</li> 	
 								<li>
-									<input type="checkbox" id="desk" value="desk">
+									<input type="checkbox" id="desk" value="desk" onclick="FilterProducts()">
 									<label for="desk"> Desk </label><br>
 								</li> 
 								<li>
-									<input type="checkbox" id="other" value="other">
+									<input type="checkbox" id="other" value="other" onclick="FilterProducts()">
 									<label for="other"> Other </label><br>
 								</li> 
 							</ul>
@@ -75,33 +75,27 @@
 							<ul class="nav nav-pills nav-stacked">
 								<h3 style="padding-bottom: 5px;">Price Range</h3>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pr1" name="pr1" value="pr1">
+									<input type="checkbox" id="pr1" value="pr1">
 									<label for="pr1"> Less than LKR 50 K </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pr2" name="pr2" value="pr2">
+									<input type="checkbox" id="pr2" value="pr2">
 									<label for="pr2"> LKR 50 K - LKR 150 K </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pr3" name="pr3" value="pr3">
+									<input type="checkbox" id="pr3" value="pr3">
 									<label for="pr3"> LKR 150 K - LKR 200 K </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pr4" name="pr4" value="pr4">
+									<input type="checkbox" id="pr4" value="pr4">
 									<label for="pr4"> LKR 200 K - LKR 250 K </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pr5" name="pr5" value="pr5">
+									<input type="checkbox" id="pr5" value="pr5">
 									<label for="pr5"> LKR 250 K - LKR 300 K </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pr6" name="pr6" value="pr6">
+									<input type="checkbox" id="pr6" value="pr6">
 									<label for="pr6"> LKR 300 K and higher </label><br>
 								</li>
 							</ul>
@@ -113,34 +107,28 @@
 							<ul class="nav nav-pills nav-stacked">
 								<h3 style="padding-bottom: 5px;">Location</h3>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc1" name="pc1" value="pc1">
-									<label for="pc1"> Living Room </label><br>
+									<input type="checkbox" id="living" value="living">
+									<label for="living"> Living Room </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc2" name="pc2" value="pc2">
-									<label for="pc2"> Dining </label><br>
+									<input type="checkbox" id="dining" value="dining">
+									<label for="dining"> Dining </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc3" name="pc3" value="pc3">
-									<label for="pc3"> Bedroom </label><br>
+									<input type="checkbox" id="bedroom" value="bedroom">
+									<label for="bedroom"> Bedroom </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc4" name="pc4" value="pc4">
-									<label for="pc4"> Office </label><br>
+									<input type="checkbox" id="office" value="office">
+									<label for="office"> Office </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc5" name="pc5" value="pc5">
-									<label for="pc5"> Outdoor </label><br>
+									<input type="checkbox" id="outdoor" value="outdoor">
+									<label for="outdoor"> Outdoor </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc6" name="pc6" value="pc6">
-									<label for="pc6"> Other </label><br>
+									<input type="checkbox" id="other" value="other">
+									<label for="other"> Other </label><br>
 								</li>
 							</ul>
 						</div>
@@ -153,44 +141,36 @@
 							<ul class="nav nav-pills nav-stacked">
 								<h3 style="padding-bottom: 5px;">Category</h3>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc1" name="pc1" value="pc1">
-									<label for="pc1"> Classy </label><br>
+									<input type="checkbox" id="classy" value="classy">
+									<label for="classy"> Classy </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc2" name="pc2" value="pc2">
-									<label for="pc2"> Antique </label><br>
+									<input type="checkbox" id="antique" value="antique">
+									<label for="antique"> Antique </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc3" name="pc3" value="pc3">
-									<label for="pc3"> Traditional </label><br>
+									<input type="checkbox" id="traditional" value="traditional">
+									<label for="traditional"> Traditional </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc4" name="pc4" value="pc4">
-									<label for="pc4"> Modern </label><br>
+									<input type="checkbox" id="modern" value="modern">
+									<label for="modern"> Modern </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc5" name="pc5" value="pc5">
-									<label for="pc5"> Contemporary </label><br>
+									<input type="checkbox" id="contemporary" value="contemporary">
+									<label for="contemporary"> Contemporary </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc6" name="pc6" value="pc6">
-									<label for="pc6"> Transitional </label><br>
+									<input type="checkbox" id="transitional" value="transitional">
+									<label for="transitional"> Transitional </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc6" name="pc6" value="pc6">
-									<label for="pc6"> Coastal </label><br>
+									<input type="checkbox" id="coastal" value="coastal">
+									<label for="coastal"> Coastal </label><br>
 								</li>
 								<li>
-									<span class="pull-right">(0)</span>
-									<input type="checkbox" id="pc6" name="pc6" value="pc6">
-									<label for="pc6"> Minimalist </label><br>
+									<input type="checkbox" id="minimalist" value="minimalist">
+									<label for="minimalist"> Minimalist </label><br>
 								</li>
 							</ul>
 						</div>
@@ -371,7 +351,16 @@
 
 		// Filter products - All products or for a specific search
 		const FilterProducts = async() => {
+			var arrYesNo = [];
+			arrYesNo.length = 0;
 
+			arrYesNo.length = arrSellerIds.length;
+
+			for(let i = 0; i < arrYesNo.length; i++){
+				arrYesNo[i] = "N";
+			}
+
+			console.log(arrYesNo);
 		}
 
 
