@@ -75,27 +75,27 @@
 							<ul class="nav nav-pills nav-stacked">
 								<h3 style="padding-bottom: 5px;">Price Range</h3>
 								<li>
-									<input type="checkbox" id="pr1" value="pr1">
+									<input type="checkbox" id="pr1" value="pr1" onclick="FilterProducts()">
 									<label for="pr1"> Less than LKR 50 K </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="pr2" value="pr2">
+									<input type="checkbox" id="pr2" value="pr2" onclick="FilterProducts()">
 									<label for="pr2"> LKR 50 K - LKR 150 K </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="pr3" value="pr3">
+									<input type="checkbox" id="pr3" value="pr3" onclick="FilterProducts()">
 									<label for="pr3"> LKR 150 K - LKR 200 K </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="pr4" value="pr4">
+									<input type="checkbox" id="pr4" value="pr4" onclick="FilterProducts()">
 									<label for="pr4"> LKR 200 K - LKR 250 K </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="pr5" value="pr5">
+									<input type="checkbox" id="pr5" value="pr5" onclick="FilterProducts()">
 									<label for="pr5"> LKR 250 K - LKR 300 K </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="pr6" value="pr6">
+									<input type="checkbox" id="pr6" value="pr6" onclick="FilterProducts()">
 									<label for="pr6"> LKR 300 K and higher </label><br>
 								</li>
 							</ul>
@@ -107,28 +107,28 @@
 							<ul class="nav nav-pills nav-stacked">
 								<h3 style="padding-bottom: 5px;">Location</h3>
 								<li>
-									<input type="checkbox" id="living" value="living">
+									<input type="checkbox" id="living" value="living" onclick="FilterProducts()">
 									<label for="living"> Living Room </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="dining" value="dining">
+									<input type="checkbox" id="dining" value="dining" onclick="FilterProducts()">
 									<label for="dining"> Dining </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="bedroom" value="bedroom">
+									<input type="checkbox" id="bedroom" value="bedroom" onclick="FilterProducts()">
 									<label for="bedroom"> Bedroom </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="office" value="office">
+									<input type="checkbox" id="office" value="office" onclick="FilterProducts()">
 									<label for="office"> Office </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="outdoor" value="outdoor">
+									<input type="checkbox" id="outdoor" value="outdoor" onclick="FilterProducts()">
 									<label for="outdoor"> Outdoor </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="other" value="other">
-									<label for="other"> Other </label><br>
+									<input type="checkbox" id="otherN" value="otherN" onclick="FilterProducts()">
+									<label for="otherN"> Other </label><br>
 								</li>
 							</ul>
 						</div>
@@ -141,35 +141,35 @@
 							<ul class="nav nav-pills nav-stacked">
 								<h3 style="padding-bottom: 5px;">Category</h3>
 								<li>
-									<input type="checkbox" id="classy" value="classy">
+									<input type="checkbox" id="classy" value="classy" onclick="FilterProducts()">
 									<label for="classy"> Classy </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="antique" value="antique">
+									<input type="checkbox" id="antique" value="antique" onclick="FilterProducts()">
 									<label for="antique"> Antique </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="traditional" value="traditional">
+									<input type="checkbox" id="traditional" value="traditional" onclick="FilterProducts()">
 									<label for="traditional"> Traditional </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="modern" value="modern">
+									<input type="checkbox" id="modern" value="modern" onclick="FilterProducts()">
 									<label for="modern"> Modern </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="contemporary" value="contemporary">
+									<input type="checkbox" id="contemporary" value="contemporary" onclick="FilterProducts()">
 									<label for="contemporary"> Contemporary </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="transitional" value="transitional">
+									<input type="checkbox" id="transitional" value="transitional" onclick="FilterProducts()">
 									<label for="transitional"> Transitional </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="coastal" value="coastal">
+									<input type="checkbox" id="coastal" value="coastal" onclick="FilterProducts()">
 									<label for="coastal"> Coastal </label><br>
 								</li>
 								<li>
-									<input type="checkbox" id="minimalist" value="minimalist">
+									<input type="checkbox" id="minimalist" value="minimalist" onclick="FilterProducts()">
 									<label for="minimalist"> Minimalist </label><br>
 								</li>
 							</ul>
@@ -197,11 +197,15 @@
 		
 
 	<script>
-		// Arrays to store searched product details
+		// Arrays to store searched / filtered product details
 		var arrSellerIds = [];
 		var arrItemIds = [];
 		var arrTotalSoldCounts = [];
 		var arrYesNo = [];
+		var arrYesNo1 = [];
+		var arrYesNo2 = [];
+		var arrYesNo3 = [];
+		var arrYesNoAll = [];
 		var arrSellerIdsFilter = [];
 		var arrItemIdsFilter = [];
 
@@ -210,6 +214,10 @@
 		arrItemIds.length = 0;
 		arrTotalSoldCounts.length = 0;
 		arrYesNo.length = 0;
+		arrYesNo1.length = 0;
+		arrYesNo2.length = 0;
+		arrYesNo3.length = 0;
+		arrYesNoAll.length = 0;
 		arrSellerIdsFilter.length = 0;
 		arrItemIdsFilter.length = 0;
 
@@ -243,6 +251,29 @@
 			document.getElementById("bookcase").checked = false;
 			document.getElementById("desk").checked = false;
 			document.getElementById("other").checked = false;
+
+			document.getElementById("pr1").checked = false;
+			document.getElementById("pr2").checked = false;
+			document.getElementById("pr3").checked = false;
+			document.getElementById("pr4").checked = false;
+			document.getElementById("pr5").checked = false;
+			document.getElementById("pr6").checked = false;
+
+			document.getElementById("living").checked = false;
+			document.getElementById("dining").checked = false;
+			document.getElementById("bedroom").checked = false;
+			document.getElementById("office").checked = false;
+			document.getElementById("outdoor").checked = false;
+			document.getElementById("otherN").checked = false;
+
+			document.getElementById("classy").checked = false;
+			document.getElementById("antique").checked = false;
+			document.getElementById("traditional").checked = false;
+			document.getElementById("modern").checked = false;
+			document.getElementById("contemporary").checked = false;
+			document.getElementById("transitional").checked = false;
+			document.getElementById("coastal").checked = false;
+			document.getElementById("minimalist").checked = false;
 		}
 
 
@@ -390,7 +421,7 @@
 		}
 
 
-		// Filter products - All products or for a specific search
+		// Filter products algorithm - All products or for a specific search
 		const FilterProducts = async() => {
 			arrSellerIdsFilter = [];
 			arrSellerIdsFilter.length = 0;
@@ -398,13 +429,42 @@
 			arrItemIdsFilter.length = 0;
 			arrYesNo = [];
 			arrYesNo.length = 0;
+			arrYesNo1 = [];
+			arrYesNo1.length = 0;
+			arrYesNo2 = [];
+			arrYesNo2.length = 0;
+			arrYesNo3 = [];
+			arrYesNo3.length = 0;
+			arrYesNoAll = [];
+			arrYesNoAll.length = 0;
+
 
 			arrYesNo.length = arrSellerIds.length;
+			arrYesNo1.length = arrSellerIds.length;
+			arrYesNo2.length = arrSellerIds.length;
+			arrYesNo3.length = arrSellerIds.length;
+			arrYesNoAll.length = arrSellerIds.length;
 			arrSellerIdsFilter.length = arrSellerIds.length;
 			arrItemIdsFilter.length = arrSellerIds.length;
 
 			for(let i = 0; i < arrSellerIds.length; i++){
 				arrYesNo[i] = "N";
+			}
+
+			for(let i = 0; i < arrSellerIds.length; i++){
+				arrYesNo1[i] = "N";
+			}
+
+			for(let i = 0; i < arrSellerIds.length; i++){
+				arrYesNo2[i] = "N";
+			}
+
+			for(let i = 0; i < arrSellerIds.length; i++){
+				arrYesNo3[i] = "N";
+			}
+
+			for(let i = 0; i < arrSellerIds.length; i++){
+				arrYesNoAll[i] = "N";
 			}
 
 			for(let i = 0; i < arrSellerIds.length; i++){
@@ -419,6 +479,8 @@
 			let response5 = await fetch("http://localhost:8080/getAllProducts");
 			let products5 = await response5.json();
 
+
+			// Filter products based on Item Type
 			for(let j = 0; j < arrSellerIdsFilter.length; j++){
 				for(let i = 0; i < products5.length; i++){
 					if(arrSellerIdsFilter[j] == products5[i].userId && arrItemIdsFilter[j] == products5[i].itemId){
@@ -462,25 +524,160 @@
 			}
 
 
+			if(document.getElementById("chair").checked == false && document.getElementById("table").checked == false && document.getElementById("sofa").checked == false && document.getElementById("cupboard").checked == false && document.getElementById("bed").checked == false && document.getElementById("bench").checked == false && document.getElementById("bookcase").checked == false && document.getElementById("desk").checked == false && document.getElementById("other").checked == false){
+				for(let j = 0; j < arrSellerIdsFilter.length; j++){
+					arrYesNo[j] = "Y";
+				}	
+			}
+			
+
+			// Filter products based on Price Range
 			for(let j = 0; j < arrSellerIdsFilter.length; j++){
-				if(document.getElementById("chair").checked == true || document.getElementById("table").checked == true || document.getElementById("sofa").checked == true || document.getElementById("cupboard").checked == true || document.getElementById("bed").checked == true || document.getElementById("bench").checked == true || document.getElementById("bookcase").checked == true || document.getElementById("desk").checked == true || document.getElementById("other").checked == true){
-					if(arrYesNo[j] != "Y"){
-						arrSellerIdsFilter[j] = 0;
-						arrItemIdsFilter[j] = 0;
+				for(let i = 0; i < products5.length; i++){
+					if(arrSellerIdsFilter[j] == products5[i].userId && arrItemIdsFilter[j] == products5[i].itemId){
+						if(document.getElementById("pr1").checked == true && products5[i].price < 50000){
+							arrYesNo1[j] = "Y";
+						}
+
+						if(document.getElementById("pr2").checked == true && products5[i].price >= 50000 && products5[i].price <= 150000){
+							arrYesNo1[j] = "Y";
+						}
+
+						if(document.getElementById("pr3").checked == true && products5[i].price >= 150000 && products5[i].price <= 200000){
+							arrYesNo1[j] = "Y";
+						}
+						
+						if(document.getElementById("pr4").checked == true && products5[i].price >= 200000 && products5[i].price <= 250000){
+							arrYesNo1[j] = "Y";
+						}
+
+						if(document.getElementById("pr5").checked == true && products5[i].price >= 250000 && products5[i].price <= 300000){
+							arrYesNo1[j] = "Y";
+						}
+
+						if(document.getElementById("pr6").checked == true && products5[i].price >= 300000){
+							arrYesNo1[j] = "Y";
+						}
+						
 					}
 				}
 			}
 
 
-			setFilteredProducts();
+			if(document.getElementById("pr1").checked == false && document.getElementById("pr2").checked == false && document.getElementById("pr3").checked == false && document.getElementById("pr4").checked == false && document.getElementById("pr5").checked == false && document.getElementById("pr6").checked == false){
+				for(let j = 0; j < arrSellerIdsFilter.length; j++){
+					arrYesNo1[j] = "Y";
+				}	
+			}
+			
 
-			/*
-			console.log(arrYesNo);
-			console.log(arrSellerIds);
-			console.log(arrSellerIdsFilter);
-			console.log(arrItemIds);
-			console.log(arrItemIdsFilter);
-			*/
+			// Filter products based on Location
+			for(let j = 0; j < arrSellerIdsFilter.length; j++){
+				for(let i = 0; i < products5.length; i++){
+					if(arrSellerIdsFilter[j] == products5[i].userId && arrItemIdsFilter[j] == products5[i].itemId){
+						if(document.getElementById("living").checked == true && products5[i].living == "true"){
+							arrYesNo2[j] = "Y";
+						}
+
+						if(document.getElementById("dining").checked == true && products5[i].dining == "true"){
+							arrYesNo2[j] = "Y";
+						}
+
+						if(document.getElementById("bedroom").checked == true && products5[i].bedroom == "true"){
+							arrYesNo2[j] = "Y";
+						}
+
+						if(document.getElementById("office").checked == true && products5[i].office == "true"){
+							arrYesNo2[j] = "Y";
+						}
+
+						if(document.getElementById("outdoor").checked == true && products5[i].outdoor == "true"){
+							arrYesNo2[j] = "Y";
+						}
+
+						if(document.getElementById("otherN").checked == true && products5[i].other == "true"){
+							arrYesNo2[j] = "Y";
+						}
+					}
+				}
+			}
+
+
+			if(document.getElementById("living").checked == false && document.getElementById("dining").checked == false && document.getElementById("bedroom").checked == false && document.getElementById("office").checked == false && document.getElementById("outdoor").checked == false && document.getElementById("otherN").checked == false){
+				for(let j = 0; j < arrSellerIdsFilter.length; j++){
+					arrYesNo2[j] = "Y";
+				}	
+			}
+
+
+			// Filter products based on Category
+			for(let j = 0; j < arrSellerIdsFilter.length; j++){
+				for(let i = 0; i < products5.length; i++){
+					if(arrSellerIdsFilter[j] == products5[i].userId && arrItemIdsFilter[j] == products5[i].itemId){
+						if(document.getElementById("classy").checked == true && products5[i].classy == "true"){
+							arrYesNo3[j] = "Y";
+						}
+						
+						if(document.getElementById("antique").checked == true && products5[i].antique == "true"){
+							arrYesNo3[j] = "Y";
+						}
+
+						if(document.getElementById("traditional").checked == true && products5[i].traditional == "true"){
+							arrYesNo3[j] = "Y";
+						}
+
+						if(document.getElementById("modern").checked == true && products5[i].modern == "true"){
+							arrYesNo3[j] = "Y";
+						}
+
+						if(document.getElementById("contemporary").checked == true && products5[i].contemporary == "true"){
+							arrYesNo3[j] = "Y";
+						}
+
+						if(document.getElementById("transitional").checked == true && products5[i].transitional == "true"){
+							arrYesNo3[j] = "Y";
+						}
+
+						if(document.getElementById("coastal").checked == true && products5[i].coastal == "true"){
+							arrYesNo3[j] = "Y";
+						}
+
+						if(document.getElementById("minimalist").checked == true && products5[i].minimalist == "true"){
+							arrYesNo3[j] = "Y";
+						}
+					}
+				}
+			}
+
+
+			if(document.getElementById("classy").checked == false && document.getElementById("antique").checked == false && document.getElementById("traditional").checked == false && document.getElementById("modern").checked == false && document.getElementById("contemporary").checked == false && document.getElementById("transitional").checked == false && document.getElementById("coastal").checked == false && document.getElementById("minimalist").checked == false){
+				for(let j = 0; j < arrSellerIdsFilter.length; j++){
+					arrYesNo3[j] = "Y";
+				}	
+			}
+
+
+			// Get the intersection set of all applied filters
+			for(let j = 0; j < arrSellerIdsFilter.length; j++){
+				if(arrYesNo[j] == "Y" && arrYesNo1[j] == "Y" && arrYesNo2[j] == "Y" && arrYesNo3[j] == "Y"){
+					arrYesNoAll[j] = "Y";
+				}else{
+					arrYesNoAll[j] = "N";
+				}
+			}	
+
+
+			// Set the arrays arrSellerIdsFilter and arrItemIdsFilter
+			for(let j = 0; j < arrSellerIdsFilter.length; j++){
+				if(arrYesNoAll[j] != "Y"){
+					arrSellerIdsFilter[j] = 0;
+					arrItemIdsFilter[j] = 0;
+				}
+			}
+			
+
+			// Display the filtered product list in the web page
+			setFilteredProducts();
 		}
 
 
