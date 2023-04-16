@@ -201,9 +201,17 @@
 		var arrSellerIds = [];
 		var arrItemIds = [];
 		var arrTotalSoldCounts = [];
+		var arrYesNo = [];
+		var arrSellerIdsFilter = [];
+		var arrItemIdsFilter = [];
+
+
 		arrSellerIds.length = 0;
 		arrItemIds.length = 0;
 		arrTotalSoldCounts.length = 0;
+		arrYesNo.length = 0;
+		arrSellerIdsFilter.length = 0;
+		arrItemIdsFilter.length = 0;
 
 
 		// Display products stored in (arrSellerIds + arrItemIds) arrays
@@ -225,6 +233,16 @@
 			
 
 			document.getElementById("products_list_view").innerHTML = productList;
+
+			document.getElementById("chair").checked = false;
+			document.getElementById("table").checked = false;
+			document.getElementById("sofa").checked = false;
+			document.getElementById("cupboard").checked = false;
+			document.getElementById("bed").checked = false;
+			document.getElementById("bench").checked = false;
+			document.getElementById("bookcase").checked = false;
+			document.getElementById("desk").checked = false;
+			document.getElementById("other").checked = false;
 		}
 
 
@@ -289,7 +307,7 @@
 			arrTotalSoldCounts.length = 0;	
 
 
-			if(searchText = ""){
+			if(document.getElementById("searchText").value == ""){
 				setAllProducts();
 			}else{
 				let response4 = await fetch("http://localhost:8080/getAllProducts");
@@ -349,18 +367,120 @@
 		});
 
 
+		// Display products stored in (arrSellerIdsFilter + arrItemIdsFilter) arrays
+		// Display filtered products
+		const setFilteredProducts = async() => {
+			let response = await fetch("http://localhost:8080/getAllProducts");
+			let products = await response.json();
+
+			var productList = "";
+
+
+			for(let j = 0; j < arrSellerIdsFilter.length; j++){
+				for(let i = 0; i < products.length; i++){
+					if(arrSellerIdsFilter[j] == products[i].userId && arrItemIdsFilter[j] == products[i].itemId){
+						productList += `<div class="col-sm-4"> <div class="product-image-wrapper"> <div class="single-products"> <div class="productinfo text-center"> <img src="${products[i].clr1Img}" alt="" /> <h2>LKR ${(products[i].price).toLocaleString('en-US')}</h2> <p>${products[i].itemName}</p> <a href="" class="btn btn-default add-to-cart" onclick="openItemView(${products[i].userId}, ${products[i].itemId})">View Details</a></div></div><div class="choose"><ul class="nav nav-pills nav-justified"><li><a href="#" onclick="addToCart(${products[i].userId}, ${products[i].itemId})">Add to Cart</a></li><li><a href="#" onclick="addToWishlist(${products[i].userId}, ${products[i].itemId})">Add to Wishlist</a></li></ul></div></div></div>`;
+						break;
+					}
+				}
+			}
+			
+
+			document.getElementById("products_list_view").innerHTML = productList;
+		}
+
+
 		// Filter products - All products or for a specific search
 		const FilterProducts = async() => {
-			var arrYesNo = [];
+			arrSellerIdsFilter = [];
+			arrSellerIdsFilter.length = 0;
+			arrItemIdsFilter = [];
+			arrItemIdsFilter.length = 0;
+			arrYesNo = [];
 			arrYesNo.length = 0;
 
 			arrYesNo.length = arrSellerIds.length;
+			arrSellerIdsFilter.length = arrSellerIds.length;
+			arrItemIdsFilter.length = arrSellerIds.length;
 
-			for(let i = 0; i < arrYesNo.length; i++){
+			for(let i = 0; i < arrSellerIds.length; i++){
 				arrYesNo[i] = "N";
 			}
 
+			for(let i = 0; i < arrSellerIds.length; i++){
+				arrSellerIdsFilter[i] = arrSellerIds[i];
+			}
+
+			for(let i = 0; i < arrSellerIds.length; i++){
+				arrItemIdsFilter[i] = arrItemIds[i];
+			}
+
+
+			let response5 = await fetch("http://localhost:8080/getAllProducts");
+			let products5 = await response5.json();
+
+			for(let j = 0; j < arrSellerIdsFilter.length; j++){
+				for(let i = 0; i < products5.length; i++){
+					if(arrSellerIdsFilter[j] == products5[i].userId && arrItemIdsFilter[j] == products5[i].itemId){
+						if(document.getElementById("chair").checked == true && products5[i].chair == "true"){
+							arrYesNo[j] = "Y";
+						}
+
+						if(document.getElementById("table").checked == true && products5[i].table == "true"){
+							arrYesNo[j] = "Y";
+						}
+
+						if(document.getElementById("sofa").checked == true && products5[i].sofa == "true"){
+							arrYesNo[j] = "Y";
+						}
+
+						if(document.getElementById("cupboard").checked == true && products5[i].cupboard == "true"){
+							arrYesNo[j] = "Y";
+						}
+
+						if(document.getElementById("bed").checked == true && products5[i].bed == "true"){
+							arrYesNo[j] = "Y";
+						}
+
+						if(document.getElementById("bench").checked == true && products5[i].bench == "true"){
+							arrYesNo[j] = "Y";
+						}
+
+						if(document.getElementById("bookcase").checked == true && products5[i].bookcase == "true"){
+							arrYesNo[j] = "Y";
+						}
+
+						if(document.getElementById("desk").checked == true && products5[i].desk == "true"){
+							arrYesNo[j] = "Y";
+						}
+
+						if(document.getElementById("other").checked == true && products5[i].otherT == "true"){
+							arrYesNo[j] = "Y";
+						}
+					}
+				}
+			}
+
+
+			for(let j = 0; j < arrSellerIdsFilter.length; j++){
+				if(document.getElementById("chair").checked == true || document.getElementById("table").checked == true || document.getElementById("sofa").checked == true || document.getElementById("cupboard").checked == true || document.getElementById("bed").checked == true || document.getElementById("bench").checked == true || document.getElementById("bookcase").checked == true || document.getElementById("desk").checked == true || document.getElementById("other").checked == true){
+					if(arrYesNo[j] != "Y"){
+						arrSellerIdsFilter[j] = 0;
+						arrItemIdsFilter[j] = 0;
+					}
+				}
+			}
+
+
+			setFilteredProducts();
+
+			/*
 			console.log(arrYesNo);
+			console.log(arrSellerIds);
+			console.log(arrSellerIdsFilter);
+			console.log(arrItemIds);
+			console.log(arrItemIdsFilter);
+			*/
 		}
 
 
