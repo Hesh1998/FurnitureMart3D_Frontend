@@ -249,6 +249,24 @@
             }
 
 
+            // Password encryption algorithm
+            const Encrypt = (salt, text) => {
+                const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
+                const byteHex = (n) => ("0" + Number(n).toString(16)).substr(-2);
+                const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
+
+                return text.split("").map(textToChars).map(applySaltToChar).map(byteHex).join("");
+            };
+
+
+            // Password decryption algorithm
+            const decrypt = (salt, encoded) => {
+                const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
+                const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
+                return encoded.match(/.{1,2}/g).map((hex) => parseInt(hex, 16)).map(applySaltToChar).map((charCode) => String.fromCharCode(charCode)).join("");
+            };
+
+
             // Reset password
             const resetPass = async() => {
                 var currentPassword = document.getElementById("currentPass").value;
@@ -257,8 +275,8 @@
 
                 let response1 = await fetch(`http://localhost:8080/findbyId/${id}`);
 			    let userDetails = await response1.json();
-
-                if(currentPassword != userDetails.password){
+                
+                if(currentPassword != decrypt("YourSalt", userDetails.password)){
                     errorToast("Current password incorrect! Try again.");
                 }else if(checkPasswordStrength() == false){
                     errorToast("New password must have at least one lowercase letter, one uppercase letter, one digit, one special character, and is at least eight characters long.");
@@ -270,7 +288,7 @@
                     object["username"] = userDetails.username;
                     object["email"] = userDetails.email;
                     object["dp"] = userDetails.dp;
-                    object["password"] = newPassword;
+                    object["password"] = Encrypt("YourSalt", newPassword);
                     object["accountType"] = userDetails.accountType;
                     object["contactNo"] = userDetails.contactNo;
                     object["deliveryAddress"] = userDetails.deliveryAddress;
